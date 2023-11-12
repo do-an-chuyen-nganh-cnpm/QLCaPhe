@@ -63,7 +63,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>QLCaphe.dbml</DependentUpon>
     </Compile>
-    <Compile Include="Librari.cs" />
+    <Compile Include="Lib\Librari.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -100,6 +100,22 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Lib\icons\checklist.png" />
+    <Content Include="Lib\icons\checklist24.png" />
+    <Content Include="Lib\icons\icons8-plus-50.png" />
+    <Content Include="Lib\icons\plus.png" />
+    <Content Include="Lib\icons\plus24.png" />
+    <Content Include="Lib\icons\remove.png" />
+    <Content Include="Lib\icons\remove24.png" />
+    <Content Include="Lib\icons\save.png" />
+    <Content Include="Lib\icons\save24.png" />
+    <Content Include="Lib\icons\search.png" />
+    <Content Include="Lib\icons\update.png" />
+    <Content Include="Lib\icons\update24.png" />
+    <Content Include="Lib\icons\updated.png" />
+    <Content Include="Lib\icons\updated24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
