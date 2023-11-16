@@ -9,3 +9,9 @@ D:\HK-7\Do-An-Chuyen-Nganh\TongHopBaoCao\Winform-QL-Caphe\GUI\obj\Debug\GUI.cspr
 D:\HK-7\Do-An-Chuyen-Nganh\TongHopBaoCao\Winform-QL-Caphe\GUI\obj\Debug\GUI.csproj.CoreCompileInputs.cache
 D:\HK-7\Do-An-Chuyen-Nganh\TongHopBaoCao\Winform-QL-Caphe\GUI\obj\Debug\GUI.exe
 D:\HK-7\Do-An-Chuyen-Nganh\TongHopBaoCao\Winform-QL-Caphe\GUI\obj\Debug\GUI.pdb
+D:\HK-7\Do-An-Chuyen-Nganh\TongHopBaoCao\Winform-QL-Caphe\GUI\obj\Debug\GUI.UControl.UC_ThongKe.resources
+D:\HK-7\Do-An-Chuyen-Nganh\TongHopBaoCao\Winform-QL-Caphe\GUI\bin\Debug\BLL.dll
+D:\HK-7\Do-An-Chuyen-Nganh\TongHopBaoCao\Winform-QL-Caphe\GUI\bin\Debug\BLL.pdb
+D:\HK-7\Do-An-Chuyen-Nganh\TongHopBaoCao\Winform-QL-Caphe\GUI\bin\Debug\BLL.dll.config
+D:\HK-7\Do-An-Chuyen-Nganh\TongHopBaoCao\Winform-QL-Caphe\GUI\obj\Debug\GUI.csproj.CopyComplete
+D:\HK-7\Do-An-Chuyen-Nganh\TongHopBaoCao\Winform-QL-Caphe\GUI\obj\Debug\GUI.UControl.UC_KhuyenMai.resources

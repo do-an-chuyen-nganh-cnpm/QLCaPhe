@@ -58,11 +58,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\XuLyBan.cs" />
+    <Compile Include="Core\XuLyKhuyenMai.cs" />
+    <Compile Include="Core\XuLyThongKe.cs" />
+    <Compile Include="DB\DieuKienThongKeModel.cs" />
     <Compile Include="DB\QLCaphe.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>QLCaphe.dbml</DependentUpon>
     </Compile>
+    <Compile Include="DB\TK_DoanhThuModel.cs" />
     <Compile Include="Lib\Librari.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -104,6 +108,8 @@
   <ItemGroup>
     <Content Include="Lib\icons\checklist.png" />
     <Content Include="Lib\icons\checklist24.png" />
+    <Content Include="Lib\icons\filter16.png" />
+    <Content Include="Lib\icons\filter24.png" />
     <Content Include="Lib\icons\icons8-plus-50.png" />
     <Content Include="Lib\icons\plus.png" />
     <Content Include="Lib\icons\plus24.png" />

@@ -1,0 +1,7 @@
+D:\HK-7\Do-An-Chuyen-Nganh\TongHopBaoCao\Winform-QL-Caphe\BLL\bin\Debug\BLL.dll.config
+D:\HK-7\Do-An-Chuyen-Nganh\TongHopBaoCao\Winform-QL-Caphe\BLL\bin\Debug\BLL.dll
+D:\HK-7\Do-An-Chuyen-Nganh\TongHopBaoCao\Winform-QL-Caphe\BLL\bin\Debug\BLL.pdb
+D:\HK-7\Do-An-Chuyen-Nganh\TongHopBaoCao\Winform-QL-Caphe\BLL\obj\Debug\BLL.csproj.AssemblyReference.cache
+D:\HK-7\Do-An-Chuyen-Nganh\TongHopBaoCao\Winform-QL-Caphe\BLL\obj\Debug\BLL.csproj.CoreCompileInputs.cache
+D:\HK-7\Do-An-Chuyen-Nganh\TongHopBaoCao\Winform-QL-Caphe\BLL\obj\Debug\BLL.dll
+D:\HK-7\Do-An-Chuyen-Nganh\TongHopBaoCao\Winform-QL-Caphe\BLL\obj\Debug\BLL.pdb
