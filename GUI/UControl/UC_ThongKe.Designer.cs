@@ -41,12 +41,12 @@
             this.btnLoc = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.cbxDieuKien = new System.Windows.Forms.ComboBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.grpDanhSachTK = new System.Windows.Forms.GroupBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.DGV_ThongKe = new System.Windows.Forms.DataGridView();
             this.groupBThongTin.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.grpDanhSachTK.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DGV_ThongKe)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBThongTin
@@ -170,38 +170,38 @@
             this.cbxDieuKien.Size = new System.Drawing.Size(121, 21);
             this.cbxDieuKien.TabIndex = 1;
             // 
-            // groupBox2
+            // grpDanhSachTK
             // 
-            this.groupBox2.Controls.Add(this.dataGridView1);
-            this.groupBox2.Location = new System.Drawing.Point(3, 123);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(1332, 518);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Danh Sách";
+            this.grpDanhSachTK.Controls.Add(this.DGV_ThongKe);
+            this.grpDanhSachTK.Location = new System.Drawing.Point(3, 123);
+            this.grpDanhSachTK.Name = "grpDanhSachTK";
+            this.grpDanhSachTK.Size = new System.Drawing.Size(1332, 574);
+            this.grpDanhSachTK.TabIndex = 1;
+            this.grpDanhSachTK.TabStop = false;
+            this.grpDanhSachTK.Text = "Danh Sách";
             // 
-            // dataGridView1
+            // DGV_ThongKe
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 19);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(1320, 402);
-            this.dataGridView1.TabIndex = 0;
+            this.DGV_ThongKe.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.DGV_ThongKe.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGV_ThongKe.Location = new System.Drawing.Point(6, 19);
+            this.DGV_ThongKe.Name = "DGV_ThongKe";
+            this.DGV_ThongKe.Size = new System.Drawing.Size(1320, 549);
+            this.DGV_ThongKe.TabIndex = 0;
             // 
             // UC_ThongKe
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.grpDanhSachTK);
             this.Controls.Add(this.groupBThongTin);
             this.Name = "UC_ThongKe";
             this.Size = new System.Drawing.Size(1338, 700);
             this.Load += new System.EventHandler(this.UC_ThongKe_Load);
             this.groupBThongTin.ResumeLayout(false);
             this.groupBThongTin.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.grpDanhSachTK.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.DGV_ThongKe)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -209,12 +209,11 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBThongTin;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox grpDanhSachTK;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.ComboBox cbxDieuKien;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnLoc;
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.TextBox txtTongDoanhThu;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtTongGiamGia;
@@ -223,5 +222,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtTongKH;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.DataGridView DGV_ThongKe;
     }
 }

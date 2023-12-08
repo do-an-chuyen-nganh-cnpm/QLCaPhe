@@ -55,13 +55,13 @@ namespace GUI.UControl
         {
             foreach(KHUYEN_MAI item in listKM)
             {
-                int indexRow = dataGrid.Rows.Add();
-                dataGrid.Rows[indexRow].Cells["MAKHUYENMAI"].Value = item.MAKHUYENMAI;
-                dataGrid.Rows[indexRow].Cells["TENKHUYENMAI"].Value = item.TENKHUYENMAI;
-                dataGrid.Rows[indexRow].Cells["NGAYBD"].Value = item.NGAYBD.Value.Day+"/"+item.NGAYBD.Value.Month+"/"+item.NGAYBD.Value.Year;
-                dataGrid.Rows[indexRow].Cells["NGAYKT"].Value = item.NGAYKT.Value.Day + "/" + item.NGAYKT.Value.Month + "/" + item.NGAYKT.Value.Year;
-                dataGrid.Rows[indexRow].Cells["TRIGIA"].Value = item.TRIGIA;
-                dataGrid.Rows[indexRow].Cells["MOTA"].Value = item.MOTA;
+                //int indexRow = dataGrid.Rows.Add();
+                //dataGrid.Rows[indexRow].Cells["MAKHUYENMAI"].Value = item.MAKHUYENMAI;
+                //dataGrid.Rows[indexRow].Cells["TENKHUYENMAI"].Value = item.TENKHUYENMAI;
+                //dataGrid.Rows[indexRow].Cells["NGAYBD"].Value = item.NGAYBD.Value.Day+"/"+item.NGAYBD.Value.Month+"/"+item.NGAYBD.Value.Year;
+                //dataGrid.Rows[indexRow].Cells["NGAYKT"].Value = item.NGAYKT.Value.Day + "/" + item.NGAYKT.Value.Month + "/" + item.NGAYKT.Value.Year;
+                //dataGrid.Rows[indexRow].Cells["TRIGIA"].Value = item.TRIGIA;
+                //dataGrid.Rows[indexRow].Cells["MOTA"].Value = item.MOTA;
             }
 
         }
@@ -159,13 +159,13 @@ namespace GUI.UControl
             try
             {
                 KHUYEN_MAI khuyenMai = new KHUYEN_MAI();
-                khuyenMai.MAKHUYENMAI = txtMaKM.Text;
-                khuyenMai.TENKHUYENMAI = txtTenKM.Text;
-                khuyenMai.MOTA = txtMoTa.Text;
-                khuyenMai.NGAYBD = txtNgayBD.Value;
-                khuyenMai.NGAYKT = txtNgayKT.Value;
-                khuyenMai.TRIGIA = double.Parse(txtTriGia.Text);
-                khuyenMai.MOTA = txtMoTa.Text;
+                //khuyenMai.MAKHUYENMAI = txtMaKM.Text;
+                //khuyenMai.TENKHUYENMAI = txtTenKM.Text;
+                //khuyenMai.MOTA = txtMoTa.Text;
+                //khuyenMai.NGAYBD = txtNgayBD.Value;
+                //khuyenMai.NGAYKT = txtNgayKT.Value;
+                //khuyenMai.TRIGIA = double.Parse(txtTriGia.Text);
+                //khuyenMai.MOTA = txtMoTa.Text;
                 return khuyenMai;
             }
             catch { return null; }
@@ -176,12 +176,12 @@ namespace GUI.UControl
             {
                 if(k != null)
                 {
-                    txtMaKM.Text = k.MAKHUYENMAI;
-                    txtTenKM.Text = k.TENKHUYENMAI;
-                    txtMoTa.Text = k.MOTA;
-                    txtNgayBD.Value = k.NGAYBD.Value;
-                    txtNgayKT.Value = k.NGAYKT.Value;
-                    txtTriGia.Text = k.TRIGIA.ToString();
+                    //txtMaKM.Text = k.MAKHUYENMAI;
+                    //txtTenKM.Text = k.TENKHUYENMAI;
+                    //txtMoTa.Text = k.MOTA;
+                    //txtNgayBD.Value = k.NGAYBD.Value;
+                    //txtNgayKT.Value = k.NGAYKT.Value;
+                    //txtTriGia.Text = k.TRIGIA.ToString();
                 }
             }
             catch { }

@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace BLL.Core
 {
-    public class XuLyThongKe
+    public class XuLyThongKe:BaseXuLy
     {
-        QLCapheDataContext ctx = new QLCapheDataContext();
         public List<TK_DoanhThuModel> Get_DoanhThu_ngay (DateTime day)
         {
             var result = from hoaDon in ctx.HoaDons
@@ -37,27 +36,32 @@ namespace BLL.Core
         }
         public List<TK_DoanhThuModel> Get_DoanhThu_khoang_A_B(DateTime ngayBD, DateTime ngayKT)
         {
-            var result = from hoaDon in ctx.HoaDons
-                         join chiTietHoaDon in ctx.ChiTietHoaDons on hoaDon.MaHD equals chiTietHoaDon.MaHD
-                         join sanPham in ctx.SanPhams on chiTietHoaDon.MaSP equals sanPham.MaSP
-                         where hoaDon.NgayLap >= ngayBD && hoaDon.NgayLap <= ngayKT
-                         select new TK_DoanhThuModel
-                         {
-                             MaHD = hoaDon.MaHD,
-                             MaNV = hoaDon.MaNV,
-                             MaKH = hoaDon.MaKH,
-                             TenSP = sanPham.TenSP,
-                             MaBan = hoaDon.MaBan,
-                             NgayLap = hoaDon.NgayLap.Value,
-                             TongTien = hoaDon.TongTien.Value,
-                             DiemTL = hoaDon.DiemTL.Value,
-                             Giamgia = hoaDon.Giamgia.Value,
-                             MaSP = chiTietHoaDon.MaSP,
-                             SoLuong = chiTietHoaDon.SoLuong.Value,
-                             ThanhTien = chiTietHoaDon.TongTien.Value
-                         };
-            List<TK_DoanhThuModel> tam = result.ToList();
-            return result.ToList();
+            string trangThaiHD = "đã thanh toán";
+            try
+            {
+                var result = from hoaDon in ctx.HoaDons
+                             join chiTietHoaDon in ctx.ChiTietHoaDons on hoaDon.MaHD equals chiTietHoaDon.MaHD
+                             join sanPham in ctx.SanPhams on chiTietHoaDon.MaSP equals sanPham.MaSP
+                             where hoaDon.NgayLap >= ngayBD && hoaDon.NgayLap <= ngayKT && hoaDon.TrangThai.Equals(trangThaiHD)
+                             select new TK_DoanhThuModel
+                             {
+                                 MaHD = hoaDon.MaHD,
+                                 MaNV = hoaDon.MaNV,
+                                 MaKH = hoaDon.MaKH,
+                                 TenSP = sanPham.TenSP,
+                                 MaBan = hoaDon.MaBan,
+                                 NgayLap = hoaDon.NgayLap.Value,
+                                 TongTien = hoaDon.TongTien.Value,
+                                 DiemTL = hoaDon.DiemTL.Value,
+                                 Giamgia = hoaDon.Giamgia.Value,
+                                 MaSP = chiTietHoaDon.MaSP,
+                                 SoLuong = chiTietHoaDon.SoLuong.Value,
+                                 ThanhTien = chiTietHoaDon.TongTien.Value
+                             };
+                List<TK_DoanhThuModel> tam = result.ToList();
+                return result.ToList();
+            }
+            catch { return null; }           
         }
         public List<TK_DoanhThuModel> getDoanhThuTheo_Ma_DoanhThu(int maDK)
         {

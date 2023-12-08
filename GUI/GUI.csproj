@@ -46,19 +46,78 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Frm\FrmGopBan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\FrmGopBan.Designer.cs">
+      <DependentUpon>FrmGopBan.cs</DependentUpon>
+    </Compile>
     <Compile Include="Frm\frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Frm\frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Frm\frm_TachBan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frm_TachBan.Designer.cs">
+      <DependentUpon>frm_TachBan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\frm_ThanhToan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frm_ThanhToan.Designer.cs">
+      <DependentUpon>frm_ThanhToan.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="UControl\UC_Ban.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UControl\UC_Ban.designer.cs">
+      <DependentUpon>UC_Ban.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UControl\UC_GoiMon.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UControl\UC_GoiMon.Designer.cs">
+      <DependentUpon>UC_GoiMon.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UControl\UC_KhachHang.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UControl\UC_KhachHang.designer.cs">
+      <DependentUpon>UC_KhachHang.cs</DependentUpon>
+    </Compile>
     <Compile Include="UControl\UC_KhuyenMai.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UControl\UC_KhuyenMai.Designer.cs">
       <DependentUpon>UC_KhuyenMai.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UControl\UC_LoaiSP.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UControl\UC_LoaiSP.designer.cs">
+      <DependentUpon>UC_LoaiSP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UControl\UC_NhanVien.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UControl\UC_NhanVien.designer.cs">
+      <DependentUpon>UC_NhanVien.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UControl\UC_SanPham.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UControl\UC_SanPham.designer.cs">
+      <DependentUpon>UC_SanPham.cs</DependentUpon>
     </Compile>
     <Compile Include="UControl\UC_ThongKe.cs">
       <SubType>UserControl</SubType>
@@ -66,21 +125,43 @@
     <Compile Include="UControl\UC_ThongKe.Designer.cs">
       <DependentUpon>UC_ThongKe.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Frm\FrmGopBan.resx">
+      <DependentUpon>FrmGopBan.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Frm\frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frm_TachBan.resx">
+      <DependentUpon>frm_TachBan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frm_ThanhToan.resx">
+      <DependentUpon>frm_ThanhToan.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
+    <EmbeddedResource Include="UControl\UC_Ban.resx">
+      <DependentUpon>UC_Ban.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UControl\UC_GoiMon.resx">
+      <DependentUpon>UC_GoiMon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UControl\UC_KhachHang.resx">
+      <DependentUpon>UC_KhachHang.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UControl\UC_KhuyenMai.resx">
       <DependentUpon>UC_KhuyenMai.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UControl\UC_LoaiSP.resx">
+      <DependentUpon>UC_LoaiSP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UControl\UC_NhanVien.resx">
+      <DependentUpon>UC_NhanVien.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UControl\UC_SanPham.resx">
+      <DependentUpon>UC_SanPham.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UControl\UC_ThongKe.resx">
       <DependentUpon>UC_ThongKe.cs</DependentUpon>
@@ -103,6 +184,30 @@
       <Project>{f52d969b-6a8c-4cab-a880-2953d08bac16}</Project>
       <Name>BLL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\plus24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\bancokhach.png" />
+    <Content Include="Resources\bantrong.png" />
+    <None Include="Resources\updated24.png" />
+    <None Include="Resources\updated.png" />
+    <None Include="Resources\update24.png" />
+    <None Include="Resources\update.png" />
+    <None Include="Resources\search.png" />
+    <None Include="Resources\save24.png" />
+    <None Include="Resources\save.png" />
+    <None Include="Resources\remove24.png" />
+    <None Include="Resources\remove.png" />
+    <None Include="Resources\plus241.png" />
+    <None Include="Resources\plus.png" />
+    <None Include="Resources\filter24.png" />
+    <None Include="Resources\filter16.png" />
+    <None Include="Resources\checklist24.png" />
+    <None Include="Resources\checklist.png" />
+    <None Include="Resources\download.jpg" />
+    <None Include="Resources\download1.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -57,9 +57,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\BaseXuLy.cs" />
+    <Compile Include="Core\LoaiSanPham.cs" />
+    <Compile Include="Core\XL_SanPham.cs" />
+    <Compile Include="Core\XuLyNhanVien.cs" />
     <Compile Include="Core\XuLyBan.cs" />
+    <Compile Include="Core\XuLyChiTietHoaDon.cs" />
+    <Compile Include="Core\XuLyHoaDon.cs" />
+    <Compile Include="Core\XuLyKhachHang.cs" />
     <Compile Include="Core\XuLyKhuyenMai.cs" />
+    <Compile Include="Core\XuLyLoaiKhachHang.cs" />
+    <Compile Include="Core\XuLyLoaiSanPham.cs" />
+    <Compile Include="Core\XuLySanPham.cs" />
     <Compile Include="Core\XuLyThongKe.cs" />
+    <Compile Include="Core\XuLyTrangThaiBan.cs" />
     <Compile Include="DB\DieuKienThongKeModel.cs" />
     <Compile Include="DB\QLCaphe.designer.cs">
       <AutoGen>True</AutoGen>
