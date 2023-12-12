@@ -20,5 +20,6 @@ namespace BLL.DB
         public double Giamgia { get; set; }
         public int SoLuong { get; set; }
         public double ThanhTien { get; set; }
+        public double DonGia { get; set; }
     }
 }

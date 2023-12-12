@@ -15,8 +15,8 @@ namespace BLL
         public static string TaoMaKhuyenMai()
         {
             string result = "";
-            DateTime date  = DateTime.Now;
-            result = "KM"+date.Second.ToString() + date.Minute.ToString() + date.Hour.ToString() + date.Day.ToString()+date.Month.ToString();
+            DateTime date = DateTime.Now;
+            result = "KM" + date.Second.ToString() + date.Minute.ToString() + date.Hour.ToString() + date.Day.ToString() + date.Month.ToString();
             return result;
         }
         private static string GenerateRandomString(int length)
@@ -69,6 +69,18 @@ namespace BLL
 
             // Trả về giá trị double.MinValue để biểu thị rằng chuyển đổi thất bại
             return double.MinValue;
+        }
+        public static string createMaQuyen()
+        {
+            return GenerateRandomString(4);
+        }
+        public static string createMaManHinh()
+        {
+            return GenerateRandomString(3);
+        } 
+        public static string createMaCalamViec()
+        {
+            return GenerateRandomString(3);
         }
     }
 }

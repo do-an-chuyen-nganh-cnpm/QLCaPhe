@@ -46,9 +46,29 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Compression.Base">
+      <HintPath>TaiNguyen\Syncfusion.Compression.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.DocIO.Base">
+      <HintPath>TaiNguyen\Syncfusion.DocIO.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.OfficeChart.Base">
+      <HintPath>TaiNguyen\Syncfusion.OfficeChart.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.XlsIO.Base">
+      <HintPath>TaiNguyen\Syncfusion.XlsIO.Base.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -58,8 +78,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\BaseXuLy.cs" />
-    <Compile Include="Core\LoaiSanPham.cs" />
-    <Compile Include="Core\XL_SanPham.cs" />
+    <Compile Include="Core\ExportExcel\Constants.cs" />
+    <Compile Include="Core\ExportExcel\ExcelExport.cs" />
+    <Compile Include="Core\ExportExcel\FileCommon.cs" />
+    <Compile Include="Core\ExportExcel\Global.cs" />
+    <Compile Include="Core\QRPay\ApiRequest.cs" />
+    <Compile Include="Core\QRPay\Bank.cs" />
+    <Compile Include="Core\XuLyCaLamViec.cs" />
+    <Compile Include="Core\XuLyCaLamViec_NhanVien.cs" />
+    <Compile Include="Core\XuLyChiTietCaLamViec.cs" />
+    <Compile Include="Core\XuLyDMManHinh.cs" />
     <Compile Include="Core\XuLyNhanVien.cs" />
     <Compile Include="Core\XuLyBan.cs" />
     <Compile Include="Core\XuLyChiTietHoaDon.cs" />
@@ -68,10 +96,16 @@
     <Compile Include="Core\XuLyKhuyenMai.cs" />
     <Compile Include="Core\XuLyLoaiKhachHang.cs" />
     <Compile Include="Core\XuLyLoaiSanPham.cs" />
+    <Compile Include="Core\XuLyQuyen.cs" />
+    <Compile Include="Core\XuLyQuyenManHinh.cs" />
     <Compile Include="Core\XuLySanPham.cs" />
     <Compile Include="Core\XuLyThongKe.cs" />
     <Compile Include="Core\XuLyTrangThaiBan.cs" />
     <Compile Include="DB\DieuKienThongKeModel.cs" />
+    <Compile Include="DB\exportSanPham.cs" />
+    <Compile Include="DB\ExportThongKeModel.cs" />
+    <Compile Include="DB\ManHinh.cs" />
+    <Compile Include="DB\NhanVien_ChiTietCaLam.cs" />
     <Compile Include="DB\QLCaphe.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -108,6 +142,7 @@
     <None Include="DB\QLCaphe.dbml.layout">
       <DependentUpon>QLCaphe.dbml</DependentUpon>
     </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -134,5 +169,6 @@
     <Content Include="Lib\icons\updated.png" />
     <Content Include="Lib\icons\updated24.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

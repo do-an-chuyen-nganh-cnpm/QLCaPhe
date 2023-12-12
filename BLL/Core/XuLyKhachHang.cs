@@ -9,6 +9,27 @@ namespace BLL.Core
 {
     public class XuLyKhachHang:BaseXuLy
     {
+        public KHACHHANG timKhachHangBySDT(string sdt)
+        {
+            try
+            {
+
+                List<KHACHHANG> khachHangs = ctx.KHACHHANGs.ToList();
+                if (khachHangs == null) { return null; }
+                foreach (KHACHHANG kh in khachHangs)
+                {
+                    if (!String.IsNullOrEmpty(kh.SoDT))
+                    {
+                        if (kh.SoDT.Trim().Equals(sdt.Trim()))
+                        {
+                            return kh;
+                        }
+                    }
+                }
+                return null;
+            }
+            catch { return null; }
+        }
         public int ThemKH (KHACHHANG kh)
         {
             try

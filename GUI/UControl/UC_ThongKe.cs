@@ -18,7 +18,7 @@ namespace GUI.UControl
         XuLyThongKe xl_ThongKe = new XuLyThongKe();
         DieuKienThongKeModel.DSDieuKien ds = new DieuKienThongKeModel.DSDieuKien();
         DataTable dataTabletThongKe;
-        DataGridView dataGrid ;
+        List<TK_DoanhThuModel> listTKModel;
         private string tk_col_NgayLap="Ngày Lập";
         private string tk_col_MAHD="Mã hóa đơn";
         private string TK_col_MaNV="Mã Nhân viên";
@@ -35,7 +35,7 @@ namespace GUI.UControl
         {
             InitializeComponent();
             DateTime time = DateTime.Parse("2023-11-12");
-            TaoDataGridView();
+            KhoiTaoDataTable();
         }
         private void UC_ThongKe_Load(object sender, EventArgs e)
         {
@@ -49,7 +49,6 @@ namespace GUI.UControl
         }
         private void btnLoc_Click(object sender, EventArgs e)
         {
-            TaoDataGridView();
             string MaDK = cbxDieuKien.SelectedValue.ToString();
             List<TK_DoanhThuModel> result = xl_ThongKe.getDoanhThuTheo_Ma_DoanhThu(int.Parse(MaDK));
             if (result == null)
@@ -59,7 +58,8 @@ namespace GUI.UControl
             }
             else
             {
-                ThemDuLieuDataGridView                    (result);
+                listTKModel = result;
+                ThemDuLieuDataGridView(result);
             }
             txtTongSanPham.Text = xl_ThongKe.getTongSlSP(result).ToString();
             txtTongDoanhThu.Text = xl_ThongKe.getTongDoanhThu(result).ToString("N0") + "đ";
@@ -89,11 +89,12 @@ namespace GUI.UControl
             {
                 ThemDuLieuDataGridView(item);
             }
+            DGV_ThongKe.DataSource = dataTabletThongKe;
         }
         private void ThemDuLieuDataGridView(TK_DoanhThuModel tk)
         {
             DataRow row = dataTabletThongKe.NewRow();
-            row[tk_col_NgayLap] = tk.NgayLap;
+            row[tk_col_NgayLap] = tk.NgayLap.ToString("dd/MM/yyyy");
             row[tk_col_MAHD] = tk.MaHD;
             row[TK_col_MaNV] = tk.MaNV;
             row[TK_col_MaKH] = tk.MaKH;
@@ -106,112 +107,12 @@ namespace GUI.UControl
             row[TK_col_SoLuong] = tk.SoLuong;
             row[TK_col_ThanhTien] = tk.ThanhTien;
             dataTabletThongKe.Rows.Add(row);
-            DGV_ThongKe.DataSource = dataTabletThongKe;
         }
 
-        private void ReloadDataGridView()
+        private void button1_Click(object sender, EventArgs e)
         {
-            List<TK_DoanhThuModel> result = new List<TK_DoanhThuModel>();
-            string MaDK = cbxDieuKien.SelectedValue.ToString();
-            if (!String.IsNullOrEmpty(MaDK))
-            {
-                result = xl_ThongKe.getDoanhThuTheo_Ma_DoanhThu(int.Parse(MaDK));
-            }
-            TaoDataGridView();
-            if (result.Count > 0)
-            {
-                ThemDuLieuDataGridView(result);
-            }
-        }
-        private void TaoDataGridView()
-        {
-            dataGrid = new DataGridView();
-            int widthPanel = grpDanhSachTK.Width;
-            int heightPanel = grpDanhSachTK.Height;
-            int phantram;
-
-            DataGridViewTextBoxColumn NgayLap = new DataGridViewTextBoxColumn();
-            NgayLap.HeaderText = "Ngày lập hóa đơn";
-            NgayLap.Name = "NgayLap";
-            //phantram = 10;
-            //NgayLap.Width = phantram * widthPanel / 100;
-            NgayLap.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGrid.Columns.Add(NgayLap);
-
-            DataGridViewTextBoxColumn MaHD = new DataGridViewTextBoxColumn();
-            MaHD.HeaderText = "Mã Hóa Đơn";
-            MaHD.Name = "MaHD";
-            //phantram = 10;
-            //MaHD.Width = phantram * widthPanel / 100;
-            MaHD.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGrid.Columns.Add(MaHD);
-
-            DataGridViewTextBoxColumn MaNV = new DataGridViewTextBoxColumn();
-            MaNV.HeaderText = "Mã Nhân Viên";
-            MaNV.Name = "MaNV";
-            MaNV.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGrid.Columns.Add(MaNV);
-
-            DataGridViewTextBoxColumn MaKH = new DataGridViewTextBoxColumn();
-            MaKH.HeaderText = "Mã Khách Hàng";
-            MaKH.Name = "MaKH";
-            MaKH.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGrid.Columns.Add(MaKH);
-
-            DataGridViewTextBoxColumn MaBan = new DataGridViewTextBoxColumn();
-            MaBan.HeaderText = "Mã Bàn";
-            MaBan.Name = "MaBan";
-            MaBan.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGrid.Columns.Add(MaBan);
-
-            DataGridViewTextBoxColumn MaSP = new DataGridViewTextBoxColumn();
-            MaSP.HeaderText = "Mã Sản Phẩm";
-            MaSP.Name = "MaSP";
-            MaSP.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGrid.Columns.Add(MaSP);
-
-            DataGridViewTextBoxColumn TenSP = new DataGridViewTextBoxColumn();
-            TenSP.HeaderText = "Tên sản phẩm";
-            TenSP.Name = "TenSP";
-            TenSP.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGrid.Columns.Add(TenSP);
-
-            DataGridViewTextBoxColumn TongTien = new DataGridViewTextBoxColumn();
-            TongTien.HeaderText = "Tổng Tiền";
-            TongTien.Name = "TongTien";
-            TongTien.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGrid.Columns.Add(TongTien);
-
-            DataGridViewTextBoxColumn DiemTL = new DataGridViewTextBoxColumn();
-            DiemTL.HeaderText = "Điểm Tích Lũy";
-            DiemTL.Name = "DiemTL";
-            DiemTL.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGrid.Columns.Add(DiemTL);
-
-            DataGridViewTextBoxColumn Giamgia = new DataGridViewTextBoxColumn();
-            Giamgia.HeaderText = "Giảm Giá";
-            Giamgia.Name = "Giamgia";
-            Giamgia.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGrid.Columns.Add(Giamgia);
-
-            DataGridViewTextBoxColumn SoLuong = new DataGridViewTextBoxColumn();
-            SoLuong.HeaderText = "Số Lượng";
-            SoLuong.Name = "SoLuong";
-            SoLuong.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGrid.Columns.Add(SoLuong);
-
-            DataGridViewTextBoxColumn ThanhTien = new DataGridViewTextBoxColumn();
-            ThanhTien.HeaderText = "Thành Tiền";
-            ThanhTien.Name = "ThanhTien";
-            ThanhTien.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGrid.Columns.Add(ThanhTien);
-
-
-            dataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGrid.Width = widthPanel;
-            dataGrid.Height = heightPanel;
-            grpDanhSachTK.Controls.Clear();
-            grpDanhSachTK.Controls.Add(dataGrid);
+          bool kq =  xl_ThongKe.XuatFile(listTKModel);
+        if(kq == false) { MessageBox.Show("Dữ liệu sai !"); }
         }
     }
 }

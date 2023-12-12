@@ -34,7 +34,6 @@ namespace BLL.Core
                     return ctx.ChiTietHoaDons.Where(v => v.MaHD.Trim().Equals(maHD.Trim())).ToList();
                 }
                 return null;
-             
             }
             catch { return null; }
         }
@@ -60,18 +59,17 @@ namespace BLL.Core
         }
         public int Xoa_CTHoaDon(string maHD, string masp)
         {
-            try
-            {
-                ChiTietHoaDon cthd = ctx.ChiTietHoaDons.FirstOrDefault
-                    (
-                    v => v.MaHD.Trim().Equals(maHD.Trim()) &&
-                    v.MaSP.Trim().Equals(masp.Trim())
-                    );
-                ctx.ChiTietHoaDons.DeleteOnSubmit(cthd);
-                ctx.SubmitChanges();
-                return 1;
-            }
-            catch { return 0; }
+            ChiTietHoaDon cthd = new ChiTietHoaDon();
+            cthd = ctx.ChiTietHoaDons.FirstOrDefault
+                (
+                v => v.MaHD.Trim().Equals(maHD.Trim()) &&
+                v.MaSP.Trim().Equals(masp.Trim())
+                );
+            if (cthd == null) { return 0; }
+            ctx.Refresh(System.Data.Linq.RefreshMode.KeepChanges, cthd);
+            ctx.ChiTietHoaDons.DeleteOnSubmit(cthd);
+            ctx.SubmitChanges();
+            return 1;
         }
         public int Sua_CTHoaDon(ChiTietHoaDon cthd)
         {
@@ -90,6 +88,24 @@ namespace BLL.Core
                 return 1;
             }
             catch { return 0; }
+        }
+        public int capNhatLai_SL(ChiTietHoaDon ct)
+        {
+            try
+            {
+                if (ct == null)
+                {
+                    return 0;
+                }
+                string mahd = ct.MaHD;
+                string masp = ct.MaSP;
+                ChiTietHoaDon chiTietHD = ctx.ChiTietHoaDons.FirstOrDefault(v => v.MaSP.Trim().Equals(masp.Trim()) && v.MaHD.Trim().Equals(mahd.Trim()));
+                chiTietHD.SoLuong = ct.SoLuong;
+                ctx.SubmitChanges();
+                if (chiTietHD != null) { return 0; }
+                return 1;
+            }
+            catch { return 0; }          
         }
     }
 }

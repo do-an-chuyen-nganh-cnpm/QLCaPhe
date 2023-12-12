@@ -1,5 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="QuanLiCaPhe" Class="QLCapheDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-02U2UQD\SQLEXPRESS;Initial Catalog=QuanLiCaPhe;User ID=sa" SettingsObjectName="BLL.Properties.Settings" SettingsPropertyName="QuanLiCaPheConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.TRANGTHAIBAN" Member="TRANGTHAIBANs">
+    <Type Name="TRANGTHAIBAN">
+      <Column Name="MaTrangThai" Type="System.String" DbType="NVarChar(15) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TenTrangThai" Type="System.String" DbType="NVarChar(40)" CanBeNull="true" />
+      <Association Name="TRANGTHAIBAN_BAN" Member="BANs" ThisKey="MaTrangThai" OtherKey="MaTrangThai" Type="BAN" />
+    </Type>
+  </Table>
   <Table Name="dbo.BAN" Member="BANs">
     <Type Name="BAN">
       <Column Name="MaBan" Type="System.String" DbType="Char(11) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -8,13 +15,6 @@
       <Column Name="MaTrangThai" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
       <Association Name="BAN_HoaDon" Member="HoaDons" ThisKey="MaBan" OtherKey="MaBan" Type="HoaDon" />
       <Association Name="TRANGTHAIBAN_BAN" Member="TRANGTHAIBAN" ThisKey="MaTrangThai" OtherKey="MaTrangThai" Type="TRANGTHAIBAN" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.TRANGTHAIBAN" Member="TRANGTHAIBANs">
-    <Type Name="TRANGTHAIBAN">
-      <Column Name="MaTrangThai" Type="System.String" DbType="NVarChar(15) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="TenTrangThai" Type="System.String" DbType="NVarChar(40)" CanBeNull="true" />
-      <Association Name="TRANGTHAIBAN_BAN" Member="BANs" ThisKey="MaTrangThai" OtherKey="MaTrangThai" Type="BAN" />
     </Type>
   </Table>
   <Table Name="dbo.CaLamViec" Member="CaLamViecs">
@@ -47,6 +47,13 @@
       <Column Name="TongTien" Type="System.Double" DbType="Float" CanBeNull="true" />
       <Association Name="HoaDon_ChiTietHoaDon" Member="HoaDon" ThisKey="MaHD" OtherKey="MaHD" Type="HoaDon" IsForeignKey="true" />
       <Association Name="SanPham_ChiTietHoaDon" Member="SanPham" ThisKey="MaSP" OtherKey="MaSP" Type="SanPham" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DM_ManHinh" Member="DM_ManHinhs">
+    <Type Name="DM_ManHinh">
+      <Column Name="MaDM" Type="System.String" DbType="VarChar(15) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TenDM" Type="System.String" DbType="NVarChar(40)" CanBeNull="true" />
+      <Association Name="DM_ManHinh_Quyen_ManHinh" Member="Quyen_ManHinhs" ThisKey="MaDM" OtherKey="MaDM" Type="Quyen_ManHinh" />
     </Type>
   </Table>
   <Table Name="dbo.HoaDon" Member="HoaDons">
@@ -138,6 +145,15 @@
       <Column Name="MaQuyen" Type="System.String" DbType="VarChar(15) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="TenQuyen" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
       <Association Name="QUYEN_NHANVIEN" Member="NHANVIENs" ThisKey="MaQuyen" OtherKey="MaQuyen" Type="NHANVIEN" />
+      <Association Name="QUYEN_Quyen_ManHinh" Member="Quyen_ManHinhs" ThisKey="MaQuyen" OtherKey="MaQuyen" Type="Quyen_ManHinh" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Quyen_ManHinh" Member="Quyen_ManHinhs">
+    <Type Name="Quyen_ManHinh">
+      <Column Name="MaDM" Type="System.String" DbType="VarChar(15) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MaQuyen" Type="System.String" DbType="VarChar(15) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="DM_ManHinh_Quyen_ManHinh" Member="DM_ManHinh" ThisKey="MaDM" OtherKey="MaDM" Type="DM_ManHinh" IsForeignKey="true" />
+      <Association Name="QUYEN_Quyen_ManHinh" Member="QUYEN" ThisKey="MaQuyen" OtherKey="MaQuyen" Type="QUYEN" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.SanPham" Member="SanPhams">

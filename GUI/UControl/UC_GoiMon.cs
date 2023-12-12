@@ -13,6 +13,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using VietQRPaymentAPI;
 
 namespace GUI.UControl
 {
@@ -32,21 +33,24 @@ namespace GUI.UControl
         private string trangThaiBanCoKhach = "đã có khách";
         private string trangThaiHD_DaTT = "đã thanh toán";
         private string trangThaiHD_chuaTT = "chưa thanh toán";
+        private int huyDatban;
         //các column trong datatable CTHD
-      private string CTHDclThanhTien = "Thành tiền";
-      private string CTHDclMaHoaDon = "Mã hóa đơn";
-      private string CTHDclTenSP = "Tên sản phẩm";
-      private string CTHDclSoLuong = "Số lượng";
-      private string CTHDclDonGia = "Đơn giá";
-      private string CTHDclMaSP = "Mã sản phẩm";
-       //Column trong table SanPham 
-      private string SPclTenSanPham = "Tên sản phẩm";
-      private string SPclDonGia = "Đơn giá";
-      private string SPclMaSp = "Mã sản phẩm";
-        private string maNV = "NV001";
+        private string CTHDclThanhTien = "Thành tiền";
+        private string CTHDclMaHoaDon = "Mã hóa đơn";
+        private string CTHDclTenSP = "Tên sản phẩm";
+        private string CTHDclSoLuong = "Số lượng";
+        private string CTHDclDonGia = "Đơn giá";
+        private string CTHDclMaSP = "Mã sản phẩm";
+        //Column trong table SanPham 
+        private string SPclTenSanPham = "Tên sản phẩm";
+        private string SPclDonGia = "Đơn giá";
+        private string SPclMaSp = "Mã sản phẩm";
+        private string maNV;
+        List<SanPham> sanPhams = new List<SanPham>();
+        List<ChiTietHoaDon> chiTietHoaDons = new List<ChiTietHoaDon>();
         public UC_GoiMon()
         {
-            InitializeComponent();
+            maNV = frm_DangNhap.nvDangSuDung.MaNV;
             InIt();
         }
         //private void LoadDGVHoaDon(ChiTietHoaDon chitietHD)
@@ -63,8 +67,12 @@ namespace GUI.UControl
         //}
         private void InIt()
         {
+            InitializeComponent();
             TaoDSban();
             LoadLoaiNuoc();
+            sanPhams = new List<SanPham>();
+            sanPhams = xuLySanPham.laySanPham();
+            LoadDGVSanPham(sanPhams);
         }
         private void LoadLoaiNuoc()
         {
@@ -74,7 +82,7 @@ namespace GUI.UControl
             cbxLoaiNuoc.DisplayMember = "TenLoaiSP";
             cbxLoaiNuoc.ValueMember = "MaLoaiSP";
         }
-        public void TaoDSban()
+        public  void TaoDSban()
         {
             try
             {
@@ -98,7 +106,6 @@ namespace GUI.UControl
                 }
             }
             catch { }
-           
         }
         public Panel taoBan(string maBan, string TenBan, string trangthai)
         {
@@ -145,8 +152,6 @@ namespace GUI.UControl
             panel.Controls.Add(label);
             return panel;
         }
-
-
         private void Panel_Click(object sender, EventArgs e)
         {
             //có 3 trạng thái : đã có khách, bàn trống, và đã đặt
@@ -158,6 +163,8 @@ namespace GUI.UControl
             string tenBan=p.Name;
             string maBan = xuLyBan.LayMaBan(tenBan);
             khoiTaoDTBL_CTHoaDon();
+            btn_DatBan.Text = "Đặt bàn";
+            btn_DatBan.Tag = 1;
             switch (p.Tag)
             {
                 case var x when x.Equals(trangThaiBanCoKhach):
@@ -167,8 +174,9 @@ namespace GUI.UControl
                         if(hd!= null)
                         {
                             txtMaHD.Text = hd.MaHD;
-                            List<ChiTietHoaDon> list = xuLyChiTietHoaDon.LayChiTietHoaDon(hd.MaHD);
-                            LoadDGV_CTHoaDon(list);
+                            chiTietHoaDons = new List<ChiTietHoaDon>();
+                            chiTietHoaDons = xuLyChiTietHoaDon.LayChiTietHoaDon(hd.MaHD);
+                            LoadDGV_CTHoaDon(chiTietHoaDons);
                         }
                         VoHieuHoaControl(btnTaoMoiHD);
                         CoHieuLucControl(btnChon);
@@ -180,6 +188,8 @@ namespace GUI.UControl
                         khoiTaoDTBL_CTHoaDon();
                         CoHieuLucControl(btnTaoMoiHD);
                         VoHieuHoaControl(btnChon);
+                        btn_DatBan.Text = "Hủy đặt bàn";
+                        btn_DatBan.Tag = huyDatban;
                         break;
                     }
                 case var x when x.Equals(trangThaiBanTrong):
@@ -197,7 +207,12 @@ namespace GUI.UControl
 
         private void btn_ThanhToan_Click(object sender, EventArgs e)
         {
-            frm_ThanhToan f = new frm_ThanhToan();
+            if(txtMaHD.Text==null || txtMaHD.Text == "")
+            {
+                MessageBox.Show("Bạn quên chọn bàn");
+                return;
+            }
+            frm_ThanhToan f = new frm_ThanhToan(txtMaHD.Text);
             f.ShowDialog();
         }
 
@@ -206,19 +221,20 @@ namespace GUI.UControl
             string maLoai = cbxLoaiNuoc.SelectedValue.ToString();
             if(maLoai != "" || !String.IsNullOrEmpty(maLoai))
             {
-                List<SanPham> result = xuLySanPham.laySanPhamByMaLoai(maLoai);
-                if (result == null)
+                sanPhams = new List<SanPham>();
+                sanPhams = xuLySanPham.laySanPhamByMaLoai(maLoai);
+                if (sanPhams == null)
                 {
                     return;
                 }
-                LoadDGVSanPham(result);
+                LoadDGVSanPham(sanPhams);
             }
         }
         private void LoadDGVSanPham()
         {           
-            List<SanPham> listSanPham =  xuLySanPham.laySanPham();
-            if (listSanPham == null) { return; }
-            LoadDGVSanPham(listSanPham);
+            sanPhams=  xuLySanPham.laySanPham();
+            if (sanPhams == null) { return; }
+            LoadDGVSanPham(sanPhams);
         }
         private void khoiTaoTBLDSSanPham()
         {
@@ -226,7 +242,6 @@ namespace GUI.UControl
             //tạo column
             dataTableSanPham.Columns.Add(SPclTenSanPham, typeof(string));
             dataTableSanPham.Columns.Add(SPclDonGia, typeof(string));
-            dataTableSanPham.Columns.Add(SPclMaSp, typeof(string));
         }
         private void LoadDGVSanPham(List<SanPham> listSP)
         {
@@ -243,7 +258,6 @@ namespace GUI.UControl
                 DataRow row = dataTableSanPham.NewRow();
                 row[SPclTenSanPham] = sp.TenSP;
                 row[SPclDonGia] = sp.GiaSP;
-                row[SPclMaSp] = sp.MaSP;
                 dataTableSanPham.Rows.Add(row);
                 dgvDSSanPham.DataSource = dataTableSanPham;
             }
@@ -260,15 +274,11 @@ namespace GUI.UControl
             //cập nhật trạng thái bàn 
             string matrangthai = xuLyTrangThaiBan.layMaTrangThai(trangThaiBanCoKhach);
             int kq = xuLyBan.capNhatTrangThaiBan(maban, matrangthai);
-            //thêm mới khách hàng
-            KHACHHANG kh = new KHACHHANG();
-            kh.MaKH = Librari.CreateMaKhachHang();
-             kq = xuLyKhachHang.ThemKH(kh);
             //thêm mới hóa đơn
             HoaDon hd = new HoaDon();
             hd.MaHD = Librari.CreateMaHoaDon();
             hd.MaNV = maNV;
-            hd.MaKH = kh.MaKH;
+            hd.MaKH = null;
             hd.MaBan = maban;
             hd.NgayLap = DateTime.Today;
             hd.TrangThai = trangThaiHD_chuaTT;
@@ -322,12 +332,10 @@ namespace GUI.UControl
             if(cthd != null)
             {
                 DataRow row = dataTableCTHoaDon.NewRow();
-                row[CTHDclMaHoaDon] = cthd.MaHD;
                 row[CTHDclTenSP] = xuLySanPham.layTenSP(cthd.MaSP);
                 row[CTHDclSoLuong] = cthd.SoLuong.Value;
                 row[CTHDclDonGia] = cthd.DonGia;
                 row[CTHDclThanhTien] = cthd.SoLuong * cthd.DonGia; 
-                row[CTHDclMaSP] = cthd.MaSP; 
                 dataTableCTHoaDon.Rows.Add(row);
                 DGV_CTHoaDon.DataSource = dataTableCTHoaDon;
             }
@@ -370,16 +378,19 @@ namespace GUI.UControl
                     xuLyChiTietHoaDon.Them_CTHoaDon(cthd);
                 }
                 //nếu trong hóa đơn tồn tại thì tăng lên sl
-                List<ChiTietHoaDon> listCTHD = xuLyChiTietHoaDon.LayChiTietHoaDon(mahd);
-                LoadDGV_CTHoaDon(listCTHD);
+                chiTietHoaDons = new List<ChiTietHoaDon>();
+                chiTietHoaDons= xuLyChiTietHoaDon.LayChiTietHoaDon(mahd);
+                LoadDGV_CTHoaDon(chiTietHoaDons);
             }
         }
         public SanPham layTT_DGV_SanPham(int rowclick)
         {
             if(dgvDSSanPham.CurrentCell != null)
             {
+                if(sanPhams == null) { return null; }
                 SanPham sp = new SanPham();
-                sp = xuLySanPham.laySanPham(dgvDSSanPham.Rows[rowclick].Cells[SPclMaSp].Value.ToString());
+                string masp = sanPhams[rowclick].MaSP.ToString();
+                sp = xuLySanPham.laySanPham(masp);
                 return sp;
             }return null;           
         }
@@ -389,8 +400,8 @@ namespace GUI.UControl
             {
                 ChiTietHoaDon chitiethoadon = new ChiTietHoaDon();
                 chitiethoadon = xuLyChiTietHoaDon.LayChiTietHoaDon(
-                    DGV_CTHoaDon.Rows[rowclick].Cells[CTHDclMaHoaDon].Value.ToString(),
-                    DGV_CTHoaDon.Rows[rowclick].Cells[CTHDclMaSP].Value.ToString());
+                   chiTietHoaDons[rowclick].MaHD,
+                      chiTietHoaDons[rowclick].MaSP);
                 return chitiethoadon;
             }
             return null;           
@@ -403,21 +414,24 @@ namespace GUI.UControl
                 if (indexClickDGV_HoaDon != -1)
                 {
                     ChiTietHoaDon chitietHoaDon = layTT_DGV_HoaDon(indexClickDGV_HoaDon);
+                    string codeHD = chitietHoaDon.MaHD;
+                    string codeSP = chitietHoaDon.MaSP;
                     if(chitietHoaDon == null) { MessageBox.Show("Lỗi btnBoChon_Click ");return; }
                     //nếu sl ít hơn sl đang chọn thì giảm sl
                     if(chitietHoaDon.SoLuong> slchon)
                     {
                         chitietHoaDon.SoLuong -= slchon;
+                        int checkCapNhat=  xuLyChiTietHoaDon.capNhatLai_SL(chitietHoaDon);
                     }
                     //nết sl == thì xóa
                     else if(slchon == chitietHoaDon.SoLuong || slchon<chitietHoaDon.SoLuong)
                     {
-                        xuLyChiTietHoaDon.Xoa_CTHoaDon(chitietHoaDon.MaHD,chitietHoaDon.MaSP);
+                        xuLyChiTietHoaDon.Xoa_CTHoaDon(codeHD, codeSP);
                     }
                     else { MessageBox.Show("Kiểm tra lại số lượng"); }
-                    List<ChiTietHoaDon> list = xuLyChiTietHoaDon.LayChiTietHoaDon(chitietHoaDon.MaHD);
-                    LoadDGV_CTHoaDon(list);
-                        
+                    chiTietHoaDons = new List<ChiTietHoaDon>();
+                    chiTietHoaDons = xuLyChiTietHoaDon.LayChiTietHoaDon(codeHD);
+                    LoadDGV_CTHoaDon(chiTietHoaDons);
                     indexClickDGV_HoaDon = -1;
                 }
             }
@@ -435,18 +449,36 @@ namespace GUI.UControl
 
         private void btn_DatBan_Click(object sender, EventArgs e)
         {
-            //cập nhật mã trạng thái bàn
-            if (txtTenBan.Text != "" || !String.IsNullOrEmpty(txtTenBan.Text))
+            if (Convert.ToInt32(btn_DatBan.Tag) == huyDatban)
             {
-                string maTrangThai = xuLyTrangThaiBan.layMaTrangThai(trangThaiBanDaDat);
-                string maBan = xuLyBan.LayMaBan(txtTenBan.Text).Trim();
-                if(!String.IsNullOrEmpty( maBan) && !String.IsNullOrEmpty(maTrangThai))
-                {
-                    xuLyBan.capNhatTrangThaiBan(maBan, maTrangThai);
-                    TaoDSban();
-                }
+                string ten = txtTenBan.Text;
+                bool kqhuy = xuLyBan.HuyDatBan(ten);
+                if (kqhuy == true) { MessageBox.Show("Hủy đặt bàn thành công"); TaoDSban(); return;  }
+                else { MessageBox.Show("Huy đặt bàn thấy bại"); TaoDSban(); return; }
             }
+            if (txtTenBan.Text == "" || txtTenBan.Text == null) { MessageBox.Show("Đặt bàn không thành công!"); }
+            string tenban = txtTenBan.Text;
+            if (String.IsNullOrEmpty(tenban)) { MessageBox.Show("Đặt bàn không thành công!"); TaoDSban(); return;  }
+            string maban = xuLyBan.LayMaBan(tenban);
+            if(maban == null) { MessageBox.Show("Không thành công"); TaoDSban(); return;  }
+            bool kq =xuLyBan.DatBan(maban);
+            if(kq == true) { MessageBox.Show("Đặt bàn thành công"); }
+            else { MessageBox.Show("Đặt bàn thất bại"); }
+            TaoDSban();
         }
+
+        private void UC_GoiMon_Load(object sender, EventArgs e)
+        {
+            List<SanPham> listSanPham = xuLySanPham.getAllSP();
+            LoadDGVSanPham(listSanPham);
+        }
+
+        private void btn_TachBan_Click(object sender, EventArgs e)
+        {
+            frm_TachBan f = new frm_TachBan();
+            f.ShowDialog();
+        }
+
         private void khoiTaoDTBL_CTHoaDon()
         {
             dataTableCTHoaDon = new DataTable();
@@ -454,8 +486,6 @@ namespace GUI.UControl
             dataTableCTHoaDon.Columns.Add(CTHDclSoLuong);
             dataTableCTHoaDon.Columns.Add(CTHDclDonGia);
             dataTableCTHoaDon.Columns.Add(CTHDclThanhTien);
-            dataTableCTHoaDon.Columns.Add(CTHDclMaHoaDon);           
-            dataTableCTHoaDon.Columns.Add(CTHDclMaSP);
             DGV_CTHoaDon.DataSource = dataTableCTHoaDon;
             txtTongSanPham.Text = "0";
             txtTrangThaiHD.Text = "null";

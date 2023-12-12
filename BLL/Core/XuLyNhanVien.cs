@@ -1,14 +1,22 @@
 ﻿using BLL.DB;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace BLL.Core
 {
-    public  class XuLyNhanVien:BaseXuLy
+    public class XuLyNhanVien : BaseXuLy
     {
+        public NHANVIEN DangNhap(string taiKhoan, string matKhau) {
+            List<NHANVIEN> list = ctx.NHANVIENs.ToList();
+            if (list == null || list.Count == 0) { return null; }
+            NHANVIEN nv = list.FirstOrDefault(v => v.TenDangNhap.Trim().Equals(taiKhoan.Trim()) && v.Matkhau.Trim().Equals(matKhau.Trim()));
+              if (nv == null) { return null; }
+            return nv;
+        }
         public List<NHANVIEN> getAllNhanVien()
         {
             return ctx.NHANVIENs.ToList();
@@ -16,6 +24,15 @@ namespace BLL.Core
         public List<QUYEN> getAllQuyen()
         {
             return ctx.QUYENs.ToList();
+        }
+        public bool checkTonTai(List<ChiTietCaLamNhanvien> listChech, string maNV)
+        {
+            ChiTietCaLamNhanvien nv = listChech.FirstOrDefault(v => v.MaNV.Trim().Equals(maNV.Trim()));
+            if (nv == null)
+            {
+                return false;
+            }
+            else { return true; }
         }
         public bool KT_MaNhanVien(string ma)
         {
@@ -96,9 +113,22 @@ namespace BLL.Core
             {
                 return 0;
             }
-
+        }
+        public List<ChiTietCaLamNhanvien> getNhanVien_By_NgayVLNgayTL(DateTime ngayVL, DateTime ngayTL)
+        {
+            List<ChiTietCaLamNhanvien> listChiTiet = ctx.ChiTietCaLamNhanviens.ToList();
+            List<ChiTietCaLamNhanvien> result = new List<ChiTietCaLamNhanvien>();
+            if (listChiTiet != null)
+            {
+                foreach(ChiTietCaLamNhanvien ctnv in listChiTiet)
+                {
+                    if(ctnv.NgayVaoLam.Date== ngayVL.Date && ctnv.NgayTanLam.Value.Date == ngayTL.Date)
+                    {
+                        result.Add(ctnv);
+                    }
+                }
+            }
+            return result;
         }
     }
-
-    
 }

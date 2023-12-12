@@ -86,6 +86,7 @@
             // 
             // DGV_CTHoaDon
             // 
+            this.DGV_CTHoaDon.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.DGV_CTHoaDon.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGV_CTHoaDon.Location = new System.Drawing.Point(6, 16);
             this.DGV_CTHoaDon.Name = "DGV_CTHoaDon";
@@ -111,6 +112,7 @@
             this.btn_TachBan.TabIndex = 5;
             this.btn_TachBan.Text = "Tách Bàn";
             this.btn_TachBan.UseVisualStyleBackColor = true;
+            this.btn_TachBan.Click += new System.EventHandler(this.btn_TachBan_Click);
             // 
             // btn_GhepBan
             // 
@@ -400,6 +402,7 @@
             this.Controls.Add(this.panelDSBan);
             this.Name = "UC_GoiMon";
             this.Size = new System.Drawing.Size(1338, 700);
+            this.Load += new System.EventHandler(this.UC_GoiMon_Load);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DGV_CTHoaDon)).EndInit();
             this.groupBox2.ResumeLayout(false);

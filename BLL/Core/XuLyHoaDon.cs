@@ -10,10 +10,21 @@ using System.Threading.Tasks;
 namespace BLL.Core
 {
     public class XuLyHoaDon:BaseXuLy
-    {       
+    {
+        XuLyKhachHang xuLyKhachHang = new XuLyKhachHang();
         public List<HoaDon> LayTatCaHoaDon()
         {
             return ctx.HoaDons.ToList();
+        }
+        public HoaDon LayHoaDon(string MaHD)
+        {
+            try
+            {
+                List<HoaDon> listHD = LayTatCaHoaDon();
+                HoaDon hd = listHD.FirstOrDefault(v => v.MaHD.Trim().Equals(MaHD.Trim()));
+                return hd;
+            }
+            catch { return null; }
         }
         public HoaDon LayHoaDon(string maBan, string TrangThai)
         {
@@ -79,6 +90,41 @@ namespace BLL.Core
                 hd.DiemTL = hoadon.DiemTL;
                 hd.Giamgia = hoadon.Giamgia;
                 hd.TrangThai = hoadon.TrangThai;
+                ctx.SubmitChanges();
+                return 1;
+            }
+            catch { return 0; }
+        }
+     
+       
+        public int ThanhToan(KHACHHANG kh, string maHD, float diemTL, float giamGia)
+        {
+            try
+            {
+                //tạo mới khách hàng 
+                bool ktMaKH = xuLyKhachHang.KT_TonTai(kh.MaKH);
+                if (ktMaKH == false)
+                {
+                    int kqThemKH = xuLyKhachHang.ThemKH(kh);
+                    if (kqThemKH == 0) { return 0; }
+                }
+                //cập nhật khách hàng cho hóa đơn
+                HoaDon hd = ctx.HoaDons.FirstOrDefault(v => v.MaHD.Trim().Equals(maHD.Trim()));
+                if (hd == null)
+                {
+                    return 0;
+                }
+                //cập nhật mã khách hàng cho hóa đơn
+                hd.MaKH = kh.MaKH;
+                hd.DiemTL = diemTL;
+                hd.Giamgia = giamGia;
+                //cập nhật trạng thái hóa đơn đã thanh toán 
+                hd.TrangThai = "đã thanh toán";
+                //cập nhật trạng thái bàn
+                string maban = hd.MaBan;
+                BAN b = ctx.BANs.FirstOrDefault(v => v.MaBan.Trim().Equals(maban.Trim()));
+                if (b == null) { return 0; }//không tìm thấy bàn cần cập nhật 
+                b.MaTrangThai = "2";
                 ctx.SubmitChanges();
                 return 1;
             }

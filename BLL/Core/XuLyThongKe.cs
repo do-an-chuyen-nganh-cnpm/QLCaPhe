@@ -1,5 +1,7 @@
 ﻿using BLL.DB;
+using BLL.Export;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -37,6 +39,7 @@ namespace BLL.Core
         public List<TK_DoanhThuModel> Get_DoanhThu_khoang_A_B(DateTime ngayBD, DateTime ngayKT)
         {
             string trangThaiHD = "đã thanh toán";
+            //trang thái có dấu hong so sánh được
             try
             {
                 var result = from hoaDon in ctx.HoaDons
@@ -51,12 +54,13 @@ namespace BLL.Core
                                  TenSP = sanPham.TenSP,
                                  MaBan = hoaDon.MaBan,
                                  NgayLap = hoaDon.NgayLap.Value,
-                                 TongTien = hoaDon.TongTien.Value,
+                                 TongTien = chiTietHoaDon.SoLuong.Value * chiTietHoaDon.DonGia.Value,
                                  DiemTL = hoaDon.DiemTL.Value,
                                  Giamgia = hoaDon.Giamgia.Value,
                                  MaSP = chiTietHoaDon.MaSP,
                                  SoLuong = chiTietHoaDon.SoLuong.Value,
-                                 ThanhTien = chiTietHoaDon.TongTien.Value
+                                 ThanhTien = chiTietHoaDon.TongTien.Value,
+                                 DonGia = sanPham.GiaSP.Value,
                              };
                 List<TK_DoanhThuModel> tam = result.ToList();
                 return result.ToList();
@@ -167,6 +171,58 @@ namespace BLL.Core
                 }
             }
             return result.Count;
+        }
+        public bool XuatFile(List<TK_DoanhThuModel> listInput)
+        {
+            if (listInput == null) { return false; }
+            ExcelExport ex = new ExcelExport();
+            ExportThongKeModel exportModel = new ExportThongKeModel();
+            List<exportSanPham> listSanPham = new List<exportSanPham>();
+            var sortedList = listInput.OrderBy(x => x.MaSP).ToList();
+            // Remove duplicates based on MaSP
+            List<TK_DoanhThuModel> listUnitMaSP= sortedList.GroupBy(x => x.MaSP).Select(g => g.First()).ToList();
+            exportModel.ngayThongKe = DateTime.Now.ToString("dd/MM/yyyy");
+            exportModel.tongDoanhThu = listInput.Sum(v => v.TongTien).ToString();
+            exportModel.tongSP = listUnitMaSP.Count().ToString();
+            exportModel.tongSoLuong = listInput.Sum(v => v.SoLuong).ToString();
+            List<string> DSMaSP = new List<string>();
+            foreach(TK_DoanhThuModel item in listUnitMaSP)
+            {
+                DSMaSP.Add(item.MaSP);
+            }
+            foreach (string maSP in DSMaSP)
+            {
+                exportSanPham sp = new exportSanPham();
+                foreach (TK_DoanhThuModel item in listInput)
+                {
+                    if (maSP.Trim().Equals(item.MaSP.Trim()))
+                    {
+                        sp.TenSP = item.TenSP;
+                        sp.Gia = item.DonGia.ToString();
+                        //
+                        if (sp.SoLuong == null)
+                        {
+                            sp.SoLuong = "0";
+                        }
+                        int sl = int.Parse(sp.SoLuong);
+                        sl += item.SoLuong;
+                        sp.SoLuong = sl.ToString();
+                        //
+                        if (sp.ThanhTien == null)
+                        {
+                            sp.ThanhTien = "0";
+                        }
+                        double thanhtien = double.Parse(sp.ThanhTien);
+                        thanhtien += item.ThanhTien;
+                        sp.ThanhTien = thanhtien.ToString();
+                    }
+                }
+                listSanPham.Add(sp);
+            }
+            //xuất file
+            string fileName = "BangThongKe";
+            bool kq = ex.ExportPhieuXuat(exportModel, listSanPham, ref fileName, false);
+            return kq;
         }
     }
 }

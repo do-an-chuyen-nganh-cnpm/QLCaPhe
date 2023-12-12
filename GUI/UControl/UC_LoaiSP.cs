@@ -14,7 +14,7 @@ namespace GUI.UControl
 {
     public partial class UC_LoaiSP : UserControl
     {
-        LoaiSanPham xl = new LoaiSanPham();
+        XuLyLoaiSanPham xl = new XuLyLoaiSanPham();
         public UC_LoaiSP()
         {
             InitializeComponent();
