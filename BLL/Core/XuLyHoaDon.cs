@@ -13,8 +13,12 @@ namespace BLL.Core
     public class XuLyHoaDon:BaseXuLy
     {
         XuLyKhachHang xuLyKhachHang = new XuLyKhachHang();
+        XuLyTrangThaiBan xuLyTrangThaiBan = new XuLyTrangThaiBan();
         XuLyBan xuLyBan = new XuLyBan();
         XuLyChiTietHoaDon xuLyChiTietHoaDon = new XuLyChiTietHoaDon();
+        public string trangthaiDaThanhToan = "đã thanh toán";
+        public string trangthaiChuaThanhToan = "chưa thanh toán";
+
         public List<HoaDon> LayTatCaHoaDon()
         {
             return ctx.HoaDons.ToList();
@@ -98,7 +102,7 @@ namespace BLL.Core
             }
             catch { return 0; }
         }
-        public int ThanhToan(KHACHHANG kh, string maHD, float diemTL, float giamGia)
+        public int ThanhToan(KHACHHANG kh, string maHD, double diemTL, double giamGia)
         {
             try
             {
@@ -120,12 +124,12 @@ namespace BLL.Core
                 hd.DiemTL = diemTL;
                 hd.Giamgia = giamGia;
                 //cập nhật trạng thái hóa đơn đã thanh toán 
-                hd.TrangThai = "đã thanh toán";
+                hd.TrangThai = trangthaiDaThanhToan;
                 //cập nhật trạng thái bàn
                 string maban = hd.MaBan;
                 BAN b = ctx.BANs.FirstOrDefault(v => v.MaBan.Trim().Equals(maban.Trim()));
                 if (b == null) { return 0; }//không tìm thấy bàn cần cập nhật 
-                b.MaTrangThai = "2";
+                b.MaTrangThai = xuLyTrangThaiBan.maTrangThaiBanTrong;
                 ctx.SubmitChanges();
                 return 1;
             }

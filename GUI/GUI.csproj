@@ -164,6 +164,12 @@
     <Compile Include="UControl\UC_CaLamViec.designer.cs">
       <DependentUpon>UC_CaLamViec.cs</DependentUpon>
     </Compile>
+    <Compile Include="UControl\UC_CapLaiMatKhau.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UControl\UC_CapLaiMatKhau.Designer.cs">
+      <DependentUpon>UC_CapLaiMatKhau.cs</DependentUpon>
+    </Compile>
     <Compile Include="UControl\UC_ChamCong.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -258,6 +264,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UControl\UC_CaLamViec.resx">
       <DependentUpon>UC_CaLamViec.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UControl\UC_CapLaiMatKhau.resx">
+      <DependentUpon>UC_CapLaiMatKhau.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UControl\UC_ChamCong.resx">
       <DependentUpon>UC_ChamCong.cs</DependentUpon>

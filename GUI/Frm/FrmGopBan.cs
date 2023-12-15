@@ -23,11 +23,11 @@ namespace GUI.Frm
         XuLyHoaDon xuLyHoaDon = new XuLyHoaDon();
         XuLyChiTietHoaDon xuLyChiTietHoaDon = new XuLyChiTietHoaDon();
         //
-        private string trangThaiBanTrong = "bàn trống";
-        private string trangThaiBanDaDat = "bàn đã đặt";
-        private string trangThaiBanCoKhach = "đã có khách";
-        private string trangThaiHD_DaTT = "đã thanh toán";
-        private string trangThaiHD_chuaTT = "chưa thanh toán";
+        private string trangThaiBanTrong;// = "bàn trống";
+        private string trangThaiBanDaDat;//= "bàn đã đặt";
+        private string trangThaiBanCoKhach;// = "đã có khách";
+        private string trangThaiHD_DaTT;//= "đã thanh toán";
+        private string trangThaiHD_chuaTT;// = "chưa thanh toán";
         //các column trong datatable CTHD
         private string CTHDclThanhTien = "Thành tiền";
         private string CTHDclTenSP = "Tên sản phẩm";
@@ -41,11 +41,21 @@ namespace GUI.Frm
         public FrmGopBan()
         {
             InitializeComponent();
+            Init();
         }
         public FrmGopBan(string maHD)
         {
             maHoaDonCanGop = maHD;
             InitializeComponent();
+            Init();
+        }
+        private void Init()
+        {
+            trangThaiBanTrong = xuLyTrangThaiBan.tenTrangThaiBanTrong;//bàn trống
+            trangThaiBanDaDat = xuLyTrangThaiBan.tenTrangThaiDaDat;//"bàn đã đặt";
+            trangThaiBanCoKhach = xuLyTrangThaiBan.tenTrangThaiDaCoKhach;//"đã có khách";
+            trangThaiHD_DaTT = xuLyHoaDon.trangthaiDaThanhToan;// "đã thanh toán";
+            trangThaiHD_chuaTT = xuLyHoaDon.trangthaiChuaThanhToan;// "chưa thanh toán";
         }
         private void FrmGopBan_Load(object sender, EventArgs e)
         {
@@ -103,22 +113,22 @@ namespace GUI.Frm
             //màu theo trạng thái và TAG
             switch (trangthai)
             {
-                case var x when x.Equals(trangThaiBanCoKhach):
+                case var x when x.Equals(xuLyTrangThaiBan.tenTrangThaiDaCoKhach): //trangThaiBanCoKhach
                     {
                         panel.BackColor = Color.LightCoral;
-                        panel.Tag = trangThaiBanCoKhach;
+                        panel.Tag = xuLyTrangThaiBan.tenTrangThaiDaCoKhach;
                         break;
                     }
-                case var x when x.Equals(trangThaiBanDaDat):
+                case var x when x.Equals(xuLyTrangThaiBan.tenTrangThaiDaDat): //trangThaiBanDaDat
                     {
                         panel.BackColor = Color.LightYellow;
-                        panel.Tag = trangThaiBanDaDat;
+                        panel.Tag = xuLyTrangThaiBan.tenTrangThaiDaDat;
                         break;
                     }
-                case var x when x.Equals(trangThaiBanTrong):
+                case var x when x.Equals(xuLyTrangThaiBan.tenTrangThaiBanTrong): //trangThaiBanTrong
                     {
                         panel.BackColor = Color.LimeGreen;
-                        panel.Tag = trangThaiBanTrong;
+                        panel.Tag = xuLyTrangThaiBan.tenTrangThaiBanTrong;
                         break;
                     }
                 default:
@@ -148,7 +158,7 @@ namespace GUI.Frm
             string maBan = xuLyBan.LayMaBan(tenBan);
             switch (p.Tag)
             {
-                case var x when x.Equals(trangThaiBanCoKhach):
+                case var x when x.Equals(xuLyTrangThaiBan.tenTrangThaiDaCoKhach): //trangThaiBanCoKhach
                     {
                         //hiển thị hóa đơn bàn đó lên
                         HoaDon hd = xuLyHoaDon.LayHoaDon(maBan, trangThaiHD_chuaTT);
@@ -187,7 +197,7 @@ namespace GUI.Frm
                         }
                         break;
                     }
-                case var x when x.Equals(trangThaiBanTrong):
+                case var x when x.Equals(xuLyTrangThaiBan.tenTrangThaiBanTrong): //trangThaiBanTrong
                     {
                         MessageBox.Show("Không được chọn bàn trống", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         break;

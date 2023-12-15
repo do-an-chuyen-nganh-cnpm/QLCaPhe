@@ -28,17 +28,19 @@ namespace GUI.Frm
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            string taikhoan = "vanhien";//txtTaiKhoan.Text;
-            string matKhau = "vanhien";//txtMatKhau.Text;
-           // if (KT_TT() == false) { return; MessageBox.Show("Thông tin bị sai"); }
+            if (txtTaiKhoan.Text == "" || txtMatKhau.Text == "") { MessageBox.Show("thông tin không đúng"); return; }
+            string taikhoan = txtTaiKhoan.Text;
+            string matKhau = txtMatKhau.Text;
+            // if (KT_TT() == false) { return; MessageBox.Show("Thông tin bị sai"); }
             NHANVIEN nv = xulyNV.DangNhap(taikhoan, matKhau);
-            if (nv == null) { return; MessageBox.Show("Đăng nhập không thành công"); } 
+            if (nv == null) { return; MessageBox.Show("Đăng nhập không thành công"); }
             this.Visible = false;
             nvDangSuDung = nv;
             Program._frmMain = new frmMain(nv.MaQuyen);
-            Program._frmMain.Show();
+            Program._frmMain.Show(); 
+            txtTaiKhoan.Clear();
+            txtMatKhau.Clear();
         }
-
         private void button2_Click(object sender, EventArgs e)
         {
             this.Close();

@@ -9,6 +9,12 @@ namespace BLL.Core
 {
     public class XuLyTrangThaiBan:BaseXuLy
     {
+        public string maTrangThaiDaCoKhach = "1";
+        public string maTrangThaiBanTrong = "2";
+        public string maTrangThaiBanDaDat = "3";
+        public string tenTrangThaiDaCoKhach = "đã có khách";
+        public string tenTrangThaiDaDat = "bàn đã đặt";
+        public string tenTrangThaiBanTrong = "bàn trống";
         public List<TRANGTHAIBAN> getAllTrangThai()
         {
             return ctx.TRANGTHAIBANs.ToList();

@@ -28,11 +28,11 @@ namespace GUI.UControl
         XuLyKhachHang xuLyKhachHang = new XuLyKhachHang();
         DataTable        dataTableSanPham, dataTableCTHoaDon;
         //
-        private string trangThaiBanTrong = "bàn trống";
-        private string trangThaiBanDaDat = "bàn đã đặt";
-        private string trangThaiBanCoKhach = "đã có khách";
-        private string trangThaiHD_DaTT = "đã thanh toán";
-        private string trangThaiHD_chuaTT = "chưa thanh toán";
+        private string trangThaiBanTrong;//bàn trống
+        private string trangThaiBanDaDat;//= "bàn đã đặt";
+        private string trangThaiBanCoKhach;// = "đã có khách";
+        private string trangThaiHD_DaTT;//= "đã thanh toán";
+        private string trangThaiHD_chuaTT;//= "chưa thanh toán";
         private int huyDatban;
         //các column trong datatable CTHD
         private string CTHDclThanhTien = "Thành tiền";
@@ -53,19 +53,7 @@ namespace GUI.UControl
             maNV = frm_DangNhap.nvDangSuDung.MaNV;
             InIt();
         }
-        //private void LoadDGVHoaDon(ChiTietHoaDon chitietHD)
-        //{
-        //    DataRow row = dataTableCTHoaDon.NewRow();
-        //    row[CTHDclDonGia] = chitietHD.DonGia;
-        //    row[CTHDclTenSP] = xuLySanPham.layTenSP(chitietHD.MaSP);
-        //    row[CTHDclMaHoaDon] = chitietHD.MaHD;
-        //    row[CTHDclMaSP]= chitietHD.MaSP;
-        //    row[CTHDclSoLuong] = chitietHD.SoLuong;
-        //    row[CTHDclThanhTien]= chitietHD.DonGia * chitietHD.SoLuong;
-        //    dataTableCTHoaDon.Rows.Add(row);
-        //    DGV_CTHoaDon.DataSource = dataTableCTHoaDon;
-        //}
-        private void InIt()
+        public void InIt()
         {
             InitializeComponent();
             TaoDSban();
@@ -73,6 +61,12 @@ namespace GUI.UControl
             sanPhams = new List<SanPham>();
             sanPhams = xuLySanPham.laySanPham();
             LoadDGVSanPham(sanPhams);
+            //
+            trangThaiBanTrong = xuLyTrangThaiBan.tenTrangThaiBanTrong;//bàn trống
+            trangThaiBanDaDat = xuLyTrangThaiBan.tenTrangThaiDaDat;//"bàn đã đặt";
+            trangThaiBanCoKhach = xuLyTrangThaiBan.tenTrangThaiDaCoKhach;//"đã có khách";
+            trangThaiHD_DaTT = xuLyHoaDon.trangthaiDaThanhToan;// "đã thanh toán";
+            trangThaiHD_chuaTT = xuLyHoaDon.trangthaiChuaThanhToan;// "chưa thanh toán";
         }
         private void LoadLoaiNuoc()
         {
@@ -120,22 +114,22 @@ namespace GUI.UControl
             //màu theo trạng thái và TAG
             switch (trangthai)
             {
-                case var x when x.Equals(trangThaiBanCoKhach):
+                case var x when x.Equals(xuLyTrangThaiBan.tenTrangThaiDaCoKhach): //trangThaiBanCoKhach
                     {
                         panel.BackColor = Color.LightCoral;
-                        panel.Tag = trangThaiBanCoKhach;
+                        panel.Tag = xuLyTrangThaiBan.tenTrangThaiDaCoKhach;
                         break;
                     }
-                case var x when x.Equals(trangThaiBanDaDat):
+                case var x when x.Equals(xuLyTrangThaiBan.tenTrangThaiDaDat ): //trangThaiBanDaDat
                     {
                         panel.BackColor = Color.LightYellow;
-                        panel.Tag = trangThaiBanDaDat;
+                        panel.Tag = xuLyTrangThaiBan.tenTrangThaiDaDat;
                         break;
                     }
-                case var x when x.Equals(trangThaiBanTrong):
+                case var x when x.Equals(xuLyTrangThaiBan.tenTrangThaiBanTrong): //trangThaiBanTrong
                     {
                         panel.BackColor = Color.LimeGreen;
-                        panel.Tag = trangThaiBanTrong;
+                        panel.Tag = xuLyTrangThaiBan.tenTrangThaiBanTrong;
                         break;
                     }
                 default:
@@ -167,7 +161,7 @@ namespace GUI.UControl
             btn_DatBan.Tag = 1;
             switch (p.Tag)
             {
-                case var x when x.Equals(trangThaiBanCoKhach):
+                case var x when x.Equals(xuLyTrangThaiBan.tenTrangThaiDaCoKhach): //trangThaiBanCoKhach
                     {
                         //hiển thị hóa đơn bàn đó lên
                         HoaDon hd = xuLyHoaDon.LayHoaDon(maBan,trangThaiHD_chuaTT);
@@ -182,7 +176,7 @@ namespace GUI.UControl
                         CoHieuLucControl(btnChon);
                         break;
                     }
-                case var x when x.Equals(trangThaiBanDaDat):
+                case var x when x.Equals(xuLyTrangThaiBan.tenTrangThaiDaDat)://trangThaiBanDaDat
                     {
                         //hiển thị nhận bàn
                         khoiTaoDTBL_CTHoaDon();
@@ -192,7 +186,7 @@ namespace GUI.UControl
                         btn_DatBan.Tag = huyDatban;
                         break;
                     }
-                case var x when x.Equals(trangThaiBanTrong):
+                case var x when x.Equals(xuLyTrangThaiBan.tenTrangThaiBanTrong)://trangThaiBanTrong
                     {
                         //cho phép oder
                         khoiTaoDTBL_CTHoaDon();
@@ -212,7 +206,7 @@ namespace GUI.UControl
                 MessageBox.Show("Bạn quên chọn bàn");
                 return;
             }
-            frm_ThanhToan f = new frm_ThanhToan(txtMaHD.Text);
+            frm_ThanhToan f = new frm_ThanhToan(txtMaHD.Text, this);
             f.ShowDialog();
         }
 

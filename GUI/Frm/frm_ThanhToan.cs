@@ -2,6 +2,7 @@
 using BLL.Core;
 using BLL.DB;
 using GUI.Report;
+using GUI.UControl;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
@@ -26,12 +27,17 @@ namespace GUI.Frm
         private const string cl_DonGia = "Đơn giá";
         private const string cl_ThanhTien = "Thành Tiền";
         private string maHD;
+        private string maKH;
         //
         XuLyChiTietHoaDon xuLyChiTietHoaDon = new XuLyChiTietHoaDon();
         XuLyKhachHang xuLyKhachHang = new XuLyKhachHang();
         XuLyHoaDon xuLyHoaDon = new XuLyHoaDon();
         XuLyHoaDon xulyhoadon = new XuLyHoaDon();
         XuLySanPham xuLySanPham = new XuLySanPham();
+        XuLyKhuyenMai xuLyKhuyenMai = new XuLyKhuyenMai();
+        XuLyLoaiKhachHang xuLyLoaiKhachHang = new XuLyLoaiKhachHang();
+        private HoaDon hoadonchinh;
+        UC_GoiMon uc_GoiMon;
         public frm_ThanhToan()
         {
             Init();
@@ -41,22 +47,50 @@ namespace GUI.Frm
             this.maHD = maHD;
             Init();
         }
+        public frm_ThanhToan(string maHD, UC_GoiMon ucGoiMon)
+        {
+            this.maHD = maHD;
+            uc_GoiMon = ucGoiMon;
+            Init();
+        }
         private void Init()
         {
             InitializeComponent();
             LoadDuLieu();
             LoadTT_HoaDon();
+            loadComboboxKhuyenMai();
+        }
+        private void loadComboboxKhuyenMai()
+        {
+            List<KHUYEN_MAI> listKhuyenMai = xuLyKhuyenMai.getKhuyenMaiByKhachHang(maKH);
+            if(listKhuyenMai != null && listKhuyenMai.Count > 0)
+            {
+                cbxMaGiamGia.DataSource = listKhuyenMai;
+                cbxMaGiamGia.DisplayMember = "TenKhuyenMai";
+                cbxMaGiamGia.ValueMember = "MaKhuyenMai";
+            }
         }
 
         private void LoadTT_HoaDon()
         {
-            HoaDon hoaDon = xuLyHoaDon.LayHoaDon(maHD);
-            if (hoaDon != null)
+            hoadonchinh = new HoaDon();
+            hoadonchinh = xuLyHoaDon.LayHoaDon(maHD);
+            if (hoadonchinh != null)
             {
-                txtMaHoaDon.Text = hoaDon.MaHD.ToString();
-                txtTongTien.Text =Librari.ConvertFormatTien( hoaDon.TongTien.Value);
+                txtMaHoaDon.Text = hoadonchinh.MaHD.ToString();
+                txtTongTien.Text =Librari.ConvertFormatTien(hoadonchinh.TongTien.Value);
                 txtGiamGia.Text = "0";
-                txtThanhToan.Text =Librari.ConvertFormatTien( (hoaDon.TongTien.Value - double.Parse(txtGiamGia.Text)));
+                txtThanhToan.Text =Librari.ConvertFormatTien( (hoadonchinh.TongTien.Value - double.Parse(txtGiamGia.Text)));
+            }
+        }
+        private void ReLoadLoadTT_HoaDon()
+        {
+            if (hoadonchinh != null)
+            {
+                txtMaHoaDon.Text = hoadonchinh.MaHD.ToString();
+                txtTongTien.Text = Librari.ConvertFormatTien(hoadonchinh.TongTien.Value);
+                txtGiamGia.Text = Librari.ConvertFormatTien(hoadonchinh.Giamgia.Value);
+                txtThanhToan.Text = Librari.ConvertFormatTien((hoadonchinh.TongTien.Value - hoadonchinh.Giamgia.Value));
             }
         }
         private void frm_ThanhToan_Load(object sender, EventArgs e)
@@ -123,9 +157,10 @@ namespace GUI.Frm
             }
             else
             {
+                txtMaKH.Text = kh.MaKH;
                 txtTenKH.Text = kh.TenKH;
                 txtSoDienThoai.Text = kh.SoDT;
-                txtDiemTichLuy.Text = kh.DiemTL.ToString();     
+                txtDiemTichLuy.Text = kh.DiemTL.ToString();   
             }
         }
 
@@ -140,18 +175,47 @@ namespace GUI.Frm
                 kh = new KHACHHANG();
                 kh.MaKH = txtMaKH.Text.ToString();
                 kh.TenKH = txtTenKH.Text.ToString();
+                kh.DiaChi = "null";
                 kh.SoDT = "0";
+                kh.MaLoaiKH = xuLyLoaiKhachHang.maLoai_KHBinhThuong;
+                kh.DiemTL = 0;
             }
-            float diemTL =float.Parse( txtDiemTichLuyHD.Text);
-            float giamGia = float.Parse(txtGiamGia.Text);
-            int kq = xulyhoadon.ThanhToan(kh, maHD, diemTL, giamGia);
+            if (hoadonchinh.Giamgia == null)
+            {
+                hoadonchinh.Giamgia = 0;
+            }
+            double giamgia = hoadonchinh.Giamgia.Value;
+            double diemtl = 0;
+            if (hoadonchinh.DiemTL == null)
+            {
+                 diemtl = 0;
+            }
+            else
+            {
+                diemtl = hoadonchinh.DiemTL.Value;
+            }
+            luuMaGiamGia();//lưu mã giảm giá cho những khách hàng có tổng hóa đơn trên 150k
+            int kq = xulyhoadon.ThanhToan(kh, maHD, diemtl, giamgia);
             if (kq == 1)
             {
                 MessageBox.Show("Thanh toán thành công");
                 frmHoaDon f = new frmHoaDon(_maHD);
                 f.ShowDialog();
+                this.Close();
+                uc_GoiMon.TaoDSban(); // tạo lại ds bàn bên UCGoiMon
+                uc_GoiMon.InIt();//khơi tạo lại UCGoiMon
             }
             else { MessageBox.Show("Thanh Toán thất bại"); }
+        }
+        private void luuMaGiamGia()
+        {
+            //giảm giá cho những hóa đơn trên 150.000
+            if(hoadonchinh.TongTien.Value >= 150000)
+            {
+               if( txtMaKH.Text != ""){
+                    xuLyKhuyenMai.themKhuyenMaiChoKH(txtMaKH.Text);
+                }
+            }
         }
 
         private void btnQuayLai_Click(object sender, EventArgs e)
@@ -182,8 +246,6 @@ namespace GUI.Frm
             var response = client.Execute(request);
             var content = response.Content;
             var dataResult = JsonConvert.DeserializeObject<ApiResponse>(content);
-
-
             var image = Base64ToImage(dataResult.data.qrDataURL.Replace("data:image/png;base64,", ""));
             int newWidth = QRThanhToan.Width;
             int newHeight = QRThanhToan.Height;
@@ -206,6 +268,7 @@ namespace GUI.Frm
             txtTenKH.Text = maHD.Trim() + "-" + maKH.Trim();
             txtSoDienThoai.Text = "null";
             txtDiemTichLuy.Text = "0";
+            txtSDT_TimKiem.Clear();
         }
 
         private void btnTichDiem_Click(object sender, EventArgs e)
@@ -215,6 +278,27 @@ namespace GUI.Frm
 
             int tongdiemtichluy = Convert.ToInt32(tongTien) * 1 / 25000;
             txtDiemTichLuyHD.Text = tongdiemtichluy.ToString();
+        }
+
+        private void txtMaKH_TextChanged(object sender, EventArgs e)
+        {
+            if (txtMaKH.Text != "")
+            {
+                maKH = txtMaKH.Text;
+                loadComboboxKhuyenMai();
+            }
+        }
+
+        private void cbxMaGiamGia_ValueMemberChanged(object sender, EventArgs e)
+        { 
+            string maKhuyenMai = cbxMaGiamGia.SelectedValue.ToString() ;
+            KHUYEN_MAI km = xuLyKhuyenMai.layKhuyenMai(maKhuyenMai);
+            DateTime homnay = DateTime.Today;
+            if(homnay.Date < km.NgayKT.Value.Date) { MessageBox.Show("Không còn hiệu lực"); return; }
+            double tongtien = hoadonchinh.TongTien.Value;
+            double phantram = xuLyKhuyenMai.layPhanTramKhuyenMai(maKhuyenMai);
+            hoadonchinh.Giamgia = phantram * tongtien/100;
+            ReLoadLoadTT_HoaDon();
         }
     }
 }
