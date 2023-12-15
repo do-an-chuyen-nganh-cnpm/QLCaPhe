@@ -19,19 +19,18 @@ namespace BLL.Core
         {
             try
             {
-                //KHUYEN_MAI temp = ctx.KHUYEN_MAIs.Where(m => m.MAKHUYENMAI.Equals(k.MAKHUYENMAI)).FirstOrDefault();
-                //if (temp != null)
-                //{
-                //    temp.MAKHUYENMAI = k.MAKHUYENMAI;
-                //    temp.TENKHUYENMAI = k.TENKHUYENMAI;
-                //    temp.MOTA = k.MOTA;
-                //    temp.NGAYBD = k.NGAYBD;
-                //    temp.NGAYKT = k.NGAYKT;
-                //    temp.TRIGIA = k.TRIGIA;
-                //    ctx.KHUYEN_MAIs.InsertOnSubmit(k);
-                //    ctx.SubmitChanges();
-                //    return 1;
-                //}
+                KHUYEN_MAI temp = ctx.KHUYEN_MAIs.Where(m => m.MaKhuyenMai.Trim().Equals(k.MaKhuyenMai.Trim())).FirstOrDefault();
+                if (temp != null)
+                {
+                    temp.MaKhuyenMai = k.MaKhuyenMai;
+                    temp.TenKhuyenMai = k.TenKhuyenMai;
+                    temp.MoTa = k.MoTa;
+                    temp.NgayBD = k.NgayBD;
+                    temp.NgayKT = k.NgayKT;
+                    temp.phanTramGiamGia = k.phanTramGiamGia;
+                    ctx.SubmitChanges();
+                    return 1;
+                }
                 return 0;
             }
             catch { return 0; }          
@@ -54,10 +53,10 @@ namespace BLL.Core
         {
             try
             {
-            //    KHUYEN_MAI khuyenMai = ctx.KHUYEN_MAIs.Where(m => m.MAKHUYENMAI.Equals(MaKhuyenMai)).FirstOrDefault();
-            //    if (khuyenMai == null) { return 0; }
-            //    ctx.KHUYEN_MAIs.DeleteOnSubmit(khuyenMai);
-            //    ctx.SubmitChanges();
+                KHUYEN_MAI khuyenMai = ctx.KHUYEN_MAIs.Where(m => m.MaKhuyenMai.Trim().Equals(MaKhuyenMai.Trim())).FirstOrDefault();
+                if (khuyenMai == null) { return 0; }
+                ctx.KHUYEN_MAIs.DeleteOnSubmit(khuyenMai);
+                ctx.SubmitChanges();
                 return 1;
             }
             catch
@@ -68,8 +67,8 @@ namespace BLL.Core
         public bool KT_TonTai(string maKhuyenMai)
         {
             try {
-                //KHUYEN_MAI k = ctx.KHUYEN_MAIs.Where(m => m.MAKHUYENMAI.Equals(maKhuyenMai)).FirstOrDefault();
-                //if(k != null) { return true; }
+                KHUYEN_MAI k = ctx.KHUYEN_MAIs.Where(m => m.MaKhuyenMai.Trim().Equals(maKhuyenMai.Trim())).FirstOrDefault();
+                if (k != null) { return true; }
                 return false;
             }
             catch { return false; }

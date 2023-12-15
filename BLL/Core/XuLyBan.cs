@@ -15,6 +15,9 @@ namespace BLL.Core
     {
         public XuLyBan():base() { }
         XuLyTrangThaiBan xuLyTrangThaiBan = new XuLyTrangThaiBan();
+        public string maTrangThaiTrong = "2";
+        public string maTrangThaiDaDat = "1";
+        public string maTrangThaiCoKhach = "3";
         public List<BAN> getAllBan()
         {
             return ctx.BANs.ToList();

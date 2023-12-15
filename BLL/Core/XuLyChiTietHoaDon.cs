@@ -10,6 +10,24 @@ namespace BLL.Core
 {
     public class XuLyChiTietHoaDon:BaseXuLy
     {     
+        public int capNhatSL(string masp, string maHD, int newSL)
+        {
+            try
+            {
+                ChiTietHoaDon ct = ctx.ChiTietHoaDons.FirstOrDefault(v => v.MaHD.Trim().Equals(maHD.Trim()) &&
+                v.MaSP.Trim().Equals(masp.Trim())
+            );
+                if (ct != null)
+                {
+                    ct.SoLuong = newSL;
+                    ctx.SubmitChanges();
+                    return 1;
+                }
+                return 0;
+            }
+            catch { return 0; }
+            
+        }
         public List<ChiTietHoaDon> LayTatCa()
         {
             return ctx.ChiTietHoaDons.ToList();
@@ -53,6 +71,7 @@ namespace BLL.Core
             {
                 ctx.ChiTietHoaDons.InsertOnSubmit(chiTietHoaDon);
                 ctx.SubmitChanges();
+                ctx.Refresh(System.Data.Linq.RefreshMode.KeepChanges, chiTietHoaDon);
                 return 1;
             }
             catch { return 0; }

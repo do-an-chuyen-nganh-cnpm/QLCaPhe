@@ -9,6 +9,18 @@ namespace BLL.Core
 {
     public class XuLyKhachHang:BaseXuLy
     {
+        public string layTenKH(string maKH)
+        {
+            KHACHHANG kh = ctx.KHACHHANGs.FirstOrDefault(v => v.MaKH.Trim().Equals(maKH.Trim()));
+            if (kh != null) { return kh.TenKH; }
+            return "";
+        }
+        public KHACHHANG layKhachHang (string maKH)
+        {
+            KHACHHANG kh = ctx.KHACHHANGs.FirstOrDefault(v => v.MaKH.Trim().Equals(maKH.Trim()));
+            if(kh!= null && kh.MaKH != null) { return kh; }
+            return null;
+        }
         public KHACHHANG timKhachHangBySDT(string sdt)
         {
             try

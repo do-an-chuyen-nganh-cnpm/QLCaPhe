@@ -20,6 +20,15 @@ namespace GUI.UControl
     {
         DataGridView dataGrid;
         XuLyKhuyenMai xuLyKM = new XuLyKhuyenMai();
+        //các cốt 
+        private const string nameMaKM = "Mã khuyến mãi";
+        private const string nameTenKM = "Tên khuyến mãi";
+        private const string nameMota = "Mô tả";
+        private const string nameNgayBD = "Ngày bắt đầu";
+        private const string nameNgayKT = "Ngày kết thúc";
+        private const string namePhanTramGiamGia = "Phần trăm giảm giá";
+        private const string nameTrangThai = "Trang Thái";
+        DataTable tblKhuyenMai;
         public UC_KhuyenMai()
         {
             InitializeComponent();
@@ -53,91 +62,29 @@ namespace GUI.UControl
         }
         private void ThemDDuLieuVafoDataaGridView(List<KHUYEN_MAI> listKM)
         {
+            TaoDataGridView();
             foreach(KHUYEN_MAI item in listKM)
             {
-                //int indexRow = dataGrid.Rows.Add();
-                //dataGrid.Rows[indexRow].Cells["MAKHUYENMAI"].Value = item.MAKHUYENMAI;
-                //dataGrid.Rows[indexRow].Cells["TENKHUYENMAI"].Value = item.TENKHUYENMAI;
-                //dataGrid.Rows[indexRow].Cells["NGAYBD"].Value = item.NGAYBD.Value.Day+"/"+item.NGAYBD.Value.Month+"/"+item.NGAYBD.Value.Year;
-                //dataGrid.Rows[indexRow].Cells["NGAYKT"].Value = item.NGAYKT.Value.Day + "/" + item.NGAYKT.Value.Month + "/" + item.NGAYKT.Value.Year;
-                //dataGrid.Rows[indexRow].Cells["TRIGIA"].Value = item.TRIGIA;
-                //dataGrid.Rows[indexRow].Cells["MOTA"].Value = item.MOTA;
+                DataRow row = tblKhuyenMai.NewRow();
+                row[nameMaKM] = item.MaKhuyenMai;
+                row[nameTenKM] = item.TenKhuyenMai;
+                row[nameMota] = item.MoTa;
+                row[nameNgayBD] = item.NgayBD.Value.ToString("dd/MM/yyyy");
+                row[nameNgayKT] = item.NgayKT.Value.ToString("dd/MM/yyyy");
+                row[namePhanTramGiamGia] = item.phanTramGiamGia;             
+                tblKhuyenMai.Rows.Add(row); 
             }
-
+            DGV_KhuyenMai.DataSource = tblKhuyenMai;
         }
          private void TaoDataGridView()
         {
-            dataGrid = new DataGridView();
-            int widthPanel = panelDateGridView.Width;
-            int heightPanel = panelDateGridView.Height;
-            int phantram;
-
-            DataGridViewTextBoxColumn MAKHUYENMAI = new DataGridViewTextBoxColumn();
-            MAKHUYENMAI.HeaderText = "Mã khuyến mãi";
-            MAKHUYENMAI.Name = "MAKHUYENMAI";
-            phantram = 10;
-            MAKHUYENMAI.Width = phantram * widthPanel / 100;
-            dataGrid.Columns.Add(MAKHUYENMAI);
-
-            DataGridViewTextBoxColumn TENKHUYENMAI = new DataGridViewTextBoxColumn();
-            TENKHUYENMAI.HeaderText = "Tên Khuyến mãi ";
-            TENKHUYENMAI.Name = "TENKHUYENMAI";
-            phantram = 20;
-            TENKHUYENMAI.Width = phantram * widthPanel / 100;
-            dataGrid.Columns.Add(TENKHUYENMAI);
-
-            DataGridViewTextBoxColumn NGAYBD = new DataGridViewTextBoxColumn();
-            NGAYBD.HeaderText = "Ngày bắt đầu";
-            NGAYBD.Name = "NGAYBD";
-            phantram = 10;
-            NGAYBD.Width = phantram * widthPanel / 100;
-            dataGrid.Columns.Add(NGAYBD);
-
-            DataGridViewTextBoxColumn NGAYKT = new DataGridViewTextBoxColumn();
-            NGAYKT.HeaderText = "Ngày kết thúc";
-            NGAYKT.Name = "NGAYKT";
-            phantram = 10;
-            NGAYKT.Width = phantram * widthPanel / 100;
-            dataGrid.Columns.Add(NGAYKT);
-
-            DataGridViewTextBoxColumn TRIGIA = new DataGridViewTextBoxColumn();
-            TRIGIA.HeaderText = "Trị giá";
-            TRIGIA.Name = "TRIGIA";
-            phantram = 10;
-            TRIGIA.Width = phantram * widthPanel / 100;
-            dataGrid.Columns.Add(TRIGIA);
-
-            DataGridViewTextBoxColumn MOTA = new DataGridViewTextBoxColumn();
-            MOTA.HeaderText = "Mô tả";
-            MOTA.Name = "MOTA";
-            phantram = 40;
-            MOTA.Width = phantram * widthPanel / 100;
-            dataGrid.Columns.Add(MOTA);
-
-            dataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGrid.Width = widthPanel;
-            dataGrid.Height = heightPanel;
-            dataGrid.CellClick += DataGrid_CellClick;
-            panelDateGridView.Controls.Clear();
-            panelDateGridView.Controls.Add(dataGrid);
-        }
-
-        private void DataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            try
-            {
-                int index = e.RowIndex;
-                if(dataGrid.CurrentCell.Value != null)
-                {
-                    txtMaKM.Text = dataGrid.Rows[index].Cells["MAKHUYENMAI"].Value.ToString();
-                    txtTenKM.Text = dataGrid.Rows[index].Cells["TENKHUYENMAI"].Value.ToString();
-                    txtMoTa.Text = dataGrid.Rows[index].Cells["MOTA"].Value.ToString();
-                    txtNgayBD.Value = ConvertToDateTime(dataGrid.Rows[index].Cells["NGAYBD"].Value.ToString());
-                    txtNgayKT.Value = ConvertToDateTime(dataGrid.Rows[index].Cells["NGAYKT"].Value.ToString());
-                    txtTriGia.Text = dataGrid.Rows[index].Cells["TRIGIA"].Value.ToString();
-                }
-            }
-            catch { }
+            tblKhuyenMai = new DataTable();
+            tblKhuyenMai.Columns.Add(nameMaKM, typeof(string));
+            tblKhuyenMai.Columns.Add(nameTenKM, typeof(string));
+            tblKhuyenMai.Columns.Add(nameMota, typeof(string));
+            tblKhuyenMai.Columns.Add(nameNgayBD, typeof(string));
+            tblKhuyenMai.Columns.Add(nameNgayKT, typeof(string));
+            tblKhuyenMai.Columns.Add(namePhanTramGiamGia, typeof(string));
         }
         static DateTime ConvertToDateTime(string dateString)
         {
@@ -159,13 +106,12 @@ namespace GUI.UControl
             try
             {
                 KHUYEN_MAI khuyenMai = new KHUYEN_MAI();
-                //khuyenMai.MAKHUYENMAI = txtMaKM.Text;
-                //khuyenMai.TENKHUYENMAI = txtTenKM.Text;
-                //khuyenMai.MOTA = txtMoTa.Text;
-                //khuyenMai.NGAYBD = txtNgayBD.Value;
-                //khuyenMai.NGAYKT = txtNgayKT.Value;
-                //khuyenMai.TRIGIA = double.Parse(txtTriGia.Text);
-                //khuyenMai.MOTA = txtMoTa.Text;
+                khuyenMai.MaKhuyenMai = txtMaKM.Text;
+                khuyenMai.TenKhuyenMai = txtTenKM.Text;
+                khuyenMai.MoTa = txtMoTa.Text;
+                khuyenMai.NgayBD = txtNgayBD.Value;
+                khuyenMai.NgayKT = txtNgayKT.Value;
+                khuyenMai.phanTramGiamGia = int.Parse(txtTriGia.Text);
                 return khuyenMai;
             }
             catch { return null; }
@@ -310,6 +256,20 @@ namespace GUI.UControl
                 //không phải số
                 e.Handled = true;
                 return;
+            }
+        }
+        int indexClick = -1;
+        private void DGV_KhuyenMai_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            indexClick = e.RowIndex;
+            if(DGV_KhuyenMai.CurrentCell != null)
+            {
+                txtMaKM.Text = DGV_KhuyenMai.Rows[indexClick].Cells[nameMaKM].Value.ToString();
+                txtTenKM.Text = DGV_KhuyenMai.Rows[indexClick].Cells[nameTenKM].Value.ToString();
+                txtMoTa.Text = DGV_KhuyenMai.Rows[indexClick].Cells[nameMota].Value.ToString();
+                txtNgayBD.Value = ConvertToDateTime(DGV_KhuyenMai.Rows[indexClick].Cells[nameNgayBD].Value.ToString());
+                txtNgayKT.Value = ConvertToDateTime(DGV_KhuyenMai.Rows[indexClick].Cells[nameNgayKT].Value.ToString());
+                txtTriGia.Text = DGV_KhuyenMai.Rows[indexClick].Cells[namePhanTramGiamGia].Value.ToString();
             }
         }
     }

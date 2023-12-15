@@ -11,6 +11,7 @@ using System.Xml.Linq;
 using BLL;
 using BLL.Core;
 using BLL.DB;
+using GUI.Frm;
 using GUI.UControl;
 
 namespace GUI
@@ -279,6 +280,12 @@ namespace GUI
         {
             UC_CaLamViec u = new UC_CaLamViec();
             LoadUC(u);
+        }
+
+        private void tachBànToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmGopBan f = new FrmGopBan();
+            f.ShowDialog();
         }
     }
 }

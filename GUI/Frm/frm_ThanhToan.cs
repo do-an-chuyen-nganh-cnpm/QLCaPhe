@@ -1,6 +1,7 @@
 ﻿using BLL;
 using BLL.Core;
 using BLL.DB;
+using GUI.Report;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
@@ -30,6 +31,7 @@ namespace GUI.Frm
         XuLyKhachHang xuLyKhachHang = new XuLyKhachHang();
         XuLyHoaDon xuLyHoaDon = new XuLyHoaDon();
         XuLyHoaDon xulyhoadon = new XuLyHoaDon();
+        XuLySanPham xuLySanPham = new XuLySanPham();
         public frm_ThanhToan()
         {
             Init();
@@ -52,9 +54,9 @@ namespace GUI.Frm
             if (hoaDon != null)
             {
                 txtMaHoaDon.Text = hoaDon.MaHD.ToString();
-                txtTongTien.Text = hoaDon.TongTien.ToString();
+                txtTongTien.Text =Librari.ConvertFormatTien( hoaDon.TongTien.Value);
                 txtGiamGia.Text = "0";
-                txtThanhToan.Text = (hoaDon.TongTien - double.Parse(txtGiamGia.Text)).ToString();
+                txtThanhToan.Text =Librari.ConvertFormatTien( (hoaDon.TongTien.Value - double.Parse(txtGiamGia.Text)));
             }
         }
         private void frm_ThanhToan_Load(object sender, EventArgs e)
@@ -99,10 +101,10 @@ namespace GUI.Frm
             if (chitiet != null)
             {
                 DataRow row = tblHoaDon.NewRow();
-                row[cl_TenSP] = chitiet.MaSP;
-                row[cl_DonGia] = chitiet.DonGia.ToString();
+                row[cl_TenSP] = xuLySanPham.layTenSP(chitiet.MaSP);
+                row[cl_DonGia] =Librari.ConvertFormatTien( chitiet.DonGia.Value);
                 row[cl_SoLuong] = chitiet.SoLuong.ToString();
-                row[cl_ThanhTien] = chitiet.TongTien.ToString();
+                row[cl_ThanhTien] =Librari.ConvertFormatTien( chitiet.TongTien.Value);
                 tblHoaDon.Rows.Add(row);
             }         
         }
@@ -146,8 +148,8 @@ namespace GUI.Frm
             if (kq == 1)
             {
                 MessageBox.Show("Thanh toán thành công");
-                frmMain f = new frmMain();
-                f.LoadDSBan();
+                frmHoaDon f = new frmHoaDon(_maHD);
+                f.ShowDialog();
             }
             else { MessageBox.Show("Thanh Toán thất bại"); }
         }

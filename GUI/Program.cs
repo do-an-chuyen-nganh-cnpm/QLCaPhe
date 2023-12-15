@@ -1,4 +1,5 @@
 ﻿using GUI.Frm;
+using GUI.Report;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,8 +22,9 @@ namespace GUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            _frm_DangNhap = new frm_DangNhap();
-            Application.Run(_frm_DangNhap);
+             _frm_DangNhap = new frm_DangNhap();
+            Application.Run(_frm_DangNhap);  
+            //Application.Run(new frmHoaDon());
         }
     }
 }

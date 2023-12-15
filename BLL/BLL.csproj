@@ -111,6 +111,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>QLCaphe.dbml</DependentUpon>
     </Compile>
+    <Compile Include="DB\rptHoaDon.cs" />
+    <Compile Include="DB\rptSanPhams.cs" />
     <Compile Include="DB\TK_DoanhThuModel.cs" />
     <Compile Include="Lib\Librari.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

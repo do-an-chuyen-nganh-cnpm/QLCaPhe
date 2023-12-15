@@ -257,7 +257,7 @@ namespace GUI.UControl
             {
                 DataRow row = dataTableSanPham.NewRow();
                 row[SPclTenSanPham] = sp.TenSP;
-                row[SPclDonGia] = sp.GiaSP;
+                row[SPclDonGia] = Librari.ConvertFormatTien(sp.GiaSP.Value);
                 dataTableSanPham.Rows.Add(row);
                 dgvDSSanPham.DataSource = dataTableSanPham;
             }
@@ -334,8 +334,8 @@ namespace GUI.UControl
                 DataRow row = dataTableCTHoaDon.NewRow();
                 row[CTHDclTenSP] = xuLySanPham.layTenSP(cthd.MaSP);
                 row[CTHDclSoLuong] = cthd.SoLuong.Value;
-                row[CTHDclDonGia] = cthd.DonGia;
-                row[CTHDclThanhTien] = cthd.SoLuong * cthd.DonGia; 
+                row[CTHDclDonGia] =Librari.ConvertFormatTien( cthd.DonGia.Value);
+                row[CTHDclThanhTien] =Librari.ConvertFormatTien( cthd.SoLuong.Value * cthd.DonGia.Value); 
                 dataTableCTHoaDon.Rows.Add(row);
                 DGV_CTHoaDon.DataSource = dataTableCTHoaDon;
             }

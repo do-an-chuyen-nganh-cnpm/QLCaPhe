@@ -125,7 +125,7 @@
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(16, 54);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(78, 16);
+            this.label2.Size = new System.Drawing.Size(79, 16);
             this.label2.TabIndex = 4;
             this.label2.Text = "Tổng Tiền";
             // 
@@ -155,7 +155,7 @@
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(14, 54);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(117, 16);
+            this.label4.Size = new System.Drawing.Size(119, 16);
             this.label4.TabIndex = 6;
             this.label4.Text = "Tên khách hàng";
             // 
@@ -175,7 +175,7 @@
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(14, 85);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(98, 16);
+            this.label5.Size = new System.Drawing.Size(101, 16);
             this.label5.TabIndex = 8;
             this.label5.Text = "Số điện thoại";
             // 
@@ -195,7 +195,7 @@
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.Location = new System.Drawing.Point(14, 114);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(94, 16);
+            this.label6.Size = new System.Drawing.Size(96, 16);
             this.label6.TabIndex = 10;
             this.label6.Text = "Điểm tích lũy";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -224,7 +224,7 @@
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(13, 25);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(111, 16);
+            this.label3.Size = new System.Drawing.Size(114, 16);
             this.label3.TabIndex = 12;
             this.label3.Text = "Mã khách hàng";
             // 
@@ -276,7 +276,7 @@
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.Location = new System.Drawing.Point(16, 154);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(94, 16);
+            this.label13.Size = new System.Drawing.Size(96, 16);
             this.label13.TabIndex = 14;
             this.label13.Text = "Điểm tích lũy";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -297,7 +297,7 @@
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.Location = new System.Drawing.Point(17, 24);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(88, 16);
+            this.label12.Size = new System.Drawing.Size(91, 16);
             this.label12.TabIndex = 12;
             this.label12.Text = "Mã hóa đơn";
             // 
@@ -315,7 +315,7 @@
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.Location = new System.Drawing.Point(17, 114);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(92, 16);
+            this.label10.Size = new System.Drawing.Size(95, 16);
             this.label10.TabIndex = 10;
             this.label10.Text = "Mã giảm giá";
             // 
@@ -335,7 +335,7 @@
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.Location = new System.Drawing.Point(16, 84);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(69, 16);
+            this.label9.Size = new System.Drawing.Size(71, 16);
             this.label9.TabIndex = 8;
             this.label9.Text = "Giảm giá";
             this.label9.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -356,7 +356,7 @@
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.Location = new System.Drawing.Point(16, 189);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(90, 16);
+            this.label7.Size = new System.Drawing.Size(91, 16);
             this.label7.TabIndex = 6;
             this.label7.Text = "Thanh Toán";
             this.label7.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -424,7 +424,7 @@
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.Location = new System.Drawing.Point(873, 215);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(54, 16);
+            this.label8.Size = new System.Drawing.Size(58, 16);
             this.label8.TabIndex = 14;
             this.label8.Text = "Mã QR";
             // 
@@ -460,6 +460,7 @@
             this.Controls.Add(this.txtSDT_TimKiem);
             this.Controls.Add(this.groupBox1);
             this.Name = "frm_ThanhToan";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frm_ThanhToan";
             this.Load += new System.EventHandler(this.frm_ThanhToan_Load);
             this.groupBox1.ResumeLayout(false);
