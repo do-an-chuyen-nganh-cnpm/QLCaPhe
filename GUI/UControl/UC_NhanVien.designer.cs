@@ -73,6 +73,7 @@
             // 
             // dgv_NhanVien
             // 
+            this.dgv_NhanVien.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgv_NhanVien.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_NhanVien.Location = new System.Drawing.Point(2, 296);
             this.dgv_NhanVien.Margin = new System.Windows.Forms.Padding(2);
@@ -81,7 +82,7 @@
             this.dgv_NhanVien.RowTemplate.Height = 33;
             this.dgv_NhanVien.Size = new System.Drawing.Size(1330, 400);
             this.dgv_NhanVien.TabIndex = 1;
-            this.dgv_NhanVien.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_NhanVien_CellContentClick);
+            this.dgv_NhanVien.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_NhanVien_CellClick);
             this.dgv_NhanVien.SelectionChanged += new System.EventHandler(this.dgv_NhanVien_SelectionChanged);
             // 
             // groupBox1
@@ -167,6 +168,7 @@
             this.txtSoDT.Name = "txtSoDT";
             this.txtSoDT.Size = new System.Drawing.Size(245, 26);
             this.txtSoDT.TabIndex = 21;
+            this.txtSoDT.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSoDT_KeyPress);
             // 
             // txtDiaChi
             // 

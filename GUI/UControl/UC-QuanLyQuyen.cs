@@ -45,8 +45,14 @@ namespace GUI.UControl
             DGVQuyen.Rows.Clear();
             DGVQuyen.DataSource = list;
         }
+        private bool KT_ThongTin()
+        {
+            if(txtMaQuyen.Text=="" || txtTenQuyen.Text =="") { return false; }
+            return true;
+        }
         private void btnThem_Click(object sender, EventArgs e)
         {
+            if(KT_ThongTin() == false) { MessageBox.Show("Kiểm tra lại thông tin !"); return; }
             Quyen_ManHinh quyen = new Quyen_ManHinh();
             quyen.MaDM = cbxManHinh.SelectedValue.ToString();
             quyen.MaQuyen = txtMaQuyen.Text.ToString();
@@ -79,6 +85,7 @@ namespace GUI.UControl
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
+            if (txtMaQuyen.Text == "") { MessageBox.Show("Kiểm tra lại thông tin"); return; }
             string MaMH = cbxManHinh.SelectedValue.ToString();
             string maQuyen = txtMaQuyen.Text;
             if (String.IsNullOrEmpty(MaMH) || String.IsNullOrEmpty(maQuyen)) { return; ThongBao("Thông báo", "Thất bại"); }

@@ -34,18 +34,19 @@ namespace GUI.Frm
         private string CTHDclSoLuong = "Số lượng";
         private string CTHDclDonGia = "Đơn giá";
         DataTable dataTableCTHoaDon = new DataTable();
-        private string maHoaDonCanGop;
         List<ChiTietHoaDon> chiTietHoaDons;
         List<string> DS_MaBanCanGop = new List<string>();
         List<string> DS_MaHoaDon = new List<string>();
+        private string hostMaBan, hostMaHD;
         public FrmGopBan()
         {
             InitializeComponent();
             Init();
         }
-        public FrmGopBan(string maHD)
+        public FrmGopBan(string maHD, string maBan)
         {
-            maHoaDonCanGop = maHD;
+            hostMaBan = maBan;
+            hostMaHD = maHD;
             InitializeComponent();
             Init();
         }
@@ -94,7 +95,7 @@ namespace GUI.Frm
                         indexBan++;
                     }
                     x = 10;
-                    y += 70;
+                    y += 90;
                 }
             }
             catch { }
@@ -104,30 +105,32 @@ namespace GUI.Frm
         {
             Panel panel = new Panel
             {
-                Width = 60,
-                Height = 60,
+                Width = 65,
+                Height = 65,
                 // Set the border style
                 BorderStyle = BorderStyle.FixedSingle,
                 Name = TenBan,
+                BackgroundImage = Properties.Resources.chair,
+                BackgroundImageLayout = ImageLayout.Stretch
             };
             //màu theo trạng thái và TAG
             switch (trangthai)
             {
                 case var x when x.Equals(xuLyTrangThaiBan.tenTrangThaiDaCoKhach): //trangThaiBanCoKhach
                     {
-                        panel.BackColor = Color.LightCoral;
+                        panel.BackColor = xuLyBan.mauCoKhach;
                         panel.Tag = xuLyTrangThaiBan.tenTrangThaiDaCoKhach;
                         break;
                     }
                 case var x when x.Equals(xuLyTrangThaiBan.tenTrangThaiDaDat): //trangThaiBanDaDat
                     {
-                        panel.BackColor = Color.LightYellow;
+                        panel.BackColor = xuLyBan.mauBanDaDat;
                         panel.Tag = xuLyTrangThaiBan.tenTrangThaiDaDat;
                         break;
                     }
                 case var x when x.Equals(xuLyTrangThaiBan.tenTrangThaiBanTrong): //trangThaiBanTrong
                     {
-                        panel.BackColor = Color.LimeGreen;
+                        panel.BackColor = xuLyBan.mauBanTrong;
                         panel.Tag = xuLyTrangThaiBan.tenTrangThaiBanTrong;
                         break;
                     }
@@ -135,14 +138,14 @@ namespace GUI.Frm
                     break;
             }
             panel.Click += Panel_Click;
-            Label label = new Label
-            {
-                Text = TenBan,
-                Location = new Point(0, 0),
-                Name = maBan,
-                Font = new Font("Arial", 12), // Set the font with size 12
-            };
-            panel.Controls.Add(label);
+            //Label label = new Label
+            //{
+            //    Text = TenBan,
+            //    Location = new Point(0, 0),
+            //    Name = maBan,
+            //    Font = new Font("Arial", 12), // Set the font with size 12
+            //};
+            //panel.Controls.Add(label);
             return panel;
         }
 
@@ -232,14 +235,15 @@ namespace GUI.Frm
 
         private void btn_GopBan_Click(object sender, EventArgs e)
         {
-          //  xuLyHoaDon 
-          if(DS_MaBanCanGop.Count <2 || DS_MaHoaDon.Count < 2)
+            //  xuLyHoaDon 
+            if (DS_MaBanCanGop.Count < 2 || DS_MaHoaDon.Count < 2)
             {
                 MessageBox.Show("Chọn ít nhất hai bàn để gọp", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-            HoaDon hd = xuLyHoaDon.LayHoaDon(DS_MaHoaDon[0]);
-            int kq = xuLyHoaDon.GopBan(DS_MaHoaDon, DS_MaBanCanGop, hd.MaHD, hd.MaBan);
-            if(kq == 1)
+            //HoaDon hd = xuLyHoaDon.LayHoaDon(DS_MaHoaDon[0]);
+            int kq = xuLyHoaDon.GopBan(DS_MaHoaDon, DS_MaBanCanGop, hostMaHD, hostMaBan);
+            if (kq == 1)
             {
                 MessageBox.Show("Gọp bàn thành công");
                 ClearPanelHienThiBan();

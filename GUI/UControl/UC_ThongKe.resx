@@ -118,6 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnLocTheoNgay.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAA
+        VAAAAFQBo63EFQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAADbSURBVDhPrdIx
+        y0FRGMDxI+v7SXwAmfQqk+xYTTbyBUgZLLLIYlCsBj4A34BJySCTRSllUN43/s9zEMp1rvzrV+e5dU/n
+        3K6hOU4fWsOs0EDcpyq2MD30ZeGzDoayiOAPsqtr8s4Rt3dq2OFXJ+/C2KCl06UA6jggJQ9elMQebQTl
+        wXNFyHXyOj2WhRy7rJNHGfwjoZMtCnmW08mhLgZ2qcmsX9w1ucrELrURKnbpVgFTu9TGeHv3+766wQ9m
+        KOnk2HWDGJYXITgnG8hPJf9EE3IKX6WxgJzAI2POlz4+JKPZE04AAAAASUVORK5CYII=
+</value>
+  </data>
   <data name="btnLoc.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAA

@@ -37,6 +37,7 @@
             this.btnSua = new System.Windows.Forms.Button();
             this.btnXoa = new System.Windows.Forms.Button();
             this.btnThem = new System.Windows.Forms.Button();
+            this.txtTriGia = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.txtNgayKT = new System.Windows.Forms.DateTimePicker();
@@ -49,7 +50,6 @@
             this.txtMaKM = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.DGV_KhuyenMai = new System.Windows.Forms.DataGridView();
-            this.txtTriGia = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_KhuyenMai)).BeginInit();
             this.SuspendLayout();
@@ -136,6 +136,15 @@
             this.btnThem.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnThem.UseVisualStyleBackColor = false;
             this.btnThem.Click += new System.EventHandler(this.btnThem_Click);
+            // 
+            // txtTriGia
+            // 
+            this.txtTriGia.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTriGia.Location = new System.Drawing.Point(660, 19);
+            this.txtTriGia.Name = "txtTriGia";
+            this.txtTriGia.Size = new System.Drawing.Size(221, 26);
+            this.txtTriGia.TabIndex = 11;
+            this.txtTriGia.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtTriGia_KeyPress);
             // 
             // label6
             // 
@@ -242,6 +251,7 @@
             // 
             // DGV_KhuyenMai
             // 
+            this.DGV_KhuyenMai.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -272,15 +282,6 @@
             this.DGV_KhuyenMai.Size = new System.Drawing.Size(1332, 530);
             this.DGV_KhuyenMai.TabIndex = 3;
             this.DGV_KhuyenMai.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_KhuyenMai_CellClick);
-            // 
-            // txtTriGia
-            // 
-            this.txtTriGia.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTriGia.Location = new System.Drawing.Point(660, 19);
-            this.txtTriGia.Name = "txtTriGia";
-            this.txtTriGia.Size = new System.Drawing.Size(221, 26);
-            this.txtTriGia.TabIndex = 11;
-            this.txtTriGia.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtTriGia_KeyPress);
             // 
             // UC_KhuyenMai
             // 

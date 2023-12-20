@@ -118,6 +118,7 @@ namespace GUI.UControl
 
         private void btn_Xoa_Click(object sender, EventArgs e)
         {
+            if (txtMaCaLam.Text =="") { MessageBox.Show("Thông tin bị sai"); return; }
             DialogResult r = MessageBox.Show("Thông báo", "Xác nhân xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (r == DialogResult.Yes)
             {
@@ -131,9 +132,21 @@ namespace GUI.UControl
         {
             coHieuLuctxt();
         }
-
+        private bool KT_ThongTin()
+        {
+           foreach(Control ctr in groupBox1.Controls)
+            {
+                if(ctr is TextBox)
+                {
+                    TextBox t = (TextBox)ctr;
+                    if (t.Text == "") { return false; }
+                }
+            }
+            return true;
+        }
         private void btn_Luu_Click(object sender, EventArgs e)
         {
+
             //kiểm tra trùng
             bool kqKT = xuLy.KT_TonTai(txtMaCaLam.Text.ToString());
             CaLamViec c = getDataControls();
@@ -211,6 +224,14 @@ namespace GUI.UControl
                 }
             }
             catch { }
+        }
+
+        private void txtTien_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if(!Char.IsDigit(e.KeyChar) && !Char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+            }
         }
     }
 }

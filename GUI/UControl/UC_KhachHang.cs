@@ -50,8 +50,18 @@ namespace GUI.UControl
             }
             catch { return null; }
         }
+        private bool KT_ThongTin()
+        {
+            if (txt_MaKH.Text == "") { return false; }
+            if (txt_TenKH.Text == "") { return false; }
+            if (txt_DiaChi.Text == "") { return false; }
+            if (txt_SDT.Text == "") { return false; }
+            if (txt_DiemTL.Text == "") { return false; }
+            return true;
+        }
         private void btnLuu_Click(object sender, EventArgs e)
         {
+            if (KT_ThongTin() == false) { MessageBox.Show("Thông tin bi sai "); return; }
             //kiểm tra trùng
             bool kqKT =xuLyKhachHang.KT_TonTai(txt_MaKH.Text.ToString());
             KHACHHANG kh = getDataControls();
@@ -93,6 +103,7 @@ namespace GUI.UControl
         }
         private void btnXoa_Click(object sender, EventArgs e)
         {
+            if (txt_MaKH.Text == "") { MessageBox.Show("Mã khách hàng không được để trống"); return; }
             DialogResult r = MessageBox.Show("Thông báo", "Xác nhân xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (r == DialogResult.Yes)
             {
@@ -150,6 +161,14 @@ namespace GUI.UControl
             txt_TenKH.Clear();
             txt_DiemTL.Clear();
             txt_SDT.Clear();
+        }
+
+        private void txt_SDT_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if(!Char.IsDigit(e.KeyChar)&& !Char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+            }
         }
     }
 }

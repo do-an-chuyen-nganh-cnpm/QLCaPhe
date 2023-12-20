@@ -9,8 +9,8 @@ namespace BLL.Core
 {
     public class XuLyLoaiKhachHang:BaseXuLy
     {
-        public string maLoai_KHBinhThuong = "1";
-        public string maLoai_KHThanThiet = "2";
+        public string maLoai_KHBinhThuong = "khthuong";
+        public string maLoai_KHThanThiet = "khthanthiet";
         public List<LoaiKhachHang> getAll()
         {
             try

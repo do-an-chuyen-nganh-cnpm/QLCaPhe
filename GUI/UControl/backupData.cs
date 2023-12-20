@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace GUI.UControl
 {
-    public partial class UC_CapLaiMatKhau : UserControl
+    public partial class backupData : UserControl
     {
-        public UC_CapLaiMatKhau()
+        public backupData()
         {
             InitializeComponent();
         }

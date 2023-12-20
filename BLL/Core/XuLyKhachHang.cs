@@ -11,9 +11,13 @@ namespace BLL.Core
     {
         public string layTenKH(string maKH)
         {
-            KHACHHANG kh = ctx.KHACHHANGs.FirstOrDefault(v => v.MaKH.Trim().Equals(maKH.Trim()));
-            if (kh != null) { return kh.TenKH; }
-            return "";
+            try
+            {
+                KHACHHANG kh = ctx.KHACHHANGs.FirstOrDefault(v => v.MaKH.Trim().Equals(maKH.Trim()));
+                if (kh != null) { return kh.TenKH; }
+                return "null";
+            }catch { return "null"; }
+            
         }
         public KHACHHANG layKhachHang (string maKH)
         {
@@ -46,6 +50,8 @@ namespace BLL.Core
         {
             try
             {
+                KHACHHANG k = new KHACHHANG();
+                k = kh;
                 ctx.KHACHHANGs.InsertOnSubmit(kh);
                 ctx.SubmitChanges();
                 return 1;

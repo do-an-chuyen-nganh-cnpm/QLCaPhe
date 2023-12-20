@@ -242,6 +242,7 @@ namespace GUI.UControl
             this.txt_SDT.Name = "txt_SDT";
             this.txt_SDT.Size = new System.Drawing.Size(240, 26);
             this.txt_SDT.TabIndex = 10;
+            this.txt_SDT.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_SDT_KeyPress);
             // 
             // txt_DiemTL
             // 

@@ -28,30 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btn_GopBan = new System.Windows.Forms.Button();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.dgv_HoaDon = new System.Windows.Forms.DataGridView();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.panelDSBan = new System.Windows.Forms.Panel();
+            this.btn_GopBan = new System.Windows.Forms.Button();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_HoaDon)).BeginInit();
             this.SuspendLayout();
-            // 
-            // btn_GopBan
-            // 
-            this.btn_GopBan.Location = new System.Drawing.Point(415, 413);
-            this.btn_GopBan.Name = "btn_GopBan";
-            this.btn_GopBan.Size = new System.Drawing.Size(120, 36);
-            this.btn_GopBan.TabIndex = 1;
-            this.btn_GopBan.Text = "Gọp Bàn";
-            this.btn_GopBan.UseVisualStyleBackColor = true;
-            this.btn_GopBan.Click += new System.EventHandler(this.btn_GopBan_Click);
             // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.dgv_HoaDon);
             this.groupBox3.Controls.Add(this.groupBox4);
-            this.groupBox3.Location = new System.Drawing.Point(404, 12);
+            this.groupBox3.Location = new System.Drawing.Point(514, 12);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(520, 390);
             this.groupBox3.TabIndex = 2;
@@ -62,6 +53,14 @@
             // 
             this.dgv_HoaDon.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgv_HoaDon.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_HoaDon.DefaultCellStyle = dataGridViewCellStyle1;
             this.dgv_HoaDon.Location = new System.Drawing.Point(5, 18);
             this.dgv_HoaDon.Margin = new System.Windows.Forms.Padding(2);
             this.dgv_HoaDon.Name = "dgv_HoaDon";
@@ -84,14 +83,26 @@
             this.panelDSBan.Location = new System.Drawing.Point(26, 18);
             this.panelDSBan.Margin = new System.Windows.Forms.Padding(2);
             this.panelDSBan.Name = "panelDSBan";
-            this.panelDSBan.Size = new System.Drawing.Size(363, 380);
+            this.panelDSBan.Size = new System.Drawing.Size(446, 438);
             this.panelDSBan.TabIndex = 3;
+            // 
+            // btn_GopBan
+            // 
+            this.btn_GopBan.Image = global::GUI.Properties.Resources.gopban;
+            this.btn_GopBan.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btn_GopBan.Location = new System.Drawing.Point(514, 420);
+            this.btn_GopBan.Name = "btn_GopBan";
+            this.btn_GopBan.Size = new System.Drawing.Size(120, 36);
+            this.btn_GopBan.TabIndex = 1;
+            this.btn_GopBan.Text = "Gọp Bàn";
+            this.btn_GopBan.UseVisualStyleBackColor = true;
+            this.btn_GopBan.Click += new System.EventHandler(this.btn_GopBan_Click);
             // 
             // FrmGopBan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(979, 520);
+            this.ClientSize = new System.Drawing.Size(1046, 520);
             this.Controls.Add(this.panelDSBan);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.btn_GopBan);

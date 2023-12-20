@@ -144,6 +144,29 @@ namespace BLL.Core
                 return 0;
             }
         }
+        public bool check_HSD(string maKM)
+        {
+            // true -> còn hạn ; false -> hết hạn
+            try
+            {
+                KHUYEN_MAI k = ctx.KHUYEN_MAIs.Where(m => m.MaKhuyenMai.Trim().Equals(maKM.Trim())).FirstOrDefault();
+                if (k != null && k.NgayBD.Value != null && k.NgayKT.Value != null)
+                {
+                    DateTime currentdate = DateTime.Today;
+                    if (k.NgayBD.Value.Date < currentdate.Date && currentdate.Date < k.NgayKT.Value.Date)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
+           
+        }
         public bool KT_TonTai(string maKhuyenMai)
         {
             try {

@@ -1,9 +1,11 @@
 ﻿using BLL.DB;
 using System;
 using System.Collections.Generic;
+using System.Data.Linq;
 using System.Data.OleDb;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -21,12 +23,17 @@ namespace BLL.Core
 
         public List<HoaDon> LayTatCaHoaDon()
         {
-            return ctx.HoaDons.ToList();
+            try
+            {
+                return ctx.HoaDons.ToList();
+            }
+            catch { return null; }
         }
         public HoaDon LayHoaDon(string MaHD)
         {
             try
             {
+                ctx.Refresh(RefreshMode.OverwriteCurrentValues, ctx.HoaDons);
                 List<HoaDon> listHD = LayTatCaHoaDon();
                 HoaDon hd = listHD.FirstOrDefault(v => v.MaHD.Trim().Equals(MaHD.Trim()));
                 return hd;
@@ -38,6 +45,53 @@ namespace BLL.Core
             List<HoaDon> listHD = LayTatCaHoaDon();
             HoaDon hd = listHD.FirstOrDefault(v => v.MaBan.Trim().Equals(maBan.Trim()) && v.TrangThai.Equals(TrangThai));
             return hd;
+        }
+        public void  capNhatGiamGia(string maHD, double giamGia)
+        {
+            try
+            {
+                HoaDon hd = ctx.HoaDons.FirstOrDefault(v => v.MaHD.Trim().Equals(maHD.Trim()));
+                if (hd != null && hd.Giamgia != null)
+                {
+                    hd.Giamgia = giamGia;
+                    ctx.SubmitChanges();
+                }
+            }
+            catch { }
+          
+        }
+        public int chuyenban(string maHD, string maBanCu, string maBanMoi)
+        {
+            HoaDon hd = ctx.HoaDons.FirstOrDefault(
+                   v => v.MaHD.Trim().Equals(maHD.Trim()) &&
+                   v.MaBan.Trim().Equals(maBanCu.Trim())
+                );
+            if (hd == null)
+            {
+                return 0;
+            }
+            else
+            {
+                hd.MaBan = maBanMoi;
+                ctx.SubmitChanges();
+                //cập nhật bàn cũ trống
+                xuLyBan.capNhatTrangThaiBan(maBanCu,xuLyTrangThaiBan.maTrangThaiBanTrong);
+                xuLyBan.capNhatTrangThaiBan(maBanMoi, xuLyTrangThaiBan.maTrangThaiDaCoKhach);
+                return 1;
+            }
+        }
+        public List< HoaDon>  TimKiemHoaDonByNgayLap(DateTime ngayLap)
+        {
+            try
+            {
+                if (ngayLap == null)
+                {
+                    return null;
+                }
+                List<HoaDon> result = ctx.HoaDons.Where(v => v.NgayLap.Value.Date == ngayLap.Date).ToList();
+                return result;
+            }
+            catch { return null; }
         }
         public HoaDon TimKiem(string maHD)
         {
@@ -233,6 +287,7 @@ namespace BLL.Core
         }
         public int GopBan(List<string> DSMaHD, List<string> DS_MaBan, string maHoaDonChinh, string MaBanChinh)
         {
+            if(String.IsNullOrEmpty(MaBanChinh) || String.IsNullOrEmpty(maHoaDonChinh) || DS_MaBan.Count==0|| DSMaHD.Count == 0) { return 0; }
             try
             {
                 List<ChiTietHoaDon> listHoaDonBanChinh = new List<ChiTietHoaDon>();
@@ -280,9 +335,11 @@ namespace BLL.Core
                 }
                 foreach(string mahd in DSMaHD)
                 {
-                    if (!mahd.Equals(maHoaDonChinh))
+                    if (!mahd.Trim().Equals(maHoaDonChinh.Trim()))
                     {
                         Xoa_AllCTHoaDon(mahd);
+                        //xóa hóa đơn không phải là hóa đơn chính
+                        xoaHoaDon(mahd);
                     }
                 }
                 // cập nhật lại trạng thái cho bàn không phải bàn chính thành trạng thái trống
@@ -290,10 +347,27 @@ namespace BLL.Core
                 {
                     if (!maban.Trim().Equals(MaBanChinh.Trim()))
                     {
-                        xuLyBan.capNhatTrangThaiBan(maban, xuLyBan.maTrangThaiTrong);
+                        xuLyBan.capNhatTrangThaiBan(maban, xuLyTrangThaiBan.maTrangThaiBanTrong);//maTrangThaiTrong
                     }
                 }
                 return 1;
+            }
+            catch { return 0; }
+        }
+        public int xoaHoaDon (string maHD)
+        {
+            try
+            {
+                ctx.Refresh(RefreshMode.OverwriteCurrentValues, ctx.HoaDons);
+                HoaDon hd = new HoaDon();
+                hd= ctx.HoaDons.FirstOrDefault(v => v.MaHD.Trim().Equals(maHD.Trim()));
+                if (hd != null && hd.MaHD != null)
+                {
+                    ctx.HoaDons.DeleteOnSubmit(hd);
+                    ctx.SubmitChanges();
+                    return 1;
+                }
+                return 0;
             }
             catch { return 0; }
            
@@ -304,7 +378,20 @@ namespace BLL.Core
             {
                 if (ct_HD != null)
                 {
-                    ctx.ChiTietHoaDons.InsertOnSubmit(ct_HD);
+                    //kiểm tra trùng 
+                    bool kt = KT_TrungChiTiet(ct_HD.MaHD, ct_HD.MaSP);
+                    if( kt == true)
+                    {
+                        ChiTietHoaDon ct = ctx.ChiTietHoaDons.FirstOrDefault(v => v.MaHD.Trim().Equals(ct_HD.MaHD.Trim()) 
+                        &&v.MaSP.Trim().Equals(ct_HD.MaSP.Trim()) );
+                        ct.SoLuong += ct_HD.SoLuong;
+                        //tăng số lượng
+                    }
+                    if(kt == false)
+                    {
+                        ctx.ChiTietHoaDons.InsertOnSubmit(ct_HD);
+                        //thêm mới
+                    }
                     ctx.SubmitChanges();
                     return 1;
                 }

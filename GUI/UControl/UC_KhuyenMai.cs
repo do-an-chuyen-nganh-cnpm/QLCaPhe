@@ -136,7 +136,8 @@ namespace GUI.UControl
         private void btnThem_Click(object sender, EventArgs e)
         {
 
-            txtMaKM.Text = Librari.TaoMaKhuyenMai();
+            txtMaKM.Clear();
+            txtMaKM.ReadOnly = false;
             txtTenKM.Clear();
             txtMoTa.Clear();
             txtTriGia.Clear();
@@ -156,9 +157,15 @@ namespace GUI.UControl
             //xuLyKM.ThemKhuyenMai(k);
         }
 
+
         private void btnLuu_Click(object sender, EventArgs e)
         {
-            //kiểm tra trùng
+            //kiểm tra thông tin
+            if(txtMaKM.Text=="" || txtTenKM.Text == "")
+            {
+                MessageBox.Show("Thông tin bị sai");
+                return;
+            }
             bool kqKT = xuLyKM.KT_TonTai(txtMaKM.Text.ToString());
             KHUYEN_MAI k = layDataControls();
             //khồng trùng thêm mới 
@@ -240,6 +247,7 @@ namespace GUI.UControl
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
+            if (txtMaKM.Text == "") { MessageBox.Show("Thông tin không được để trống"); return; }
             DialogResult r = MessageBox.Show("Thông báo", "Xác nhân xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if(r == DialogResult.Yes)
             {
@@ -261,16 +269,20 @@ namespace GUI.UControl
         int indexClick = -1;
         private void DGV_KhuyenMai_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            indexClick = e.RowIndex;
-            if(DGV_KhuyenMai.CurrentCell != null)
+            try
             {
-                txtMaKM.Text = DGV_KhuyenMai.Rows[indexClick].Cells[nameMaKM].Value.ToString();
-                txtTenKM.Text = DGV_KhuyenMai.Rows[indexClick].Cells[nameTenKM].Value.ToString();
-                txtMoTa.Text = DGV_KhuyenMai.Rows[indexClick].Cells[nameMota].Value.ToString();
-                txtNgayBD.Value = ConvertToDateTime(DGV_KhuyenMai.Rows[indexClick].Cells[nameNgayBD].Value.ToString());
-                txtNgayKT.Value = ConvertToDateTime(DGV_KhuyenMai.Rows[indexClick].Cells[nameNgayKT].Value.ToString());
-                txtTriGia.Text = DGV_KhuyenMai.Rows[indexClick].Cells[namePhanTramGiamGia].Value.ToString();
+                indexClick = e.RowIndex;
+                if (DGV_KhuyenMai.CurrentCell != null)
+                {
+                    txtMaKM.Text = DGV_KhuyenMai.Rows[indexClick].Cells[nameMaKM].Value.ToString();
+                    txtTenKM.Text = DGV_KhuyenMai.Rows[indexClick].Cells[nameTenKM].Value.ToString();
+                    txtMoTa.Text = DGV_KhuyenMai.Rows[indexClick].Cells[nameMota].Value.ToString();
+                    txtNgayBD.Value = ConvertToDateTime(DGV_KhuyenMai.Rows[indexClick].Cells[nameNgayBD].Value.ToString());
+                    txtNgayKT.Value = ConvertToDateTime(DGV_KhuyenMai.Rows[indexClick].Cells[nameNgayKT].Value.ToString());
+                    txtTriGia.Text = DGV_KhuyenMai.Rows[indexClick].Cells[namePhanTramGiamGia].Value.ToString();
+                }
             }
+            catch { }
         }
     }
 }

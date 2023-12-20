@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -25,6 +26,7 @@ namespace GUI.UControl
         private string TK_col_MaKH = "Mã Khách Hàng";
         private string TK_col_MaBan = "Mã Bàn";
         private string TK_col_MaSP = "Mã sản phẩm";
+        private string TK_col_DonGia = "Đơn giá";
         private string TK_col_TenSP = "Tên sản phẩm";
         private string TK_col_TongTien = "Tổng tiền";
         private string TK_col_DiemTL = "Diển tích lũy"; 
@@ -48,7 +50,7 @@ namespace GUI.UControl
 
         }
         private void btnLoc_Click(object sender, EventArgs e)
-        {
+        {  
             string MaDK = cbxDieuKien.SelectedValue.ToString();
             List<TK_DoanhThuModel> result = xl_ThongKe.getDoanhThuTheo_Ma_DoanhThu(int.Parse(MaDK));
             if (result == null)
@@ -73,9 +75,10 @@ namespace GUI.UControl
             dataTabletThongKe.Columns.Add(tk_col_MAHD, typeof(string));
             dataTabletThongKe.Columns.Add(TK_col_MaNV, typeof(string));
             dataTabletThongKe.Columns.Add(TK_col_MaKH, typeof(string));
-            dataTabletThongKe.Columns.Add(TK_col_MaBan, typeof(string));
+            dataTabletThongKe.Columns.Add(TK_col_MaBan, typeof(string)); 
             dataTabletThongKe.Columns.Add(TK_col_MaSP, typeof(string));
             dataTabletThongKe.Columns.Add(TK_col_TenSP, typeof(string));
+            dataTabletThongKe.Columns.Add(TK_col_DonGia, typeof(string));
             dataTabletThongKe.Columns.Add(TK_col_TongTien, typeof(string));
             dataTabletThongKe.Columns.Add(TK_col_DiemTL, typeof(string));
             dataTabletThongKe.Columns.Add(TK_col_Giamgia, typeof(string));
@@ -101,6 +104,7 @@ namespace GUI.UControl
             row[TK_col_MaBan] = tk.MaBan;
             row[TK_col_MaSP] = tk.MaSP;
             row[TK_col_TenSP] = tk.TenSP;
+            row[TK_col_DonGia] = tk.DonGia;
             row[TK_col_TongTien] = tk.TongTien;
             row[TK_col_DiemTL] = tk.DiemTL;
             row[TK_col_Giamgia] = tk.Giamgia;
@@ -113,6 +117,26 @@ namespace GUI.UControl
         {
           bool kq =  xl_ThongKe.XuatFile(listTKModel);
         if(kq == false) { MessageBox.Show("Dữ liệu sai !"); }
+        }
+        private void btnLocTheoNgay_Click(object sender, EventArgs e)
+        {
+            DateTime ngayBD = txtNgayBD.Value;
+            DateTime ngayKT = txtNgayKT.Value;
+            if(ngayBD > ngayKT)
+            {
+                MessageBox.Show("Điều kiện ngày bị sai");
+                return;
+            }
+            else
+            {
+                listTKModel = new List<TK_DoanhThuModel>();
+                listTKModel= xl_ThongKe.getThongkeTheoNgay(ngayBD,ngayKT);
+                ThemDuLieuDataGridView(listTKModel);
+                txtTongSanPham.Text = xl_ThongKe.getTongSlSP(listTKModel).ToString();
+                txtTongDoanhThu.Text = xl_ThongKe.getTongDoanhThu(listTKModel).ToString("N0") + "đ";
+                txtTongGiamGia.Text = xl_ThongKe.getTongGiamGia(listTKModel).ToString("N0") + "đ";
+                txtTongKH.Text = xl_ThongKe.geSLKH(listTKModel).ToString();
+            }
         }
     }
 }

@@ -90,6 +90,7 @@ namespace GUI.UControl
 
         private void btn_Xoa_Click(object sender, EventArgs e)
         {
+            if (txtMaNV.Text == "") { MessageBox.Show("Không được để trống mã nhân viên"); return; }
             DialogResult r = MessageBox.Show("Bạn có muốn xóa không?", "Xác nhân xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (r == DialogResult.Yes)
             {
@@ -144,10 +145,20 @@ namespace GUI.UControl
             btn_Luu.Enabled = true;
 
         }
-
-
+        private bool KT_ThongTin()
+        {
+            if (txtMaNV.Text == "") { return false; }
+            if (txtTenDN.Text == "") { return false; }
+            if (txtChucVu.Text == "") { return false; }
+            if (txtDiaChi.Text == "") { return false; }
+            if (txtSoDT.Text == "" || txtSoDT.Text.Trim().Length!=10) { return false; }
+            if (txtTenDN.Text == "") { return false; }
+            if (txtMatKhau.Text == "") { return false; }
+            return true;
+        }
         private void btn_Luu_Click(object sender, EventArgs e)
         {
+            if(KT_ThongTin()==false) { MessageBox.Show("Thông tin bị sai");return; }   
             bool kqKT = xl.KT_MaNhanVien(txtMaNV.Text.ToString());
             NHANVIEN nhanvien = getDataControls();
             if (kqKT == false)
@@ -212,43 +223,58 @@ namespace GUI.UControl
             }
         }
 
-        private void dgv_NhanVien_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
-            {
-                // Lấy dòng được chọn
-                DataGridViewRow selectedRow = dgv_NhanVien.Rows[e.RowIndex];
-                // Hiển thị thông tin trên TextBox khi chọn một dòng
-                txtMaNV.Text = selectedRow.Cells["MaNV"].Value.ToString();
-                txtTenNV.Text = selectedRow.Cells["TenNV"].Value.ToString();
-                txtSoDT.Text = selectedRow.Cells["SoDT"].Value.ToString();
-                txtChucVu.Text = selectedRow.Cells["ChucVu"].Value.ToString();
-                txtDiaChi.Text = selectedRow.Cells["DiaChi"].Value.ToString();
-                txtTenDN.Text = selectedRow.Cells["TenDangNhap"].Value.ToString();
-                txtMatKhau.Text = selectedRow.Cells["MatKhau"].Value.ToString();
-                cbb_Quyen.SelectedValue = selectedRow.Cells["MaQuyen"].Value.ToString();
-                string gioiTinh = selectedRow.Cells["GioiTinh"].Value.ToString();
-                if (gioiTinh == "Nam")
-                {
-                    rdo_Nam.Checked = true;
-                    rdo_Nu.Checked = false;
-                }
-                else if (gioiTinh == "Nữ")
-                {
-                    rdo_Nam.Checked = false;
-                    rdo_Nu.Checked = true;
-                }
-                else
-                {
-                    rdo_Nam.Checked = false;
-                    rdo_Nu.Checked = false;
-                }
-            }
-        }
-
         private void dgv_NhanVien_SelectionChanged(object sender, EventArgs e)
         {
             btn_Xoa.Enabled = btn_Sua.Enabled = true;
+        }
+
+        private void dgv_NhanVien_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (dgv_NhanVien.CurrentCell != null)
+                {
+                    // Lấy dòng được chọn
+                    DataGridViewRow selectedRow = dgv_NhanVien.Rows[e.RowIndex];
+                    // Hiển thị thông tin trên TextBox khi chọn một dòng
+                    txtMaNV.Text = selectedRow.Cells["MaNV"].Value.ToString();
+                    txtTenNV.Text = selectedRow.Cells["TenNV"].Value.ToString();
+                    txtSoDT.Text = selectedRow.Cells["SoDT"].Value.ToString();
+                    txtChucVu.Text = selectedRow.Cells["ChucVu"].Value.ToString();
+                    txtDiaChi.Text = selectedRow.Cells["DiaChi"].Value.ToString();
+                    txtTenDN.Text = selectedRow.Cells["TenDangNhap"].Value.ToString();
+                    txtMatKhau.Text = selectedRow.Cells["MatKhau"].Value.ToString();
+                    cbb_Quyen.SelectedValue = selectedRow.Cells["MaQuyen"].Value.ToString();
+                    string gioiTinh = selectedRow.Cells["GioiTinh"].Value.ToString();
+                    if (gioiTinh == "Nam")
+                    {
+                        rdo_Nam.Checked = true;
+                        rdo_Nu.Checked = false;
+                    }
+                    else if (gioiTinh == "Nữ")
+                    {
+                        rdo_Nam.Checked = false;
+                        rdo_Nu.Checked = true;
+                    }
+                    else
+                    {
+                        rdo_Nam.Checked = false;
+                        rdo_Nu.Checked = false;
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void txtSoDT_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if(!Char.IsDigit(e.KeyChar) && !Char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+            }
         }
     }
 }

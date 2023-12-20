@@ -62,6 +62,7 @@ namespace GUI.UControl
 
         private void btn_Xoa_Click(object sender, EventArgs e)
         {
+            if (txtMaSP.Text == "") { MessageBox.Show("Mã sản phẩm không được để trống"); return; }
             DialogResult r = MessageBox.Show("Bạn có muốn xóa không?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (r == DialogResult.Yes)
             {
@@ -180,6 +181,14 @@ namespace GUI.UControl
                 txtHinhAnh.Text = selectedRow.Cells["HinhAnh"].Value.ToString();
                 cbb_LoaiSP.SelectedValue = selectedRow.Cells["MaLoaiSP"].Value.ToString();
 
+            }
+        }
+
+        private void txt_GiaSP_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if(!Char.IsDigit(e.KeyChar)&& !Char.IsControl(e.KeyChar))
+            {
+                e.Handled =true;
             }
         }
     }

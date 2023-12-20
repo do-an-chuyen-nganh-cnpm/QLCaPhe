@@ -55,9 +55,9 @@ namespace GUI.UControl
             try
             {
                 BAN b = new BAN();
-                b.MaBan = txtMaBan.Text;
-                b.TenBan = txtTenBan.Text;
-                b.MaTrangThai = cb_MaTrangThai.SelectedValue.ToString();
+                b.MaBan = txtMaBan.Text.Trim();
+                b.TenBan = txtTenBan.Text.Trim();
+                b.MaTrangThai = cb_MaTrangThai.SelectedValue.ToString().Trim();
                 return b;
             }
             catch { return null; }
@@ -70,6 +70,7 @@ namespace GUI.UControl
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
+            if (txtMaBan.Text == "") { MessageBox.Show("Thông tin không chính xác"); return; }
             DialogResult r = MessageBox.Show("Xác nhân xóa ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (r == DialogResult.Yes)
             {
@@ -83,9 +84,14 @@ namespace GUI.UControl
         {
             coHieuLuctxt();
         }
-
+        private bool KT_ThongTin()
+        {
+            if(txtMaBan.Text =="" || txtTenBan.Text == "") { return false; }
+            return true;
+        }
         private void btnLuu_Click(object sender, EventArgs e)
         {
+            if (KT_ThongTin() == false) { MessageBox.Show("Thông tin không đúng");return; }
             //kiểm tra trùng
             bool kqKT = xuLy.KT_TonTai(txtMaBan.Text.ToString());
             BAN b = getDataControls();

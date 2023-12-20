@@ -52,6 +52,7 @@ namespace GUI.UControl
 
         private void btn_Xoa_Click(object sender, EventArgs e)
         {
+            if (txtMaLoai.Text == "") { MessageBox.Show("Thông tin bị sai"); return; }
             DialogResult r = MessageBox.Show("Bạn có muốn xóa không?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (r == DialogResult.Yes)
             {
@@ -87,6 +88,7 @@ namespace GUI.UControl
         private void btn_Luu_Click(object sender, EventArgs e)
         {
             //Kiểm tra thông tin vừa nhập hoặc sửa có phù hợp
+            if(txtTenLoai.Text=="" || txtMaLoai.Text == "") { MessageBox.Show("Thông tin bị sai");return; }
             if(txtMaLoai.Text == string.Empty)
             {
                 MessageBox.Show("Chưa nhập mã loại ");

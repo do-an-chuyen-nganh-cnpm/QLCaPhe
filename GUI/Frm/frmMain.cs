@@ -16,18 +16,25 @@ using GUI.UControl;
 
 namespace GUI
 {
-    public partial class frmMain : Form
+    public  partial class frmMain : Form
     {
         XuLyQuyenManHinh xuLyQuyenManHinh = new XuLyQuyenManHinh();
         //
         static string  _MaQuyen;
+        UserControl ucmain;
+       public static Form frmmain;
         public frmMain()
         {
             init();
         }
+        public  void reload(UserControl uc)
+        {
+            LoadUC(uc);
+        }
         public void LoadDSBan()
         {
             UC_GoiMon u = new UC_GoiMon();
+            ucmain = u;
             u.TaoDSban();
         }
         public frmMain(string MaQuyen)
@@ -38,6 +45,7 @@ namespace GUI
         private void init()
         {
             InitializeComponent();
+            frmmain = this;
             if (_MaQuyen != null)
             {
                 PhanQuyen(_MaQuyen);
@@ -161,6 +169,7 @@ namespace GUI
         }
         private void LoadUC(UserControl u)
         {
+            ucmain = u;
             panel1.Controls.Clear();
             panel1.Controls.Add(u);
         }
@@ -291,6 +300,12 @@ namespace GUI
         private void đăngXuấtToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void hoaĐơnToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UC_HoaDon u = new UC_HoaDon();
+            LoadUC(u);
         }
     }
 }

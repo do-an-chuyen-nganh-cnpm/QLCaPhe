@@ -17,6 +17,12 @@ namespace BLL.Core
               if (nv == null) { return null; }
             return nv;
         }
+        public string layTenNhanVien(string maNhanVien)
+        {
+            NHANVIEN nv = ctx.NHANVIENs.FirstOrDefault(v => v.MaNV.Trim().Equals(maNhanVien.Trim()));
+            if(nv==null || nv.TenNV == null) { return "null"; }
+           else { return nv.TenNV; }
+        }
         public List<NHANVIEN> getAllNhanVien()
         {
             return ctx.NHANVIENs.ToList();

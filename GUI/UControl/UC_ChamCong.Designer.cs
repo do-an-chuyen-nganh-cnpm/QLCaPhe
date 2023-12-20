@@ -104,6 +104,7 @@
             this.txtTien.Name = "txtTien";
             this.txtTien.Size = new System.Drawing.Size(200, 26);
             this.txtTien.TabIndex = 7;
+            this.txtTien.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtTien_KeyPress);
             // 
             // label4
             // 

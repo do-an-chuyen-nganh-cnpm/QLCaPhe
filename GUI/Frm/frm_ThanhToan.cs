@@ -75,12 +75,13 @@ namespace GUI.Frm
         {
             hoadonchinh = new HoaDon();
             hoadonchinh = xuLyHoaDon.LayHoaDon(maHD);
+            if(hoadonchinh.TongTien == null) { return; }
             if (hoadonchinh != null)
             {
                 txtMaHoaDon.Text = hoadonchinh.MaHD.ToString();
                 txtTongTien.Text =Librari.ConvertFormatTien(hoadonchinh.TongTien.Value);
-                txtGiamGia.Text = "0";
-                txtThanhToan.Text =Librari.ConvertFormatTien( (hoadonchinh.TongTien.Value - double.Parse(txtGiamGia.Text)));
+                txtGiamGia.Text =Librari.ConvertFormatTien( hoadonchinh.Giamgia.Value); 
+                txtThanhToan.Text =Librari.ConvertFormatTien( (hoadonchinh.TongTien.Value - hoadonchinh.Giamgia.Value));
             }
         }
         private void ReLoadLoadTT_HoaDon()
@@ -99,7 +100,7 @@ namespace GUI.Frm
             txtMaKH.Text = maKH;
             txtTenKH.Text = maHD.Trim() +"-"+ maKH.Trim();
             txtSoDienThoai.Text = "null";
-            txtDiemTichLuy.Text = "0";
+            txtDiemTichLuy.Text = "0";           
         }        
 
         private void KhoiTaoDataTable()
@@ -174,10 +175,10 @@ namespace GUI.Frm
                 //tạo mới khách hàng
                 kh = new KHACHHANG();
                 kh.MaKH = txtMaKH.Text.ToString();
+                kh.MaLoaiKH = xuLyLoaiKhachHang.maLoai_KHBinhThuong;
                 kh.TenKH = txtTenKH.Text.ToString();
                 kh.DiaChi = "null";
                 kh.SoDT = "0";
-                kh.MaLoaiKH = xuLyLoaiKhachHang.maLoai_KHBinhThuong;
                 kh.DiemTL = 0;
             }
             if (hoadonchinh.Giamgia == null)
@@ -230,7 +231,9 @@ namespace GUI.Frm
             apiRequest.acqId = 970436; //id vietcomback
             apiRequest.accountNo = 1016761461;
             apiRequest.accountName = "TRAN VAN HIEN";
-            apiRequest.amount =Convert.ToInt32(double.Parse( txtThanhToan.Text.ToString())); //tổng tiền thanh toán
+            if (hoadonchinh.Giamgia == null) { hoadonchinh.Giamgia = 0; }
+            double tongtien = hoadonchinh.TongTien.Value - hoadonchinh.Giamgia.Value;
+            apiRequest.amount =Convert.ToInt32(tongtien); //tổng tiền thanh toán
             apiRequest.format = "text";
             apiRequest.template = "compact";
             var jsonRequest = JsonConvert.SerializeObject(apiRequest);
@@ -299,6 +302,45 @@ namespace GUI.Frm
             double phantram = xuLyKhuyenMai.layPhanTramKhuyenMai(maKhuyenMai);
             hoadonchinh.Giamgia = phantram * tongtien/100;
             ReLoadLoadTT_HoaDon();
+        }
+
+        private void cbxMaGiamGia_TextChanged(object sender, EventArgs e)
+        {
+            if (cbxMaGiamGia.Text == "") { return; }
+            //sự thay đổi 
+            string maKhuyenMai = cbxMaGiamGia.Text;
+            if (String.IsNullOrEmpty(maKhuyenMai)) {
+                txtGiamGia.Text = "0";
+                xulyhoadon.capNhatGiamGia(maHD, 0) ;
+                LoadTT_HoaDon();
+            }
+            else
+            {
+                bool ktTonTaiMaGiamGia = xuLyKhuyenMai.KT_TonTai(maKhuyenMai);
+                if (ktTonTaiMaGiamGia == true)
+                {
+                    //kiểm tra hạn dùng 
+                    bool checkHSD = xuLyKhuyenMai.check_HSD(maKhuyenMai);
+                    if(checkHSD == true)
+                    {
+                        int phantram = xuLyKhuyenMai.layPhanTramKhuyenMai(maKhuyenMai);
+                        double giamgia = phantram * hoadonchinh.TongTien.Value / 100;
+                        xulyhoadon.capNhatGiamGia(maHD, giamgia);
+                        LoadTT_HoaDon();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Mã hết hạn hoặc chưa được sử dụng");
+                        xulyhoadon.capNhatGiamGia(maHD, 0);
+                        LoadTT_HoaDon();
+                    }
+                }
+                else { 
+                    xulyhoadon.capNhatGiamGia(maHD, 0);
+                    LoadTT_HoaDon();
+                }
+            }
+          
         }
     }
 }

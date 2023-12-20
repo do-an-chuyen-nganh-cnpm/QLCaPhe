@@ -33,7 +33,7 @@ namespace GUI.Frm
             string matKhau = txtMatKhau.Text;
             // if (KT_TT() == false) { return; MessageBox.Show("Thông tin bị sai"); }
             NHANVIEN nv = xulyNV.DangNhap(taikhoan, matKhau);
-            if (nv == null) { return; MessageBox.Show("Đăng nhập không thành công"); }
+            if (nv == null) { MessageBox.Show("Đăng nhập không thành công"); return;  }
             this.Visible = false;
             nvDangSuDung = nv;
             Program._frmMain = new frmMain(nv.MaQuyen);

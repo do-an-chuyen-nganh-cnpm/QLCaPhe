@@ -46,8 +46,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\packages\Excel\Microsoft.Office.Interop.Excel.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -87,6 +89,7 @@
     <Compile Include="Core\XuLyCaLamViec.cs" />
     <Compile Include="Core\XuLyCaLamViec_NhanVien.cs" />
     <Compile Include="Core\XuLyChiTietCaLamViec.cs" />
+    <Compile Include="Core\XuLyDatBan.cs" />
     <Compile Include="Core\XuLyDMManHinh.cs" />
     <Compile Include="Core\XuLyNhanVien.cs" />
     <Compile Include="Core\XuLyBan.cs" />

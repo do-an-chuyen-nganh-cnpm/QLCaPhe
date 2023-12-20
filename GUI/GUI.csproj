@@ -100,6 +100,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Frm\frmChuyenBan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frmChuyenBan.Designer.cs">
+      <DependentUpon>frmChuyenBan.cs</DependentUpon>
+    </Compile>
     <Compile Include="Frm\FrmGopBan.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -130,6 +136,12 @@
     <Compile Include="Frm\frm_ThanhToan.Designer.cs">
       <DependentUpon>frm_ThanhToan.cs</DependentUpon>
     </Compile>
+    <Compile Include="Frm\frm_TT_DatBanOnline.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm\frm_TT_DatBanOnline.Designer.cs">
+      <DependentUpon>frm_TT_DatBanOnline.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -146,6 +158,12 @@
     <Compile Include="Report\rpt_HoaDon.cs" />
     <Compile Include="Report\rpt_SanPham.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="UControl\backupData.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UControl\backupData.Designer.cs">
+      <DependentUpon>backupData.cs</DependentUpon>
+    </Compile>
     <Compile Include="UControl\UC-QuanLyQuyen.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -164,12 +182,6 @@
     <Compile Include="UControl\UC_CaLamViec.designer.cs">
       <DependentUpon>UC_CaLamViec.cs</DependentUpon>
     </Compile>
-    <Compile Include="UControl\UC_CapLaiMatKhau.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UControl\UC_CapLaiMatKhau.Designer.cs">
-      <DependentUpon>UC_CapLaiMatKhau.cs</DependentUpon>
-    </Compile>
     <Compile Include="UControl\UC_ChamCong.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -181,6 +193,12 @@
     </Compile>
     <Compile Include="UControl\UC_GoiMon.Designer.cs">
       <DependentUpon>UC_GoiMon.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UControl\UC_HoaDon.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UControl\UC_HoaDon.Designer.cs">
+      <DependentUpon>UC_HoaDon.cs</DependentUpon>
     </Compile>
     <Compile Include="UControl\UC_KhachHang.cs">
       <SubType>UserControl</SubType>
@@ -230,6 +248,9 @@
     <Compile Include="UControl\UC_TinhLuongNhanVien.designer.cs">
       <DependentUpon>UC_TinhLuongNhanVien.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Frm\frmChuyenBan.resx">
+      <DependentUpon>frmChuyenBan.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Frm\FrmGopBan.resx">
       <DependentUpon>FrmGopBan.cs</DependentUpon>
     </EmbeddedResource>
@@ -245,6 +266,9 @@
     <EmbeddedResource Include="Frm\frm_ThanhToan.resx">
       <DependentUpon>frm_ThanhToan.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Frm\frm_TT_DatBanOnline.resx">
+      <DependentUpon>frm_TT_DatBanOnline.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -256,6 +280,9 @@
     <EmbeddedResource Include="Report\rpt_HoaDon.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="UControl\backupData.resx">
+      <DependentUpon>backupData.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UControl\UC-QuanLyQuyen.resx">
       <DependentUpon>UC-QuanLyQuyen.cs</DependentUpon>
     </EmbeddedResource>
@@ -265,14 +292,14 @@
     <EmbeddedResource Include="UControl\UC_CaLamViec.resx">
       <DependentUpon>UC_CaLamViec.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UControl\UC_CapLaiMatKhau.resx">
-      <DependentUpon>UC_CapLaiMatKhau.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="UControl\UC_ChamCong.resx">
       <DependentUpon>UC_ChamCong.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UControl\UC_GoiMon.resx">
       <DependentUpon>UC_GoiMon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UControl\UC_HoaDon.resx">
+      <DependentUpon>UC_HoaDon.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UControl\UC_KhachHang.resx">
       <DependentUpon>UC_KhachHang.cs</DependentUpon>
@@ -324,6 +351,15 @@
     <None Include="Resources\plus24.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\pay.png" />
+    <None Include="Resources\datban.png" />
+    <None Include="Resources\chuyenban.png" />
+    <None Include="Resources\tachban.png" />
+    <None Include="Resources\gopban.png" />
+    <None Include="Resources\new.png" />
+    <None Include="Resources\all.png" />
+    <None Include="Resources\chair.png" />
+    <None Include="Resources\printer.png" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

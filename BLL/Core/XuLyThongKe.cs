@@ -14,27 +14,35 @@ namespace BLL.Core
     {
         public List<TK_DoanhThuModel> Get_DoanhThu_ngay (DateTime day)
         {
-            var result = from hoaDon in ctx.HoaDons
-                         join chiTietHoaDon in ctx.ChiTietHoaDons on hoaDon.MaHD equals chiTietHoaDon.MaHD
-                         join sanPham in ctx.SanPhams on chiTietHoaDon.MaSP equals sanPham.MaSP
-                         where hoaDon.NgayLap == day
-                         select new TK_DoanhThuModel
-                         {
-                             MaHD = hoaDon.MaHD,
-                             MaNV = hoaDon.MaNV,
-                             MaKH = hoaDon.MaKH,
-                             MaBan = hoaDon.MaBan,
-                             NgayLap = hoaDon.NgayLap.Value,
-                             TongTien = hoaDon.TongTien.Value,
-                             TenSP = sanPham.TenSP,
-                             DiemTL = hoaDon.DiemTL.Value,
-                             Giamgia = hoaDon.Giamgia.Value,
-                             MaSP = chiTietHoaDon.MaSP,
-                             SoLuong = chiTietHoaDon.SoLuong.Value,
-                             ThanhTien = chiTietHoaDon.TongTien.Value
-                         };
-            List<TK_DoanhThuModel> tam = result.ToList();
-            return result.ToList();
+            try
+            {
+                var result = from hoaDon in ctx.HoaDons
+                             join chiTietHoaDon in ctx.ChiTietHoaDons on hoaDon.MaHD equals chiTietHoaDon.MaHD
+                             join sanPham in ctx.SanPhams on chiTietHoaDon.MaSP equals sanPham.MaSP
+                             where hoaDon.NgayLap.Value.Date == day.Date
+                             select new TK_DoanhThuModel
+                             {
+                                 MaHD = hoaDon.MaHD,
+                                 MaNV = hoaDon.MaNV,
+                                 MaKH = hoaDon.MaKH,
+                                 MaBan = hoaDon.MaBan,
+                                 NgayLap = hoaDon.NgayLap.Value,
+                                 TongTien = hoaDon.TongTien.Value,
+                                 TenSP = sanPham.TenSP,
+                                 DiemTL = hoaDon.DiemTL.Value,
+                                 DonGia = chiTietHoaDon.DonGia.Value,
+                                 Giamgia = hoaDon.Giamgia.Value,
+                                 MaSP = chiTietHoaDon.MaSP,
+                                 SoLuong = chiTietHoaDon.SoLuong.Value,
+                                 ThanhTien = chiTietHoaDon.TongTien.Value
+                             };
+                List<TK_DoanhThuModel> tam = result.ToList();
+                return result.ToList();
+            }
+            catch
+            {
+                return null;
+            }
         }
         public List<TK_DoanhThuModel> Get_DoanhThu_khoang_A_B(DateTime ngayBD, DateTime ngayKT)
         {
@@ -45,7 +53,7 @@ namespace BLL.Core
                 var result = from hoaDon in ctx.HoaDons
                              join chiTietHoaDon in ctx.ChiTietHoaDons on hoaDon.MaHD equals chiTietHoaDon.MaHD
                              join sanPham in ctx.SanPhams on chiTietHoaDon.MaSP equals sanPham.MaSP
-                             where hoaDon.NgayLap >= ngayBD && hoaDon.NgayLap <= ngayKT && hoaDon.TrangThai.Equals(trangThaiHD)
+                             where hoaDon.NgayLap.Value.Date >= ngayBD.Date && hoaDon.NgayLap.Value.Date <= ngayKT.Date && hoaDon.TrangThai.Equals(trangThaiHD)
                              select new TK_DoanhThuModel
                              {
                                  MaHD = hoaDon.MaHD,
@@ -67,70 +75,83 @@ namespace BLL.Core
             }
             catch { return null; }           
         }
+
+        public List<TK_DoanhThuModel> getThongkeTheoNgay(DateTime ngayBD, DateTime ngayKT)
+        {
+            List<TK_DoanhThuModel> result = Get_DoanhThu_khoang_A_B(ngayBD, ngayKT);
+            return result;
+        }
         public List<TK_DoanhThuModel> getDoanhThuTheo_Ma_DoanhThu(int maDK)
         {
+
+            /*
+              _danhSachDieuKien = new List<DieuKienThongKeModel>();
+                DieuKienThongKeModel d = new DieuKienThongKeModel();
+                d.TenDK = "Hôm nay";
+                d.MaDK = "1";
+                _danhSachDieuKien.Add(d);
+                DieuKienThongKeModel d2 = new DieuKienThongKeModel();
+                d2.TenDK = "Quý 1";
+                d2.MaDK = "2";
+                _danhSachDieuKien.Add(d2);
+                DieuKienThongKeModel d3 = new DieuKienThongKeModel();
+                d3.TenDK = "Quý 2";
+                d3.MaDK = "3";
+                _danhSachDieuKien.Add(d3);
+                DieuKienThongKeModel d4 = new DieuKienThongKeModel();
+                d4.TenDK = "Quý 3";
+                d4.MaDK = "4";
+                _danhSachDieuKien.Add(d4);
+                DieuKienThongKeModel d5 = new DieuKienThongKeModel();
+                d5.TenDK = "Quý 4";
+                d5.MaDK = "5";
+                _danhSachDieuKien.Add(d5);
+             */
             switch (maDK)
             {
                 case 1:
                     {
                         // Ngày hôm nay
                         DateTime today = DateTime.Now;
-                        List<TK_DoanhThuModel> result = Get_DoanhThu_ngay(today);
+                        //List<TK_DoanhThuModel> result = Get_DoanhThu_ngay(today);
+                        List<TK_DoanhThuModel> result = Get_DoanhThu_khoang_A_B(today,today);
                         return result;
                     }
                 case 2:
                     {
-                        // Ngày hôm qua
+                        //quý 1
+                        int nam = DateTime.Today.Year;
+                        DateTime BD = new DateTime(nam, 1, 1); // January 1st
+                        DateTime KT = new DateTime(nam, 3, 31); // March 31st
                         DateTime yesterday = DateTime.Now.AddDays(-1);
-                        List<TK_DoanhThuModel> result = Get_DoanhThu_ngay(yesterday);
+                        List<TK_DoanhThuModel> result = Get_DoanhThu_khoang_A_B(BD,KT);
                         return result;
                     }
                 case 3:
                     {
-                        // 7 ngày trước
-                        DateTime sevenDaysAgo = DateTime.Now.AddDays(-7);
-                        DateTime today = DateTime.Now;
-                        List<TK_DoanhThuModel> result = Get_DoanhThu_khoang_A_B(sevenDaysAgo, today);
+                        // Quý 2
+                        int nam = DateTime.Today.Year;
+                        DateTime BD = new DateTime(nam, 4, 1); // January 1st
+                        DateTime KT = new DateTime(nam, 6, 30); // March 31st
+                        List<TK_DoanhThuModel> result = Get_DoanhThu_khoang_A_B(BD, KT);
                         return result;
                     }
                 case 4:
                     {
-                        // Tuần này
-                        DateTime startOfWeek = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek);
-                        DateTime today = DateTime.Now;
-                        List<TK_DoanhThuModel> result = Get_DoanhThu_khoang_A_B(startOfWeek, today);
+                        // Quý 3
+                        int nam = DateTime.Today.Year;
+                        DateTime BD = new DateTime(nam, 7, 1); // January 1st
+                        DateTime KT = new DateTime(nam, 9, 30); // March 31st
+                        List<TK_DoanhThuModel> result = Get_DoanhThu_khoang_A_B(BD, KT);
                         return result;
                     }
                 case 5:
                     {
-                        // Tuần trước
-                        DateTime startOfLastWeek = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek - 7);
-                        DateTime startOfWeek = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek);
-                        List<TK_DoanhThuModel> result = Get_DoanhThu_khoang_A_B(startOfLastWeek, startOfWeek);
-                        return result;
-                    }
-                case 6:
-                    {
-                        // Tháng này
-                        DateTime startOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-                        DateTime today = DateTime.Now;
-                        List<TK_DoanhThuModel> result = Get_DoanhThu_khoang_A_B(startOfMonth, today);
-                        return result;
-                    }
-                case 7:
-                    {
-                        // Tháng trước
-                        DateTime startOfLastMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(-1);
-                        DateTime startOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-                        List<TK_DoanhThuModel> result = Get_DoanhThu_khoang_A_B(startOfMonth, startOfLastMonth);
-                        return result;
-                    }
-                case 8:
-                    {
-                        // 28 ngày trước
-                        DateTime twentyEightDaysAgo = DateTime.Now.AddDays(-28);
-                        DateTime today = DateTime.Now;
-                        List<TK_DoanhThuModel> result = Get_DoanhThu_khoang_A_B(twentyEightDaysAgo, today);
+                        // Quy 4
+                        int nam = DateTime.Today.Year;
+                        DateTime BD = new DateTime(nam, 10, 1); // January 1st
+                        DateTime KT = new DateTime(nam, 12, 30); // March 31st
+                        List<TK_DoanhThuModel> result = Get_DoanhThu_khoang_A_B(BD, KT);
                         return result;
                     }
                 default:

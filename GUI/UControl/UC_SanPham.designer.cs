@@ -52,7 +52,7 @@
             // panel1
             // 
             this.panel1.Location = new System.Drawing.Point(2, 2);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(636, 245);
             this.panel1.TabIndex = 0;
@@ -76,9 +76,9 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(2, 0);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox1.Size = new System.Drawing.Size(1323, 247);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
@@ -90,7 +90,7 @@
             this.btn_Luu.Image = global::GUI.Properties.Resources.save24;
             this.btn_Luu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btn_Luu.Location = new System.Drawing.Point(498, 188);
-            this.btn_Luu.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_Luu.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Luu.Name = "btn_Luu";
             this.btn_Luu.Size = new System.Drawing.Size(101, 37);
             this.btn_Luu.TabIndex = 13;
@@ -104,7 +104,7 @@
             this.btn_Sua.Image = global::GUI.Properties.Resources.update24;
             this.btn_Sua.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btn_Sua.Location = new System.Drawing.Point(348, 188);
-            this.btn_Sua.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_Sua.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Sua.Name = "btn_Sua";
             this.btn_Sua.Size = new System.Drawing.Size(101, 37);
             this.btn_Sua.TabIndex = 12;
@@ -118,7 +118,7 @@
             this.btn_Xoa.Image = global::GUI.Properties.Resources.remove24;
             this.btn_Xoa.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btn_Xoa.Location = new System.Drawing.Point(198, 188);
-            this.btn_Xoa.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_Xoa.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Xoa.Name = "btn_Xoa";
             this.btn_Xoa.Size = new System.Drawing.Size(101, 37);
             this.btn_Xoa.TabIndex = 11;
@@ -132,7 +132,7 @@
             this.btn_Them.Image = global::GUI.Properties.Resources.plus241;
             this.btn_Them.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btn_Them.Location = new System.Drawing.Point(48, 188);
-            this.btn_Them.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_Them.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Them.Name = "btn_Them";
             this.btn_Them.Size = new System.Drawing.Size(101, 37);
             this.btn_Them.TabIndex = 10;
@@ -145,7 +145,7 @@
             this.cbb_LoaiSP.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbb_LoaiSP.FormattingEnabled = true;
             this.cbb_LoaiSP.Location = new System.Drawing.Point(485, 54);
-            this.cbb_LoaiSP.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbb_LoaiSP.Margin = new System.Windows.Forms.Padding(2);
             this.cbb_LoaiSP.Name = "cbb_LoaiSP";
             this.cbb_LoaiSP.Size = new System.Drawing.Size(130, 26);
             this.cbb_LoaiSP.TabIndex = 9;
@@ -154,7 +154,7 @@
             // 
             this.txtHinhAnh.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtHinhAnh.Location = new System.Drawing.Point(485, 93);
-            this.txtHinhAnh.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtHinhAnh.Margin = new System.Windows.Forms.Padding(2);
             this.txtHinhAnh.Name = "txtHinhAnh";
             this.txtHinhAnh.Size = new System.Drawing.Size(130, 24);
             this.txtHinhAnh.TabIndex = 8;
@@ -163,16 +163,17 @@
             // 
             this.txt_GiaSP.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txt_GiaSP.Location = new System.Drawing.Point(170, 144);
-            this.txt_GiaSP.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txt_GiaSP.Margin = new System.Windows.Forms.Padding(2);
             this.txt_GiaSP.Name = "txt_GiaSP";
             this.txt_GiaSP.Size = new System.Drawing.Size(142, 24);
             this.txt_GiaSP.TabIndex = 7;
+            this.txt_GiaSP.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_GiaSP_KeyPress);
             // 
             // txtTenSP
             // 
             this.txtTenSP.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtTenSP.Location = new System.Drawing.Point(170, 99);
-            this.txtTenSP.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtTenSP.Margin = new System.Windows.Forms.Padding(2);
             this.txtTenSP.Name = "txtTenSP";
             this.txtTenSP.Size = new System.Drawing.Size(142, 24);
             this.txtTenSP.TabIndex = 6;
@@ -181,7 +182,7 @@
             // 
             this.txtMaSP.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtMaSP.Location = new System.Drawing.Point(170, 54);
-            this.txtMaSP.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtMaSP.Margin = new System.Windows.Forms.Padding(2);
             this.txtMaSP.Name = "txtMaSP";
             this.txtMaSP.Size = new System.Drawing.Size(142, 24);
             this.txtMaSP.TabIndex = 5;
@@ -243,9 +244,10 @@
             // 
             // dgv_SanPham
             // 
+            this.dgv_SanPham.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgv_SanPham.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_SanPham.Location = new System.Drawing.Point(3, 250);
-            this.dgv_SanPham.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dgv_SanPham.Margin = new System.Windows.Forms.Padding(2);
             this.dgv_SanPham.Name = "dgv_SanPham";
             this.dgv_SanPham.RowHeadersWidth = 82;
             this.dgv_SanPham.RowTemplate.Height = 33;
@@ -261,7 +263,7 @@
             this.Controls.Add(this.dgv_SanPham);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "UC_SanPham";
             this.Size = new System.Drawing.Size(1338, 700);
             this.groupBox1.ResumeLayout(false);

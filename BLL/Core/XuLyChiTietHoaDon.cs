@@ -78,17 +78,21 @@ namespace BLL.Core
         }
         public int Xoa_CTHoaDon(string maHD, string masp)
         {
-            ChiTietHoaDon cthd = new ChiTietHoaDon();
-            cthd = ctx.ChiTietHoaDons.FirstOrDefault
-                (
-                v => v.MaHD.Trim().Equals(maHD.Trim()) &&
-                v.MaSP.Trim().Equals(masp.Trim())
-                );
-            if (cthd == null) { return 0; }
-            ctx.Refresh(System.Data.Linq.RefreshMode.KeepChanges, cthd);
-            ctx.ChiTietHoaDons.DeleteOnSubmit(cthd);
-            ctx.SubmitChanges();
-            return 1;
+            try
+            {
+                ChiTietHoaDon cthd = new ChiTietHoaDon();
+                cthd = ctx.ChiTietHoaDons.FirstOrDefault
+                    (
+                    v => v.MaHD.Trim().Equals(maHD.Trim()) &&
+                    v.MaSP.Trim().Equals(masp.Trim())
+                    );
+                if (cthd == null) { return 0; }
+                ctx.Refresh(System.Data.Linq.RefreshMode.KeepChanges, cthd);
+                ctx.ChiTietHoaDons.DeleteOnSubmit(cthd);
+                ctx.SubmitChanges();
+                return 1;
+            }
+            catch { return 0; }
         }
         public int Sua_CTHoaDon(ChiTietHoaDon cthd)
         {
@@ -103,6 +107,27 @@ namespace BLL.Core
                 c.DonGia = cthd.DonGia;
                 c.MaSP = cthd.MaSP;
                 c.SoLuong = cthd.SoLuong;
+                ctx.SubmitChanges();
+                return 1;
+            }
+            catch { return 0; }
+        }
+        public int congThemSL(string mahd, string masp, int sl)
+        {
+            try
+            {
+                ChiTietHoaDon ct = ctx.ChiTietHoaDons.FirstOrDefault(
+                v => v.MaHD.Trim().Equals(mahd.Trim()) &&
+                v.MaSP.Trim().Equals(masp.Trim())
+                );
+                if (ct != null)
+                {
+                    ct.SoLuong += sl;
+                }
+                else
+                {
+                    return 0;
+                }
                 ctx.SubmitChanges();
                 return 1;
             }

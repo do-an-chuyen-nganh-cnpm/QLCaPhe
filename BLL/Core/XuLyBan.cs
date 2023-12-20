@@ -1,6 +1,7 @@
 ﻿using BLL.DB;
 using System;
 using System.Collections.Generic;
+using System.Data.Linq;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
@@ -15,12 +16,30 @@ namespace BLL.Core
     {
         public XuLyBan():base() { }
         XuLyTrangThaiBan xuLyTrangThaiBan = new XuLyTrangThaiBan();
-        public string maTrangThaiTrong = "2";
-        public string maTrangThaiDaDat = "1";
-        public string maTrangThaiCoKhach = "3";
+        public Color mauCoKhach = Color.IndianRed;
+        public Color mauBanTrong = Color.LimeGreen;
+        public Color mauBanDaDat = Color.PaleGoldenrod;
+        public bool checkBanTrong(string maBan)
+        {
+            BAN b = ctx.BANs.FirstOrDefault(v => v.MaBan.Trim().Equals(maBan.Trim()));
+            if (b != null)
+            {
+                if (b.MaTrangThai.Trim().Equals(xuLyTrangThaiBan.maTrangThaiBanTrong))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         public List<BAN> getAllBan()
         {
-            return ctx.BANs.ToList();
+            try
+            {
+                ctx.Refresh(RefreshMode.OverwriteCurrentValues, ctx.BANs);
+                return ctx.BANs.ToList();
+            }
+            catch { return null; }
+        
         }
         public string LayTrangThaiBan(string maBan)
         {
@@ -60,7 +79,15 @@ namespace BLL.Core
         {
             return ctx.TRANGTHAIBANs.ToList();
         }
-
+        public string layTenBanByMaBan(string maBan)
+        {
+            BAN b = ctx.BANs.FirstOrDefault(v => v.MaBan.Trim().Equals(maBan.Trim()));
+            if (b == null)
+            {
+                return "nll";
+            }
+            return b.TenBan;
+        }
         public int ThemBan(BAN b)
         {
             try

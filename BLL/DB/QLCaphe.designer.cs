@@ -30,12 +30,12 @@ namespace BLL.DB
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertTRANGTHAIBAN(TRANGTHAIBAN instance);
-    partial void UpdateTRANGTHAIBAN(TRANGTHAIBAN instance);
-    partial void DeleteTRANGTHAIBAN(TRANGTHAIBAN instance);
     partial void InsertBAN(BAN instance);
     partial void UpdateBAN(BAN instance);
     partial void DeleteBAN(BAN instance);
+    partial void InsertTRANGTHAIBAN(TRANGTHAIBAN instance);
+    partial void UpdateTRANGTHAIBAN(TRANGTHAIBAN instance);
+    partial void DeleteTRANGTHAIBAN(TRANGTHAIBAN instance);
     partial void InsertCaLamViec(CaLamViec instance);
     partial void UpdateCaLamViec(CaLamViec instance);
     partial void DeleteCaLamViec(CaLamViec instance);
@@ -45,6 +45,9 @@ namespace BLL.DB
     partial void InsertChiTietHoaDon(ChiTietHoaDon instance);
     partial void UpdateChiTietHoaDon(ChiTietHoaDon instance);
     partial void DeleteChiTietHoaDon(ChiTietHoaDon instance);
+    partial void InsertDatBan(DatBan instance);
+    partial void UpdateDatBan(DatBan instance);
+    partial void DeleteDatBan(DatBan instance);
     partial void InsertDM_ManHinh(DM_ManHinh instance);
     partial void UpdateDM_ManHinh(DM_ManHinh instance);
     partial void DeleteDM_ManHinh(DM_ManHinh instance);
@@ -110,19 +113,19 @@ namespace BLL.DB
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<TRANGTHAIBAN> TRANGTHAIBANs
-		{
-			get
-			{
-				return this.GetTable<TRANGTHAIBAN>();
-			}
-		}
-		
 		public System.Data.Linq.Table<BAN> BANs
 		{
 			get
 			{
 				return this.GetTable<BAN>();
+			}
+		}
+		
+		public System.Data.Linq.Table<TRANGTHAIBAN> TRANGTHAIBANs
+		{
+			get
+			{
+				return this.GetTable<TRANGTHAIBAN>();
 			}
 		}
 		
@@ -147,6 +150,14 @@ namespace BLL.DB
 			get
 			{
 				return this.GetTable<ChiTietHoaDon>();
+			}
+		}
+		
+		public System.Data.Linq.Table<DatBan> DatBans
+		{
+			get
+			{
+				return this.GetTable<DatBan>();
 			}
 		}
 		
@@ -236,6 +247,237 @@ namespace BLL.DB
 			{
 				return this.GetTable<SanPham>();
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.BAN")]
+	public partial class BAN : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _MaBan;
+		
+		private string _TenBan;
+		
+		private string _ThuocTinh;
+		
+		private string _MaTrangThai;
+		
+		private EntitySet<DatBan> _DatBans;
+		
+		private EntitySet<HoaDon> _HoaDons;
+		
+		private EntityRef<TRANGTHAIBAN> _TRANGTHAIBAN;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnMaBanChanging(string value);
+    partial void OnMaBanChanged();
+    partial void OnTenBanChanging(string value);
+    partial void OnTenBanChanged();
+    partial void OnThuocTinhChanging(string value);
+    partial void OnThuocTinhChanged();
+    partial void OnMaTrangThaiChanging(string value);
+    partial void OnMaTrangThaiChanged();
+    #endregion
+		
+		public BAN()
+		{
+			this._DatBans = new EntitySet<DatBan>(new Action<DatBan>(this.attach_DatBans), new Action<DatBan>(this.detach_DatBans));
+			this._HoaDons = new EntitySet<HoaDon>(new Action<HoaDon>(this.attach_HoaDons), new Action<HoaDon>(this.detach_HoaDons));
+			this._TRANGTHAIBAN = default(EntityRef<TRANGTHAIBAN>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MaBan", DbType="Char(11) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string MaBan
+		{
+			get
+			{
+				return this._MaBan;
+			}
+			set
+			{
+				if ((this._MaBan != value))
+				{
+					this.OnMaBanChanging(value);
+					this.SendPropertyChanging();
+					this._MaBan = value;
+					this.SendPropertyChanged("MaBan");
+					this.OnMaBanChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TenBan", DbType="NVarChar(20)")]
+		public string TenBan
+		{
+			get
+			{
+				return this._TenBan;
+			}
+			set
+			{
+				if ((this._TenBan != value))
+				{
+					this.OnTenBanChanging(value);
+					this.SendPropertyChanging();
+					this._TenBan = value;
+					this.SendPropertyChanged("TenBan");
+					this.OnTenBanChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ThuocTinh", DbType="NVarChar(30)")]
+		public string ThuocTinh
+		{
+			get
+			{
+				return this._ThuocTinh;
+			}
+			set
+			{
+				if ((this._ThuocTinh != value))
+				{
+					this.OnThuocTinhChanging(value);
+					this.SendPropertyChanging();
+					this._ThuocTinh = value;
+					this.SendPropertyChanged("ThuocTinh");
+					this.OnThuocTinhChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MaTrangThai", DbType="NVarChar(15)")]
+		public string MaTrangThai
+		{
+			get
+			{
+				return this._MaTrangThai;
+			}
+			set
+			{
+				if ((this._MaTrangThai != value))
+				{
+					if (this._TRANGTHAIBAN.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnMaTrangThaiChanging(value);
+					this.SendPropertyChanging();
+					this._MaTrangThai = value;
+					this.SendPropertyChanged("MaTrangThai");
+					this.OnMaTrangThaiChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BAN_DatBan", Storage="_DatBans", ThisKey="MaBan", OtherKey="MaBan")]
+		public EntitySet<DatBan> DatBans
+		{
+			get
+			{
+				return this._DatBans;
+			}
+			set
+			{
+				this._DatBans.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BAN_HoaDon", Storage="_HoaDons", ThisKey="MaBan", OtherKey="MaBan")]
+		public EntitySet<HoaDon> HoaDons
+		{
+			get
+			{
+				return this._HoaDons;
+			}
+			set
+			{
+				this._HoaDons.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TRANGTHAIBAN_BAN", Storage="_TRANGTHAIBAN", ThisKey="MaTrangThai", OtherKey="MaTrangThai", IsForeignKey=true)]
+		public TRANGTHAIBAN TRANGTHAIBAN
+		{
+			get
+			{
+				return this._TRANGTHAIBAN.Entity;
+			}
+			set
+			{
+				TRANGTHAIBAN previousValue = this._TRANGTHAIBAN.Entity;
+				if (((previousValue != value) 
+							|| (this._TRANGTHAIBAN.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._TRANGTHAIBAN.Entity = null;
+						previousValue.BANs.Remove(this);
+					}
+					this._TRANGTHAIBAN.Entity = value;
+					if ((value != null))
+					{
+						value.BANs.Add(this);
+						this._MaTrangThai = value.MaTrangThai;
+					}
+					else
+					{
+						this._MaTrangThai = default(string);
+					}
+					this.SendPropertyChanged("TRANGTHAIBAN");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_DatBans(DatBan entity)
+		{
+			this.SendPropertyChanging();
+			entity.BAN = this;
+		}
+		
+		private void detach_DatBans(DatBan entity)
+		{
+			this.SendPropertyChanging();
+			entity.BAN = null;
+		}
+		
+		private void attach_HoaDons(HoaDon entity)
+		{
+			this.SendPropertyChanging();
+			entity.BAN = this;
+		}
+		
+		private void detach_HoaDons(HoaDon entity)
+		{
+			this.SendPropertyChanging();
+			entity.BAN = null;
 		}
 	}
 	
@@ -350,209 +592,6 @@ namespace BLL.DB
 		{
 			this.SendPropertyChanging();
 			entity.TRANGTHAIBAN = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.BAN")]
-	public partial class BAN : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private string _MaBan;
-		
-		private string _TenBan;
-		
-		private string _ThuocTinh;
-		
-		private string _MaTrangThai;
-		
-		private EntitySet<HoaDon> _HoaDons;
-		
-		private EntityRef<TRANGTHAIBAN> _TRANGTHAIBAN;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnMaBanChanging(string value);
-    partial void OnMaBanChanged();
-    partial void OnTenBanChanging(string value);
-    partial void OnTenBanChanged();
-    partial void OnThuocTinhChanging(string value);
-    partial void OnThuocTinhChanged();
-    partial void OnMaTrangThaiChanging(string value);
-    partial void OnMaTrangThaiChanged();
-    #endregion
-		
-		public BAN()
-		{
-			this._HoaDons = new EntitySet<HoaDon>(new Action<HoaDon>(this.attach_HoaDons), new Action<HoaDon>(this.detach_HoaDons));
-			this._TRANGTHAIBAN = default(EntityRef<TRANGTHAIBAN>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MaBan", DbType="Char(11) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string MaBan
-		{
-			get
-			{
-				return this._MaBan;
-			}
-			set
-			{
-				if ((this._MaBan != value))
-				{
-					this.OnMaBanChanging(value);
-					this.SendPropertyChanging();
-					this._MaBan = value;
-					this.SendPropertyChanged("MaBan");
-					this.OnMaBanChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TenBan", DbType="NVarChar(20)")]
-		public string TenBan
-		{
-			get
-			{
-				return this._TenBan;
-			}
-			set
-			{
-				if ((this._TenBan != value))
-				{
-					this.OnTenBanChanging(value);
-					this.SendPropertyChanging();
-					this._TenBan = value;
-					this.SendPropertyChanged("TenBan");
-					this.OnTenBanChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ThuocTinh", DbType="NVarChar(30)")]
-		public string ThuocTinh
-		{
-			get
-			{
-				return this._ThuocTinh;
-			}
-			set
-			{
-				if ((this._ThuocTinh != value))
-				{
-					this.OnThuocTinhChanging(value);
-					this.SendPropertyChanging();
-					this._ThuocTinh = value;
-					this.SendPropertyChanged("ThuocTinh");
-					this.OnThuocTinhChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MaTrangThai", DbType="NVarChar(15)")]
-		public string MaTrangThai
-		{
-			get
-			{
-				return this._MaTrangThai;
-			}
-			set
-			{
-				if ((this._MaTrangThai != value))
-				{
-					if (this._TRANGTHAIBAN.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnMaTrangThaiChanging(value);
-					this.SendPropertyChanging();
-					this._MaTrangThai = value;
-					this.SendPropertyChanged("MaTrangThai");
-					this.OnMaTrangThaiChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BAN_HoaDon", Storage="_HoaDons", ThisKey="MaBan", OtherKey="MaBan")]
-		public EntitySet<HoaDon> HoaDons
-		{
-			get
-			{
-				return this._HoaDons;
-			}
-			set
-			{
-				this._HoaDons.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TRANGTHAIBAN_BAN", Storage="_TRANGTHAIBAN", ThisKey="MaTrangThai", OtherKey="MaTrangThai", IsForeignKey=true)]
-		public TRANGTHAIBAN TRANGTHAIBAN
-		{
-			get
-			{
-				return this._TRANGTHAIBAN.Entity;
-			}
-			set
-			{
-				TRANGTHAIBAN previousValue = this._TRANGTHAIBAN.Entity;
-				if (((previousValue != value) 
-							|| (this._TRANGTHAIBAN.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._TRANGTHAIBAN.Entity = null;
-						previousValue.BANs.Remove(this);
-					}
-					this._TRANGTHAIBAN.Entity = value;
-					if ((value != null))
-					{
-						value.BANs.Add(this);
-						this._MaTrangThai = value.MaTrangThai;
-					}
-					else
-					{
-						this._MaTrangThai = default(string);
-					}
-					this.SendPropertyChanged("TRANGTHAIBAN");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_HoaDons(HoaDon entity)
-		{
-			this.SendPropertyChanging();
-			entity.BAN = this;
-		}
-		
-		private void detach_HoaDons(HoaDon entity)
-		{
-			this.SendPropertyChanging();
-			entity.BAN = null;
 		}
 	}
 	
@@ -1197,6 +1236,253 @@ namespace BLL.DB
 						this._MaSP = default(string);
 					}
 					this.SendPropertyChanged("SanPham");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DatBan")]
+	public partial class DatBan : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _maDatBan;
+		
+		private string _HoTen;
+		
+		private string _SoDienThoai;
+		
+		private System.Nullable<System.DateTime> _NgayNhan;
+		
+		private System.Nullable<System.TimeSpan> _GioNhan;
+		
+		private string _MaBan;
+		
+		private string _TrangThai;
+		
+		private EntityRef<BAN> _BAN;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnmaDatBanChanging(string value);
+    partial void OnmaDatBanChanged();
+    partial void OnHoTenChanging(string value);
+    partial void OnHoTenChanged();
+    partial void OnSoDienThoaiChanging(string value);
+    partial void OnSoDienThoaiChanged();
+    partial void OnNgayNhanChanging(System.Nullable<System.DateTime> value);
+    partial void OnNgayNhanChanged();
+    partial void OnGioNhanChanging(System.Nullable<System.TimeSpan> value);
+    partial void OnGioNhanChanged();
+    partial void OnMaBanChanging(string value);
+    partial void OnMaBanChanged();
+    partial void OnTrangThaiChanging(string value);
+    partial void OnTrangThaiChanged();
+    #endregion
+		
+		public DatBan()
+		{
+			this._BAN = default(EntityRef<BAN>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_maDatBan", DbType="VarChar(15) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string maDatBan
+		{
+			get
+			{
+				return this._maDatBan;
+			}
+			set
+			{
+				if ((this._maDatBan != value))
+				{
+					this.OnmaDatBanChanging(value);
+					this.SendPropertyChanging();
+					this._maDatBan = value;
+					this.SendPropertyChanged("maDatBan");
+					this.OnmaDatBanChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HoTen", DbType="NVarChar(90)")]
+		public string HoTen
+		{
+			get
+			{
+				return this._HoTen;
+			}
+			set
+			{
+				if ((this._HoTen != value))
+				{
+					this.OnHoTenChanging(value);
+					this.SendPropertyChanging();
+					this._HoTen = value;
+					this.SendPropertyChanged("HoTen");
+					this.OnHoTenChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SoDienThoai", DbType="VarChar(11)")]
+		public string SoDienThoai
+		{
+			get
+			{
+				return this._SoDienThoai;
+			}
+			set
+			{
+				if ((this._SoDienThoai != value))
+				{
+					this.OnSoDienThoaiChanging(value);
+					this.SendPropertyChanging();
+					this._SoDienThoai = value;
+					this.SendPropertyChanged("SoDienThoai");
+					this.OnSoDienThoaiChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NgayNhan", DbType="Date")]
+		public System.Nullable<System.DateTime> NgayNhan
+		{
+			get
+			{
+				return this._NgayNhan;
+			}
+			set
+			{
+				if ((this._NgayNhan != value))
+				{
+					this.OnNgayNhanChanging(value);
+					this.SendPropertyChanging();
+					this._NgayNhan = value;
+					this.SendPropertyChanged("NgayNhan");
+					this.OnNgayNhanChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GioNhan", DbType="Time")]
+		public System.Nullable<System.TimeSpan> GioNhan
+		{
+			get
+			{
+				return this._GioNhan;
+			}
+			set
+			{
+				if ((this._GioNhan != value))
+				{
+					this.OnGioNhanChanging(value);
+					this.SendPropertyChanging();
+					this._GioNhan = value;
+					this.SendPropertyChanged("GioNhan");
+					this.OnGioNhanChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MaBan", DbType="Char(11)")]
+		public string MaBan
+		{
+			get
+			{
+				return this._MaBan;
+			}
+			set
+			{
+				if ((this._MaBan != value))
+				{
+					if (this._BAN.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnMaBanChanging(value);
+					this.SendPropertyChanging();
+					this._MaBan = value;
+					this.SendPropertyChanged("MaBan");
+					this.OnMaBanChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TrangThai", DbType="NVarChar(50)")]
+		public string TrangThai
+		{
+			get
+			{
+				return this._TrangThai;
+			}
+			set
+			{
+				if ((this._TrangThai != value))
+				{
+					this.OnTrangThaiChanging(value);
+					this.SendPropertyChanging();
+					this._TrangThai = value;
+					this.SendPropertyChanged("TrangThai");
+					this.OnTrangThaiChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BAN_DatBan", Storage="_BAN", ThisKey="MaBan", OtherKey="MaBan", IsForeignKey=true)]
+		public BAN BAN
+		{
+			get
+			{
+				return this._BAN.Entity;
+			}
+			set
+			{
+				BAN previousValue = this._BAN.Entity;
+				if (((previousValue != value) 
+							|| (this._BAN.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._BAN.Entity = null;
+						previousValue.DatBans.Remove(this);
+					}
+					this._BAN.Entity = value;
+					if ((value != null))
+					{
+						value.DatBans.Add(this);
+						this._MaBan = value.MaBan;
+					}
+					else
+					{
+						this._MaBan = default(string);
+					}
+					this.SendPropertyChanged("BAN");
 				}
 			}
 		}
@@ -2570,8 +2856,6 @@ namespace BLL.DB
 		
 		private string _TenLoaiSP;
 		
-		private string _TrangThai;
-		
 		private EntitySet<SanPham> _SanPhams;
 		
     #region Extensibility Method Definitions
@@ -2582,8 +2866,6 @@ namespace BLL.DB
     partial void OnMaLoaiSPChanged();
     partial void OnTenLoaiSPChanging(string value);
     partial void OnTenLoaiSPChanged();
-    partial void OnTrangThaiChanging(string value);
-    partial void OnTrangThaiChanged();
     #endregion
 		
 		public LoaiSP()
@@ -2628,26 +2910,6 @@ namespace BLL.DB
 					this._TenLoaiSP = value;
 					this.SendPropertyChanged("TenLoaiSP");
 					this.OnTenLoaiSPChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TrangThai", DbType="NVarChar(20)")]
-		public string TrangThai
-		{
-			get
-			{
-				return this._TrangThai;
-			}
-			set
-			{
-				if ((this._TrangThai != value))
-				{
-					this.OnTrangThaiChanging(value);
-					this.SendPropertyChanging();
-					this._TrangThai = value;
-					this.SendPropertyChanged("TrangThai");
-					this.OnTrangThaiChanged();
 				}
 			}
 		}
@@ -2724,8 +2986,6 @@ namespace BLL.DB
 		
 		private string _MaQuyen;
 		
-		private string _TrangThai;
-		
 		private EntitySet<ChiTietCaLamNhanvien> _ChiTietCaLamNhanviens;
 		
 		private EntitySet<HoaDon> _HoaDons;
@@ -2756,8 +3016,6 @@ namespace BLL.DB
     partial void OnMatkhauChanged();
     partial void OnMaQuyenChanging(string value);
     partial void OnMaQuyenChanged();
-    partial void OnTrangThaiChanging(string value);
-    partial void OnTrangThaiChanged();
     #endregion
 		
 		public NHANVIEN()
@@ -2968,26 +3226,6 @@ namespace BLL.DB
 					this._MaQuyen = value;
 					this.SendPropertyChanged("MaQuyen");
 					this.OnMaQuyenChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TrangThai", DbType="NVarChar(20)")]
-		public string TrangThai
-		{
-			get
-			{
-				return this._TrangThai;
-			}
-			set
-			{
-				if ((this._TrangThai != value))
-				{
-					this.OnTrangThaiChanging(value);
-					this.SendPropertyChanging();
-					this._TrangThai = value;
-					this.SendPropertyChanged("TrangThai");
-					this.OnTrangThaiChanged();
 				}
 			}
 		}
@@ -3423,8 +3661,6 @@ namespace BLL.DB
 		
 		private System.Nullable<double> _GiaSP;
 		
-		private string _TrangThai;
-		
 		private EntitySet<ChiTietHoaDon> _ChiTietHoaDons;
 		
 		private EntityRef<LoaiSP> _LoaiSP;
@@ -3443,8 +3679,6 @@ namespace BLL.DB
     partial void OnHinhAnhChanged();
     partial void OnGiaSPChanging(System.Nullable<double> value);
     partial void OnGiaSPChanged();
-    partial void OnTrangThaiChanging(string value);
-    partial void OnTrangThaiChanged();
     #endregion
 		
 		public SanPham()
@@ -3554,26 +3788,6 @@ namespace BLL.DB
 					this._GiaSP = value;
 					this.SendPropertyChanged("GiaSP");
 					this.OnGiaSPChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TrangThai", DbType="NVarChar(20)")]
-		public string TrangThai
-		{
-			get
-			{
-				return this._TrangThai;
-			}
-			set
-			{
-				if ((this._TrangThai != value))
-				{
-					this.OnTrangThaiChanging(value);
-					this.SendPropertyChanging();
-					this._TrangThai = value;
-					this.SendPropertyChanged("TrangThai");
-					this.OnTrangThaiChanged();
 				}
 			}
 		}

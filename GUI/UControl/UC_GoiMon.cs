@@ -2,17 +2,20 @@
 using BLL.Core;
 using BLL.DB;
 using GUI.Frm;
+using Microsoft.ReportingServices.RdlExpressions.ExpressionHostObjectModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using VietQRPaymentAPI;
 
 namespace GUI.UControl
@@ -27,6 +30,7 @@ namespace GUI.UControl
         XuLyChiTietHoaDon xuLyChiTietHoaDon = new XuLyChiTietHoaDon();
         XuLyKhachHang xuLyKhachHang = new XuLyKhachHang();
         DataTable        dataTableSanPham, dataTableCTHoaDon;
+        UC_GoiMon ucmain;
         //
         private string trangThaiBanTrong;//bàn trống
         private string trangThaiBanDaDat;//= "bàn đã đặt";
@@ -53,6 +57,10 @@ namespace GUI.UControl
             maNV = frm_DangNhap.nvDangSuDung.MaNV;
             InIt();
         }
+        public void ReLoadUC()
+        {
+            ucmain = new UC_GoiMon();
+        }
         public void InIt()
         {
             InitializeComponent();
@@ -61,6 +69,7 @@ namespace GUI.UControl
             sanPhams = new List<SanPham>();
             sanPhams = xuLySanPham.laySanPham();
             LoadDGVSanPham(sanPhams);
+            ucmain = this;
             //
             trangThaiBanTrong = xuLyTrangThaiBan.tenTrangThaiBanTrong;//bàn trống
             trangThaiBanDaDat = xuLyTrangThaiBan.tenTrangThaiDaDat;//"bàn đã đặt";
@@ -81,7 +90,8 @@ namespace GUI.UControl
             try
             {
                 panelDSBan.Controls.Clear();
-                List<BAN> listBan = xuLyBan.getAllBan();
+                List<BAN> listBan = new List<BAN>();
+                listBan = xuLyBan.getAllBan();
                 int x = 10, y = 10;
                 int indexBan = 0;
                 for (int row = 0; row < listBan.Count; row++)
@@ -96,33 +106,44 @@ namespace GUI.UControl
                         indexBan++;
                     }
                     x = 10;
-                    y += 70;
+                    y += 90;
                 }
             }
             catch { }
+        }
+        private static Image ResizeImage(Image originalImage, int newWidth, int newHeight)
+        {
+            Bitmap resizedImage = new Bitmap(newWidth, newHeight);
+            using (Graphics g = Graphics.FromImage(resizedImage))
+            {
+                g.DrawImage(originalImage, 0, 0, newWidth, newHeight);
+            }
+            return resizedImage;
         }
         public Panel taoBan(string maBan, string TenBan, string trangthai)
         {
             Panel panel = new Panel
             {
-                Width = 60,
-                Height = 60,
+                Width = 65,
+                Height = 65,
                 // Set the border style
                 BorderStyle = BorderStyle.FixedSingle,
                 Name = TenBan,
+                BackgroundImage = Properties.Resources.chair,
+                BackgroundImageLayout = ImageLayout.Stretch
             };
             //màu theo trạng thái và TAG
             switch (trangthai)
             {
                 case var x when x.Equals(xuLyTrangThaiBan.tenTrangThaiDaCoKhach): //trangThaiBanCoKhach
                     {
-                        panel.BackColor = Color.LightCoral;
+                        panel.BackColor = Color.IndianRed;
                         panel.Tag = xuLyTrangThaiBan.tenTrangThaiDaCoKhach;
                         break;
                     }
                 case var x when x.Equals(xuLyTrangThaiBan.tenTrangThaiDaDat ): //trangThaiBanDaDat
                     {
-                        panel.BackColor = Color.LightYellow;
+                        panel.BackColor = Color.PaleGoldenrod ;
                         panel.Tag = xuLyTrangThaiBan.tenTrangThaiDaDat;
                         break;
                     }
@@ -136,14 +157,14 @@ namespace GUI.UControl
                     break;
             }
             panel.Click += Panel_Click;
-            Label label = new Label
-            {
-                Text = TenBan,
-                Location = new Point(0, 0),
-                Name = maBan,
-                Font = new Font("Arial", 12), // Set the font with size 12
-            };           
-            panel.Controls.Add(label);
+            //Label label = new Label
+            //{
+            //    Text = TenBan,
+            //    Location = new Point(0, 0),
+            //    Name = maBan,
+            //    Font = new Font("Arial", 12), // Set the font with size 12
+            //};    
+          //  panel.Controls.Add(label);
             return panel;
         }
         private void Panel_Click(object sender, EventArgs e)
@@ -201,7 +222,7 @@ namespace GUI.UControl
 
         private void btn_ThanhToan_Click(object sender, EventArgs e)
         {
-            if(txtMaHD.Text==null || txtMaHD.Text == "")
+            if(txtMaHD.Text=="null" || txtMaHD.Text == "null")
             {
                 MessageBox.Show("Bạn quên chọn bàn");
                 return;
@@ -240,6 +261,7 @@ namespace GUI.UControl
         private void LoadDGVSanPham(List<SanPham> listSP)
         {
             khoiTaoTBLDSSanPham();
+            if(listSP == null) { return; }  
             foreach(SanPham item in listSP)
             {
                 LoadDGVSanPham(item);
@@ -263,10 +285,11 @@ namespace GUI.UControl
 
         private void btnTaoMoiHD_Click(object sender, EventArgs e)
         {
+            if (txtTenBan.Text.Equals("null")) { MessageBox.Show("chưa chọn bàn"); return; }
             string tenBan = txtTenBan.Text;
             string maban = xuLyBan.LayMaBan(tenBan);
             //cập nhật trạng thái bàn 
-            string matrangthai = xuLyTrangThaiBan.layMaTrangThai(trangThaiBanCoKhach);
+            string matrangthai = xuLyTrangThaiBan.maTrangThaiDaCoKhach;//trangThaiBanCoKhach
             int kq = xuLyBan.capNhatTrangThaiBan(maban, matrangthai);
             //thêm mới hóa đơn
             HoaDon hd = new HoaDon();
@@ -274,6 +297,8 @@ namespace GUI.UControl
             hd.MaNV = maNV;
             hd.MaKH = null;
             hd.MaBan = maban;
+            hd.Giamgia = 0;
+            hd.DiemTL = 0;
             hd.NgayLap = DateTime.Today;
             hd.TrangThai = trangThaiHD_chuaTT;
             kq = xuLyHoaDon.Them(hd);
@@ -346,7 +371,8 @@ namespace GUI.UControl
 
         private void btnChon_Click(object sender, EventArgs e)
         {
-            if (indexClickDGVSP == -1) { return; }
+            if (indexClickDGVSP == -1) { MessageBox.Show("Bạn quên chọn!"); return; }
+            if (txtSoLuongChon.Value <= 0) { MessageBox.Show("Thông tin sô lượng bị sai"); return; }
             SanPham sp = layTT_DGV_SanPham(indexClickDGVSP); 
             ChiTietHoaDon cthd = new ChiTietHoaDon();
             if (sp != null)
@@ -402,12 +428,15 @@ namespace GUI.UControl
         }
         private void btnBoChon_Click(object sender, EventArgs e)
         {
+            if (indexClickDGV_HoaDon == -1) { MessageBox.Show("Bạn quên chọn rồi!"); return; }
+            if (txtSoLuongChon.Value <= 0) { MessageBox.Show("Thông tin sô lượng bị sai"); return; }
             if (indexClickDGV_HoaDon != -1)
             {
                 int slchon = int.Parse(txtSoLuongChon.Value.ToString());
                 if (indexClickDGV_HoaDon != -1)
                 {
                     ChiTietHoaDon chitietHoaDon = layTT_DGV_HoaDon(indexClickDGV_HoaDon);
+                    if (chitietHoaDon == null) { return; }
                     string codeHD = chitietHoaDon.MaHD;
                     string codeSP = chitietHoaDon.MaSP;
                     if(chitietHoaDon == null) { MessageBox.Show("Lỗi btnBoChon_Click ");return; }
@@ -471,6 +500,52 @@ namespace GUI.UControl
         {
             frm_TachBan f = new frm_TachBan();
             f.ShowDialog();
+        }
+
+        private void btn_GhepBan_Click(object sender, EventArgs e)
+        {
+            
+        }
+        private void btnTachBan_Click(object sender, EventArgs e)
+        {
+            if(txtTenBan.Text=="null" || txtMaHD.Text == "null")
+            {
+                MessageBox.Show("Bạn chưa chọn bàn");
+                return;
+            }
+            string maHD = txtMaHD.Text;
+            string maBan  =xuLyBan.LayMaBan(txtTenBan.Text);
+            frm_TachBan f = new frm_TachBan(maBan,maHD);
+            f.ShowDialog();
+        }
+
+        private void btnGopBan_Click(object sender, EventArgs e)
+        {
+            if(txtMaHD.Text=="null" || txtTenBan.Text == "null") { MessageBox.Show("Bạn chưa chọn bàn"); return; }
+            string mahd = txtMaHD.Text;
+            string maban  = xuLyBan.LayMaBan(txtTenBan.Text);
+            FrmGopBan f = new FrmGopBan(mahd, maban);
+            f.ShowDialog();
+        }
+
+        private void btnChuyenBan_Click(object sender, EventArgs e)
+        {
+            if(txtTenBan.Text=="" || txtMaHD.Text == "") { MessageBox.Show("Bạn quên chọn bàn"); return; }
+            string maHD = txtMaHD.Text;
+            string maBan = xuLyBan.LayMaBan(txtTenBan.Text);
+            frmChuyenBan f = new frmChuyenBan(maBan, maHD, this);
+            f.ShowDialog();
+        }
+
+        private void btnThongTinDB_Click(object sender, EventArgs e)
+        {
+            frm_TT_DatBanOnline f = new frm_TT_DatBanOnline();
+            f.ShowDialog();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            TaoDSban();
         }
 
         private void khoiTaoDTBL_CTHoaDon()
